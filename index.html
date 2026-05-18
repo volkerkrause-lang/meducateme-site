@@ -1,726 +1,1607 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>MeducateMe – Physiology & Paediatrics Learning Platform</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="MeducateMe explains clinical medicine from simple concepts to advanced physiology, pathophysiology, diagnosis and management." />
-  <title>MeducateMe | Understand Medicine From the Inside Out</title>
-
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & ReactDOM CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Framer Motion CDN -->
+  <script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
+  <!-- Smooth scrolling -->
   <style>
-    :root {
-      --bg: #f7fbfc;
-      --surface: #ffffff;
-      --surface-soft: #eef8f9;
-      --text: #12313a;
-      --muted: #5b6f76;
-      --primary: #0f7c8a;
-      --primary-dark: #085766;
-      --accent: #21a6a6;
-      --border: #d8e8eb;
-      --shadow: 0 18px 45px rgba(15, 124, 138, 0.10);
-      --radius: 22px;
-      --max-width: 1180px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     html {
       scroll-behavior: smooth;
     }
-
-    body {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img, svg {
-      max-width: 100%;
-      display: block;
-    }
-
-    .container {
-      width: min(100% - 32px, var(--max-width));
-      margin-inline: auto;
-    }
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(247, 251, 252, 0.88);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(216, 232, 235, 0.8);
-    }
-
-    .nav {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      font-size: 1.35rem;
-    }
-
-    .brand-mark {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      display: grid;
-      place-items: center;
-      color: white;
-      font-weight: 900;
-      box-shadow: 0 12px 26px rgba(15, 124, 138, 0.22);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 26px;
-      color: var(--muted);
-      font-weight: 650;
-      font-size: 0.95rem;
-    }
-
-    .nav-links a:hover {
-      color: var(--primary-dark);
-    }
-
-    .nav-cta {
-      background: var(--primary);
-      color: white;
-      padding: 11px 18px;
-      border-radius: 999px;
-      box-shadow: 0 10px 24px rgba(15, 124, 138, 0.20);
-    }
-
-    .nav-cta:hover {
-      background: var(--primary-dark);
-      color: white !important;
-    }
-
-    .mobile-menu-button {
-      display: none;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      border-radius: 12px;
-      padding: 10px 12px;
-      color: var(--text);
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .hero {
-      padding: 84px 0 52px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: -180px -120px auto auto;
-      width: 420px;
-      height: 420px;
-      border-radius: 50%;
-      background: rgba(33, 166, 166, 0.16);
-      filter: blur(8px);
-      z-index: -1;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.12fr 0.88fr;
-      gap: 52px;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--primary-dark);
-      background: var(--surface-soft);
-      border: 1px solid var(--border);
-      padding: 8px 13px;
-      border-radius: 999px;
-      font-weight: 750;
-      font-size: 0.9rem;
-      margin-bottom: 22px;
-    }
-
-    .eyebrow-dot {
+    /* Custom scrollbar for subtle SaaS polish */
+    ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
     }
-
-    h1 {
-      font-size: clamp(2.65rem, 6vw, 5.4rem);
-      line-height: 0.95;
-      letter-spacing: -0.075em;
-      margin-bottom: 26px;
-      max-width: 820px;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1.08rem, 1.7vw, 1.32rem);
-      color: var(--muted);
-      max-width: 700px;
-      margin-bottom: 34px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 32px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.6);
       border-radius: 999px;
-      padding: 14px 22px;
-      font-weight: 800;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-      border: 1px solid transparent;
     }
-
-    .button:hover {
-      transform: translateY(-2px);
-    }
-
-    .button-primary {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 16px 32px rgba(15, 124, 138, 0.22);
-    }
-
-    .button-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .button-secondary {
-      background: var(--surface);
-      color: var(--primary-dark);
-      border-color: var(--border);
-      box-shadow: 0 12px 26px rgba(18, 49, 58, 0.06);
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      color: var(--muted);
-      font-size: 0.94rem;
-    }
-
-    .hero-meta span {
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 8px 12px;
-    }
-
-    .hero-card {
-      background: linear-gradient(180deg, #ffffff, #f0fbfb);
-      border: 1px solid var(--border);
-      border-radius: calc(var(--radius) + 12px);
-      box-shadow: var(--shadow);
-      padding: 28px;
-      position: relative;
-    }
-
-    .clinical-panel {
-      display: grid;
-      gap: 16px;
-    }
-
-    .panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .panel-header strong {
-      display: block;
-      font-size: 1.05rem;
-      margin-bottom: 2px;
-    }
-
-    .panel-header span {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .pulse {
-      width: 50px;
-      height: 50px;
-      border-radius: 18px;
-      background: rgba(33, 166, 166, 0.12);
-      display: grid;
-      place-items: center;
-      color: var(--primary);
-      font-size: 1.45rem;
-    }
-
-    .learning-step {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 16px;
-    }
-
-    .learning-step small {
-      color: var(--primary);
-      font-weight: 850;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .learning-step h3 {
-      margin-top: 5px;
-      margin-bottom: 5px;
-      font-size: 1.03rem;
-    }
-
-    .learning-step p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    section {
-      padding: 72px 0;
-    }
-
-    .section-heading {
-      max-width: 780px;
-      margin-bottom: 34px;
-    }
-
-    .section-kicker {
-      color: var(--primary);
-      font-weight: 850;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-size: 0.82rem;
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      font-size: clamp(2rem, 4vw, 3.1rem);
-      line-height: 1.05;
-      letter-spacing: -0.055em;
-      margin-bottom: 16px;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-      font-size: 1.08rem;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: 0 12px 30px rgba(18, 49, 58, 0.05);
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
-      border-color: rgba(15, 124, 138, 0.26);
-    }
-
-    .icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 16px;
-      background: var(--surface-soft);
-      display: grid;
-      place-items: center;
-      color: var(--primary);
-      font-size: 1.35rem;
-      margin-bottom: 18px;
-    }
-
-    .card h3 {
-      font-size: 1.18rem;
-      margin-bottom: 8px;
-      letter-spacing: -0.02em;
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: 0.98rem;
-    }
-
-    .area-card {
-      min-height: 150px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .area-card span {
-      color: var(--primary);
-      font-weight: 800;
-      margin-top: 20px;
-    }
-
-    .featured {
-      background: linear-gradient(180deg, rgba(238, 248, 249, 0.68), rgba(247, 251, 252, 0));
-    }
-
-    .content-card {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      min-height: 240px;
-    }
-
-    .tag {
-      align-self: flex-start;
-      border-radius: 999px;
-      padding: 6px 10px;
-      background: var(--surface-soft);
-      color: var(--primary-dark);
-      font-size: 0.78rem;
-      font-weight: 850;
-    }
-
-    .content-card h3 {
-      font-size: 1.22rem;
-    }
-
-    .content-card .read-more {
-      margin-top: auto;
-      color: var(--primary-dark);
-      font-weight: 850;
-    }
-
-    .method-wrap {
-      display: grid;
-      grid-template-columns: 0.86fr 1.14fr;
-      gap: 38px;
-      align-items: start;
-    }
-
-    .method-list {
-      display: grid;
-      gap: 14px;
-      counter-reset: method;
-    }
-
-    .method-item {
-      counter-increment: method;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 16px;
-      align-items: start;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 18px;
-    }
-
-    .method-item::before {
-      content: counter(method);
-      width: 38px;
-      height: 38px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: var(--primary);
-      color: white;
-      font-weight: 900;
-    }
-
-    .method-item h3 {
-      font-size: 1.04rem;
-      margin-bottom: 4px;
-    }
-
-    .method-item p {
-      color: var(--muted);
-      font-size: 0.96rem;
-    }
-
-    .membership {
-      background: #0d3f4a;
-      color: white;
-      border-radius: 38px;
-      padding: 54px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .membership::after {
-      content: "";
-      position: absolute;
-      right: -120px;
-      top: -140px;
-      width: 340px;
-      height: 340px;
-      border-radius: 50%;
-      background: rgba(33, 166, 166, 0.28);
-    }
-
-    .membership .section-kicker,
-    .membership p {
-      color: rgba(255, 255, 255, 0.78);
-    }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 30px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .price-card {
-      background: rgba(255, 255, 255, 0.10);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 22px;
-      padding: 24px;
-      backdrop-filter: blur(8px);
-    }
-
-    .price-card h3 {
-      font-size: 1.35rem;
-      margin-bottom: 8px;
-    }
-
-    .price-card ul {
-      list-style: none;
-      display: grid;
-      gap: 9px;
-      color: rgba(255, 255, 255, 0.82);
-      margin-top: 16px;
-    }
-
-    .price-card li::before {
-      content: "✓";
-      color: #7ce0d9;
-      font-weight: 900;
-      margin-right: 9px;
-    }
-
-    .disclaimer {
-      background: #fff9ee;
-      border: 1px solid #f2dfb8;
-      border-radius: var(--radius);
-      padding: 28px;
-      display: flex;
-      align-items: flex-start;
-      gap: 18px;
-    }
-
-    .disclaimer strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .disclaimer p {
-      color: #705f38;
-    }
-
-    .site-footer {
-      padding: 44px 0;
-      border-top: 1px solid var(--border);
-      background: var(--surface);
-    }
-
-    .footer-grid {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-weight: 650;
-    }
-
-    .footer-links a:hover {
-      color: var(--primary-dark);
-    }
-
-    .copyright {
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-top: 8px;
-    }
-
-    @media (max-width: 920px) {
-      .hero-grid,
-      .method-wrap {
-        grid-template-columns: 1fr;
-      }
-
-      .grid-3,
-      .pricing-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .grid-4 {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .hero {
-        padding-top: 58px;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .mobile-menu-button {
-        display: inline-flex;
-      }
-
-      .nav-links {
-        position: absolute;
-        inset: 76px 16px auto 16px;
-        display: none;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        padding: 14px;
-        box-shadow: var(--shadow);
-      }
-
-      .nav-links.is-open {
-        display: flex;
-      }
-
-      .nav-links a {
-        padding: 12px;
-        border-radius: 12px;
-      }
-
-      .nav-cta {
-        text-align: center;
-      }
-
-      .grid-4 {
-        grid-template-columns: 1fr;
-      }
-
-      .membership {
-        padding: 34px 22px;
-        border-radius: 26px;
-      }
-
-      section {
-        padding: 54px 0;
-      }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
     }
   </style>
 </head>
+<body class="bg-slate-950 text-slate-50">
+  <div id="root"></div>
 
-<body>
-  <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="#top" aria-label="MeducateMe home">
-        <span class="brand-mark">M</span>
-        <span>MeducateMe</span>
-      </a>
+  <script>
+    const { useState, useEffect, useMemo } = React;
+    const { motion, AnimatePresence } = window["framer-motion"];
 
-      <button class="mobile-menu-button" aria-expanded="false" aria-controls="navLinks" id="menuButton">
-        Menu
-      </button>
+    // Shared layout variants for subtle fade+up animations
+    const fadeInUp = {
+      hidden: { opacity: 0, y: 24 },
+      visible: { opacity: 1, y: 0 }
+    };
 
-      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
-        <a href="#why">Why</a>
-        <a href="#areas">Learning areas</a>
-        <a href="#featured">Featured</a>
-        <a href="#method">Method</a>
-        <a href="#membership" class="nav-cta">Start Learning</a>
-      </nav>
-    </div>
-  </header>
+    // Mock user authentication state
+    const useAuth = () => {
+      const [user, setUser] = useState(null);
+      const login = (role = "student") =>
+        setUser({ id: 1, name: "Dr VK", role });
+      const logout = () => setUser(null);
+      return { user, login, logout };
+    };
 
-  <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="container hero-grid">
-        <div>
-          <div class="eyebrow"><span class="eyebrow-dot"></span> UK-focused clinical education</div>
-          <h1 id="hero-title">Understand Medicine From the Inside Out</h1>
-          <p class="hero-subtitle">
-            MeducateMe explains clinical medicine by starting with simple concepts, then building step by step into physiology, pathophysiology, diagnosis and management.
-          </p>
+    // Mock content types
+    const initialLessons = [
+      {
+        id: 1,
+        title: "Neonatal Respiratory Distress: From Alveoli to Apnoea",
+        category: "Paediatrics",
+        level: "Intermediate",
+        free: true,
+        tags: ["respiratory", "neonate", "physiology"],
+        type: "video",
+        description:
+          "Step through fetal-to-neonatal transition, surfactant physiology, and clinical patterns of respiratory distress.",
+      },
+      {
+        id: 2,
+        title: "Cardiac Output: Frank-Starling in the Febrile Child",
+        category: "Physiology",
+        level: "Advanced",
+        free: false,
+        tags: ["cardiac", "hemodynamics"],
+        type: "lesson",
+        description:
+          "Explore preload, afterload, and contractility in paediatric sepsis with real clinical scenarios.",
+      },
+      {
+        id: 3,
+        title: "Asthma Exacerbations: Why Bronchi Spasm",
+        category: "Paediatrics",
+        level: "Beginner",
+        free: true,
+        tags: ["asthma", "airways"],
+        type: "quiz",
+        description:
+          "Understand the immunology and airway physiology behind acute wheeze in children.",
+      },
+      {
+        id: 4,
+        title: "Renal Physiology: From Nephrons to Nephrotic Syndrome",
+        category: "Physiology",
+        level: "Intermediate",
+        free: false,
+        tags: ["renal", "pathophysiology"],
+        type: "lesson",
+        description:
+          "Link glomerular physiology to oedema, proteinuria, and real ward cases.",
+      },
+    ];
 
-          <div class="hero-actions">
-            <a class="button button-primary" href="#areas">Start Learning →</a>
-            <a class="button button-secondary" href="#featured">Explore EPALS &amp; Paediatrics</a>
+    const categories = ["All", "Paediatrics", "Physiology"];
+    const levels = ["All", "Beginner", "Intermediate", "Advanced"];
+
+    // Simple code “runner” for teaching code-related physiology (e.g., calculations)
+    const runCode = (code) => {
+      try {
+        // Extremely sandboxed mimic with Function, no access to outer scope
+        // eslint-disable-next-line no-new-func
+        const result = Function('"use strict";let console={log:()=>{}};return (' + code + ')')();
+        return String(result);
+      } catch (e) {
+        return "Error: " + e.message;
+      }
+    };
+
+    const Logo = () => (
+      <div className="flex items-center gap-3">
+        <div className="relative">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 via-teal-300 to-sky-400 flex items-center justify-center shadow-lg shadow-emerald-500/40 border border-emerald-200/60">
+            <svg
+              viewBox="0 0 48 48"
+              className="w-7 h-7 text-slate-900"
+              aria-hidden="true"
+            >
+              <circle
+                cx="24"
+                cy="24"
+                r="20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+              />
+              <path
+                d="M14 26c2-6 5-9 10-9s8 3 10 9"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <path
+                d="M22 18c0-3-1-6-4-8"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <path
+                d="M26 18c0-3 1-6 4-8"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
           </div>
-
-          <div class="hero-meta" aria-label="Audience">
-            <span>Doctors in training</span>
-            <span>Paediatrics</span>
-            <span>EPALS / APLS / NLS</span>
-            <span>Ward-ready explanations</span>
+          <div className="absolute -bottom-1 -right-1 bg-slate-900 rounded-full px-1.5 py-0.5 border border-emerald-300/60">
+            <span className="text-[9px] tracking-[0.18em] font-semibold text-emerald-300">
+              RETRO
+            </span>
           </div>
         </div>
+        <div className="flex flex-col">
+          <span className="font-semibold text-sm tracking-[0.28em] text-emerald-200 uppercase">
+            MeducateMe
+          </span>
+          <span className="text-xs text-slate-300 italic">
+            “Education is the best clinical tool.”
+          </span>
+        </div>
+      </div>
+    );
 
-        <aside class="hero-card" aria-label="Example learning pathway">
-          <div class="clinical-panel">
-            <div class="panel-header">
-              <div>
-                <strong>Example: shock causes tachycardia</strong>
-                <span>Simple idea → physiology → clinical action</span>
+    const RetroBackground = () => (
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(45,212,191,0.16),_transparent_55%),radial-gradient(circle_at_bottom,_rgba(56,189,248,0.12),_transparent_55%),linear-gradient(to_bottom,_#020617,_#020617)]" />
+        <div className="absolute inset-0 opacity-[0.18] mix-blend-screen">
+          <svg
+            className="w-full h-full"
+            viewBox="0 0 1600 900"
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <linearGradient id="gridLine" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stopColor="#22c55e" stopOpacity="0.35" />
+                <stop offset="100%" stopColor="#22c55e" stopOpacity="0.1" />
+              </linearGradient>
+              <linearGradient id="gridLine2" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.35" />
+                <stop offset="100%" stopColor="#22c55e" stopOpacity="0.1" />
+              </linearGradient>
+            </defs>
+            {Array.from({ length: 24 }).map((_, i) => (
+              <line
+                key={"v" + i}
+                x1={(i * 1600) / 24}
+                y1="0"
+                x2={(i * 1600) / 24}
+                y2="900"
+                stroke="url(#gridLine2)"
+                strokeWidth={i % 4 === 0 ? 1.1 : 0.4}
+              />
+            ))}
+            {Array.from({ length: 16 }).map((_, i) => (
+              <line
+                key={"h" + i}
+                x1="0"
+                y1={(i * 900) / 16}
+                x2="1600"
+                y2={(i * 900) / 16}
+                stroke="url(#gridLine)"
+                strokeWidth={i % 4 === 0 ? 1.1 : 0.4}
+              />
+            ))}
+            <path
+              d="M0 650 C300 620 500 700 800 680 C1100 660 1300 720 1600 700 V900 H0 Z"
+              fill="url(#waveFill)"
+            >
+              <animate
+                attributeName="d"
+                dur="28s"
+                repeatCount="indefinite"
+                values="
+                  M0 650 C300 620 500 700 800 680 C1100 660 1300 720 1600 700 V900 H0 Z;
+                  M0 660 C320 640 520 690 820 670 C1120 650 1300 710 1600 690 V900 H0 Z;
+                  M0 640 C280 610 520 720 820 695 C1120 670 1380 710 1600 690 V900 H0 Z;
+                  M0 650 C300 620 500 700 800 680 C1100 660 1300 720 1600 700 V900 H0 Z
+                "
+              />
+            </path>
+            <defs>
+              <linearGradient id="waveFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#22c55e" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="#0f172a" stopOpacity="0.9" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div className="absolute inset-0">
+          <div className="absolute -left-40 top-20 w-80 h-80 bg-emerald-500/20 rounded-full blur-3xl" />
+          <div className="absolute right-0 top-40 w-72 h-72 bg-sky-500/25 rounded-full blur-3xl" />
+          <div className="absolute left-1/3 bottom-10 w-96 h-96 bg-cyan-400/16 rounded-full blur-3xl" />
+        </div>
+      </div>
+    );
+
+    const NavBar = ({ user, onLogin, onLogout, onScrollToSection }) => {
+      const [open, setOpen] = useState(false);
+      return (
+        <motion.header
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/70 border-b border-slate-800/60"
+        >
+          <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between gap-4">
+            <Logo />
+            <div className="hidden md:flex items-center gap-6 text-xs font-medium tracking-wide">
+              {[
+                ["Overview", "hero"],
+                ["Curriculum", "curriculum"],
+                ["Interactive Lab", "interactive"],
+                ["Pricing", "pricing"],
+                ["Dashboard", "dashboard"],
+              ].map(([label, id]) => (
+                <button
+                  key={id}
+                  onClick={() => onScrollToSection(id)}
+                  className="uppercase text-slate-300 hover:text-emerald-300 transition-colors"
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            <div className="hidden md:flex items-center gap-3">
+              {!user && (
+                <>
+                  <button
+                    onClick={() => onLogin("student")}
+                    className="text-xs font-semibold tracking-wide text-slate-200 hover:text-emerald-300 transition-colors"
+                  >
+                    Sign in
+                  </button>
+                  <button
+                    onClick={() => onLogin("admin")}
+                    className="text-xs font-semibold tracking-wide text-slate-950 bg-gradient-to-r from-emerald-400 to-sky-400 px-4 py-2 rounded-full shadow-lg shadow-emerald-500/40 hover:scale-[1.03] transition-transform"
+                  >
+                    Start free trial
+                  </button>
+                </>
+              )}
+              {user && (
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-slate-300">
+                    {user.role === "admin" ? "Admin" : "Member"} • {user.name}
+                  </span>
+                  <button
+                    onClick={onLogout}
+                    className="text-xs font-semibold tracking-wide text-rose-300 hover:text-rose-200 transition-colors"
+                  >
+                    Log out
+                  </button>
+                </div>
+              )}
+            </div>
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="md:hidden flex flex-col gap-1"
+            >
+              <span className="w-5 h-[2px] bg-slate-100" />
+              <span className="w-5 h-[2px] bg-slate-100" />
+            </button>
+          </div>
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="md:hidden border-t border-slate-800/60 bg-slate-950/90"
+              >
+                <div className="mx-auto max-w-6xl px-4 py-3 flex flex-col gap-3 text-xs font-medium tracking-wide">
+                  {[
+                    ["Overview", "hero"],
+                    ["Curriculum", "curriculum"],
+                    ["Interactive Lab", "interactive"],
+                    ["Pricing", "pricing"],
+                    ["Dashboard", "dashboard"],
+                  ].map(([label, id]) => (
+                    <button
+                      key={id}
+                      onClick={() => {
+                        onScrollToSection(id);
+                        setOpen(false);
+                      }}
+                      className="uppercase text-slate-300 hover:text-emerald-300 text-left"
+                    >
+                      {label}
+                    </button>
+                  ))}
+                  {!user && (
+                    <div className="flex gap-3 mt-2">
+                      <button
+                        onClick={() => {
+                          onLogin("student");
+                          setOpen(false);
+                        }}
+                        className="text-xs font-semibold tracking-wide text-slate-200 hover:text-emerald-300"
+                      >
+                        Sign in
+                      </button>
+                      <button
+                        onClick={() => {
+                          onLogin("admin");
+                          setOpen(false);
+                        }}
+                        className="text-xs font-semibold tracking-wide text-slate-950 bg-gradient-to-r from-emerald-400 to-sky-400 px-3 py-1.5 rounded-full shadow-lg shadow-emerald-500/40"
+                      >
+                        Start free trial
+                      </button>
+                    </div>
+                  )}
+                  {user && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-slate-300">
+                        {user.role === "admin" ? "Admin" : "Member"} •{" "}
+                        {user.name}
+                      </span>
+                      <button
+                        onClick={() => {
+                          onLogout();
+                          setOpen(false);
+                        }}
+                        className="text-xs font-semibold tracking-wide text-rose-300"
+                      >
+                        Log out
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.header>
+      );
+    };
+
+    const Hero = ({ onScrollToSection, user }) => {
+      return (
+        <section id="hero" className="relative">
+          <div className="mx-auto max-w-6xl px-4 pt-10 pb-16 md:pt-16 md:pb-24">
+            <div className="grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] gap-10 items-center">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ staggerChildren: 0.08 }}
+                className="space-y-6"
+              >
+                <motion.div variants={fadeInUp} className="inline-flex mb-1">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-emerald-300/30 bg-slate-900/60 px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-emerald-200">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Physiology-first paediatrics
+                  </span>
+                </motion.div>
+                <motion.h1
+                  variants={fadeInUp}
+                  className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-slate-50"
+                >
+                  Understand the{" "}
+                  <span className="bg-gradient-to-r from-emerald-300 via-cyan-300 to-sky-400 bg-clip-text text-transparent">
+                    why
+                  </span>{" "}
+                  behind every paediatric diagnosis.
+                </motion.h1>
+                <motion.p
+                  variants={fadeInUp}
+                  className="text-sm md:text-base text-slate-300 max-w-xl"
+                >
+                  MeducateMe is your interactive physiology lab for real-world
+                  paediatrics. Walk from cellular processes to bedside decisions
+                  with retro-inspired visuals, cases, and simulations.
+                </motion.p>
+                <motion.div
+                  variants={fadeInUp}
+                  className="flex flex-wrap gap-3 items-center"
+                >
+                  <button
+                    onClick={() => onScrollToSection("pricing")}
+                    className="text-xs md:text-sm font-semibold tracking-wide text-slate-950 bg-gradient-to-r from-emerald-400 via-cyan-300 to-sky-400 px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/40 hover:scale-[1.03] active:scale-[0.99] transition-transform"
+                  >
+                    Start learning in 60 seconds
+                  </button>
+                  <button
+                    onClick={() => onScrollToSection("interactive")}
+                    className="text-xs md:text-sm font-semibold tracking-wide text-emerald-200 hover:text-emerald-100 flex items-center gap-2"
+                  >
+                    Explore interactive lab
+                    <span className="w-4 h-4 rounded-full border border-emerald-300/50 flex items-center justify-center text-[9px]">
+                      →
+                    </span>
+                  </button>
+                </motion.div>
+                <motion.div
+                  variants={fadeInUp}
+                  className="flex flex-wrap gap-4 text-[11px] text-slate-300"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full border border-emerald-300/50 bg-slate-900/70 flex items-center justify-center">
+                      <span className="text-[12px] text-emerald-300">Q</span>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-emerald-200">
+                        Question-first learning
+                      </p>
+                      <p>Start from the clinical scenario and work backwards.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full border border-sky-300/50 bg-slate-900/70 flex items-center justify-center">
+                      <span className="text-[12px] text-sky-300">Ψ</span>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sky-200">
+                        Physiology deep dives
+                      </p>
+                      <p>Bridge textbooks and real on-call decisions.</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 36 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8 }}
+                className="relative"
+              >
+                <div className="absolute -inset-2 bg-gradient-to-tr from-emerald-500/15 via-sky-500/15 to-transparent rounded-3xl blur-2xl" />
+                <div className="relative rounded-3xl border border-slate-800/60 bg-slate-900/80 backdrop-blur-xl shadow-[0_0_60px_rgba(15,118,110,0.45)] overflow-hidden">
+                  <div className="px-4 py-3 border-b border-slate-800/60 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                      <span className="w-2 h-2 rounded-full bg-amber-300" />
+                      <span className="w-2 h-2 rounded-full bg-rose-400" />
+                    </div>
+                    <p className="text-[11px] text-slate-300">
+                      Live case: Tachypnoeic 3-month-old
+                    </p>
+                    <span className="text-[10px] text-emerald-200 uppercase tracking-[0.18em]">
+                      Simulation
+                    </span>
+                  </div>
+                  <div className="p-4 space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="rounded-2xl border border-emerald-400/35 bg-gradient-to-br from-emerald-500/15 via-slate-900 to-slate-900/95 p-3 relative overflow-hidden">
+                        <div className="absolute -right-4 -top-4 w-16 h-16 rounded-full bg-emerald-500/10 blur-xl" />
+                        <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-200 mb-2">
+                          Vital Trends
+                        </p>
+                        <div className="h-20 w-full relative">
+                          <svg
+                            viewBox="0 0 220 80"
+                            className="absolute inset-0 text-emerald-300"
+                          >
+                            <polyline
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinejoin="round"
+                              strokeLinecap="round"
+                              points="0,60 20,30 40,50 60,20 80,40 100,25 120,35 140,22 160,40 180,30 200,45 220,20"
+                            >
+                              <animate
+                                attributeName="stroke-dashoffset"
+                                from="240"
+                                to="0"
+                                dur="4s"
+                                repeatCount="indefinite"
+                              />
+                              <animate
+                                attributeName="stroke-dasharray"
+                                from="2,4"
+                                to="8,4"
+                                dur="5s"
+                                repeatCount="indefinite"
+                              />
+                            </polyline>
+                          </svg>
+                          <div className="absolute bottom-0 left-0 text-[10px] text-emerald-100">
+                            RR 72➝58
+                          </div>
+                          <div className="absolute bottom-0 right-0 text-[10px] text-emerald-100">
+                            SpO₂ 88%➝95%
+                          </div>
+                        </div>
+                      </div>
+                      <div className="rounded-2xl border border-sky-400/35 bg-gradient-to-br from-sky-500/12 via-slate-900 to-slate-900/95 p-3 flex flex-col justify-between relative overflow-hidden">
+                        <div className="absolute -left-6 -top-8 w-20 h-20 rounded-full bg-sky-500/10 blur-xl" />
+                        <div>
+                          <p className="text-[11px] uppercase tracking-[0.22em] text-sky-200 mb-2">
+                            Retro Logbook
+                          </p>
+                          <p className="text-[11px] text-slate-200">
+                            “Every tachypnoeic child is asking you a physiology
+                            question.”
+                          </p>
+                        </div>
+                        <p className="text-[10px] text-slate-400 mt-2 italic">
+                          Tap into case notes, differential flows, and bedside
+                          reasoning.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-[1.2fr_0.8fr] gap-3">
+                      <div className="rounded-2xl border border-slate-700/80 bg-slate-950/80 p-3 flex flex-col gap-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] text-slate-300 uppercase tracking-[0.2em]">
+                            Why is the child tachypnoeic?
+                          </span>
+                          <span className="text-[10px] text-emerald-300">
+                            Step 1/4
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-300">
+                          Match the clinical signs to their underlying physiology.
+                        </p>
+                        <div className="flex flex-wrap gap-2 mt-1">
+                          {["Metabolic acidosis", "Primary lung pathology", "Sepsis compensating", "Pain/anxiety"].map(
+                            (label, idx) => (
+                              <button
+                                key={idx}
+                                className="text-[10px] px-2 py-1 rounded-full border border-slate-600/80 bg-slate-900/70 hover:border-emerald-400/70 hover:bg-emerald-500/10 hover:text-emerald-200 transition-colors"
+                              >
+                                {label}
+                              </button>
+                            )
+                          )}
+                        </div>
+                      </div>
+                      <div className="rounded-2xl border border-slate-700/80 bg-slate-950/80 p-3 flex flex-col justify-between">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-[10px] text-slate-300 uppercase tracking-[0.2em]">
+                            Retro Progress
+                          </span>
+                          <span className="text-[10px] text-emerald-200">
+                            42% complete
+                          </span>
+                        </div>
+                        <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                          <div className="h-full w-[42%] bg-gradient-to-r from-emerald-400 via-cyan-300 to-sky-400 animate-[pulse_3s_ease-in-out_infinite]" />
+                        </div>
+                        <div className="flex items-center justify-between mt-2 text-[10px] text-slate-400">
+                          <span>6 quizzes bookmarked</span>
+                          <span>3 cases in progress</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="px-4 py-3 border-t border-slate-800/60 flex items-center justify-between text-[10px] text-slate-400 bg-slate-950/90">
+                    <span>Designed for doctors, medical students & nurses.</span>
+                    <span className="flex items-center gap-1 text-emerald-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      Live physiology engine
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const CurriculumSection = ({ lessons, search, category, level, onSearch, onCategory, onLevel, bookmarks, toggleBookmark }) => {
+      const filteredLessons = useMemo(() => {
+        return lessons.filter((lesson) => {
+          const term = search.toLowerCase();
+          const matchesSearch =
+            !term ||
+            lesson.title.toLowerCase().includes(term) ||
+            lesson.description.toLowerCase().includes(term) ||
+            lesson.tags.some((t) => t.toLowerCase().includes(term));
+          const matchesCategory =
+            category === "All" || lesson.category === category;
+          const matchesLevel = level === "All" || lesson.level === level;
+          return matchesSearch && matchesCategory && matchesLevel;
+        });
+      }, [lessons, search, category, level]);
+
+      return (
+        <section id="curriculum" className="py-12 md:py-16">
+          <div className="mx-auto max-w-6xl px-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ staggerChildren: 0.06 }}
+              className="flex flex-col md:flex-row md:items-end gap-6 mb-8"
+            >
+              <motion.div variants={fadeInUp} className="flex-1">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-200 mb-2">
+                  Curriculum
+                </p>
+                <h2 className="text-xl md:text-2xl font-semibold text-slate-50 mb-2">
+                  Structured videos and illness explanations with physiology at
+                  the core.
+                </h2>
+                <p className="text-sm text-slate-300 max-w-xl">
+                  Browse retro-styled physiology boards, paediatric case walk-
+                  throughs, and clinical pattern libraries. Free foundations,
+                  premium deep dives.
+                </p>
+              </motion.div>
+              <motion.div
+                variants={fadeInUp}
+                className="flex flex-col md:flex-row gap-3 md:items-center md:justify-end text-xs"
+              >
+                <div className="relative w-full md:w-56">
+                  <input
+                    value={search}
+                    onChange={(e) => onSearch(e.target.value)}
+                    placeholder="Search by topic, symptom, exam..."
+                    className="w-full rounded-full border border-slate-700/80 bg-slate-950/70 px-8 py-2 text-[11px] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-emerald-400/70"
+                  />
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-[13px]">
+                    🔎
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <select
+                    value={category}
+                    onChange={(e) => onCategory(e.target.value)}
+                    className="rounded-full border border-slate-700/80 bg-slate-950/70 px-3 py-2 text-[11px] text-slate-100 focus:outline-none focus:border-emerald-400/70"
+                  >
+                    {categories.map((c) => (
+                      <option key={c}>{c}</option>
+                    ))}
+                  </select>
+                  <select
+                    value={level}
+                    onChange={(e) => onLevel(e.target.value)}
+                    className="rounded-full border border-slate-700/80 bg-slate-950/70 px-3 py-2 text-[11px] text-slate-100 focus:outline-none focus:border-emerald-400/70"
+                  >
+                    {levels.map((l) => (
+                      <option key={l}>{l}</option>
+                    ))}
+                  </select>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredLessons.map((lesson) => {
+                const bookmarked = bookmarks.includes(lesson.id);
+                return (
+                  <motion.div
+                    key={lesson.id}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.4 }}
+                    className="group rounded-2xl border border-slate-800/70 bg-slate-950/70 backdrop-blur-xl hover:border-emerald-400/60 hover:bg-slate-900/90 transition-colors relative overflow-hidden"
+                  >
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-emerald-500/15 via-sky-500/10 to-transparent pointer-events-none" />
+                    <div className="relative p-4 h-full flex flex-col gap-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400 mb-1">
+                            {lesson.category} • {lesson.level}
+                          </p>
+                          <h3 className="text-sm font-semibold text-slate-50 group-hover:text-emerald-100 line-clamp-2">
+                            {lesson.title}
+                          </h3>
+                        </div>
+                        <button
+                          onClick={() => toggleBookmark(lesson.id)}
+                          className="text-[13px] hover:scale-110 transition-transform"
+                          title="Bookmark"
+                        >
+                          {bookmarked ? "★" : "☆"}
+                        </button>
+                      </div>
+                      <p className="text-xs text-slate-300 line-clamp-3">
+                        {lesson.description}
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {lesson.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-[10px] px-2 py-0.5 rounded-full border border-slate-700/80 text-slate-300 bg-slate-950/70"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="mt-auto flex items-center justify-between pt-2 border-t border-slate-800/70 text-[11px]">
+                        <span
+                          className={
+                            lesson.free
+                              ? "text-emerald-300 flex items-center gap-1"
+                              : "text-amber-300 flex items-center gap-1"
+                          }
+                        >
+                          {lesson.free ? "Free access" : "Premium case"}
+                          {!lesson.free && <span>🔒</span>}
+                        </span>
+                        <span className="text-slate-400">
+                          {lesson.type === "video"
+                            ? "Video lesson"
+                            : lesson.type === "quiz"
+                            ? "Quiz + cases"
+                            : "Pathophysiology walk-through"}
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+              {filteredLessons.length === 0 && (
+                <div className="text-sm text-slate-400 col-span-full">
+                  No content matches your filters yet. Try removing a filter or
+                  searching by symptom or system.
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const InteractiveLab = () => {
+      const [quizStep, setQuizStep] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const [dragItems, setDragItems] = useState([
+        { id: "ventilation", label: "Ventilation" },
+        { id: "perfusion", label: "Perfusion" },
+        { id: "compliance", label: "Lung compliance" },
+      ]);
+      const [targets, setTargets] = useState({
+        alveoli: null,
+        capillary: null,
+        diaphragm: null,
+      });
+      const [codeInput, setCodeInput] = useState("42");
+      const [codeOutput, setCodeOutput] = useState("");
+      const [expanded, setExpanded] = useState("diagram");
+
+      const quizQuestions = [
+        {
+          id: 1,
+          question:
+            "An 8-month-old with bronchiolitis is tachypnoeic with mild recessions but normal BP. What is the main physiological driver?",
+          options: [
+            "Increased dead space ventilation",
+            "Compensatory washout of CO₂",
+            "Primary myocardial depression",
+            "Systemic vascular resistance increase",
+          ],
+          correct: 1,
+          explanation:
+            "Early tachypnoea in bronchiolitis often reflects compensatory CO₂ washout and maintenance of oxygenation before fatigue develops.",
+        },
+        {
+          id: 2,
+          question:
+            "As fatigue sets in, which change most worries you physiologically?",
+          options: [
+            "Falling respiratory rate with rising CO₂",
+            "Stable RR with mild work of breathing",
+            "Normal capillary refill with mild tachycardia",
+            "Improving oxygen requirement",
+          ],
+          correct: 0,
+          explanation:
+            "A falling RR with rising CO₂ suggests failing respiratory pump and impending respiratory failure.",
+        },
+      ];
+
+      const handleDrop = (zone, itemId) => {
+        setTargets((prev) => ({ ...prev, [zone]: itemId }));
+      };
+
+      const isQuizComplete =
+        quizStep >= quizQuestions.length &&
+        Object.keys(answers).length === quizQuestions.length;
+
+      return (
+        <section id="interactive" className="py-12 md:py-16">
+          <div className="mx-auto max-w-6xl px-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ staggerChildren: 0.06 }}
+              className="flex flex-col md:flex-row md:items-end gap-6 mb-8"
+            >
+              <motion.div variants={fadeInUp} className="flex-1">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-200 mb-2">
+                  Interactive Lab
+                </p>
+                <h2 className="text-xl md:text-2xl font-semibold text-slate-50 mb-2">
+                  Build mental models you can use on-call.
+                </h2>
+                <p className="text-sm text-slate-300 max-w-xl">
+                  Manipulate diagrams, drag concepts into place, and test your
+                  reasoning with real-time feedback. Multi-step quizzes save your
+                  progress so you can dip in between shifts.
+                </p>
+              </motion.div>
+              <motion.div
+                variants={fadeInUp}
+                className="text-xs text-slate-300 flex flex-col gap-1"
+              >
+                <span>• Multi-step quizzes with saved progress</span>
+                <span>• Interactive lung diagrams & drag-and-drop flows</span>
+                <span>• Embedded code cells for physiology calculations</span>
+              </motion.div>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Interactive Diagram + Drag & Drop */}
+              <div className="rounded-2xl border border-slate-800/70 bg-slate-950/80 backdrop-blur-xl p-4 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] uppercase tracking-[0.22em] text-sky-200">
+                      Lung Diagram
+                    </span>
+                    <span className="text-[10px] text-slate-400">
+                      Drag labels into the system.
+                    </span>
+                  </div>
+                  <button
+                    onClick={() =>
+                      setExpanded((prev) =>
+                        prev === "diagram" ? null : "diagram"
+                      )
+                    }
+                    className="text-[11px] text-slate-400"
+                  >
+                    {expanded === "diagram" ? "Collapse" : "Expand"}
+                  </button>
+                </div>
+                <AnimatePresence initial={false}>
+                  {expanded === "diagram" && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="space-y-3"
+                    >
+                      <div className="flex gap-3 flex-wrap">
+                        {dragItems.map((item) => (
+                          <button
+                            key={item.id}
+                            draggable
+                            onDragStart={(e) =>
+                              e.dataTransfer.setData("text/plain", item.id)
+                            }
+                            className="px-2.5 py-1 rounded-full border border-slate-700/70 bg-slate-900/70 text-[11px] text-slate-100 hover:border-emerald-400/70 hover:bg-emerald-500/10 hover:text-emerald-200 transition-colors"
+                          >
+                            {item.label}
+                          </button>
+                        ))}
+                      </div>
+                      <div className="rounded-xl border border-slate-800/80 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-950/90 p-3">
+                        <div className="text-[10px] text-slate-400 mb-1 flex justify-between">
+                          <span>Drag concepts onto the diagram zones</span>
+                          <span className="text-emerald-300">Live link view</span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 text-[11px]">
+                          {[
+                            ["Alveoli", "alveoli"],
+                            ["Capillary", "capillary"],
+                            ["Diaphragm", "diaphragm"],
+                          ].map(([label, zone]) => (
+                            <div
+                              key={zone}
+                              onDragOver={(e) => e.preventDefault()}
+                              onDrop={(e) => {
+                                const id = e.dataTransfer.getData("text/plain");
+                                handleDrop(zone, id);
+                              }}
+                              className="relative h-20 rounded-lg border border-slate-800/80 bg-slate-950/80 flex flex-col items-center justify-center text-center px-1 hover:border-emerald-400/70 hover:bg-emerald-500/5 transition-colors"
+                            >
+                              <span className="text-[10px] text-slate-400 mb-1 uppercase tracking-[0.18em]">
+                                {label}
+                              </span>
+                              <span className="text-xs text-slate-200">
+                                {targets[zone]
+                                  ? dragItems.find((d) => d.id === targets[zone])
+                                      ?.label
+                                  : "Drop a concept here"}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-              <div class="pulse" aria-hidden="true">♥</div>
+
+              {/* Quiz + Code editor */}
+              <div className="rounded-2xl border border-slate-800/70 bg-slate-950/80 backdrop-blur-xl p-4 space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] uppercase tracking-[0.22em] text-emerald-200">
+                    Multi-step quiz
+                  </span>
+                  <span className="text-[10px] text-slate-400">
+                    Step {Math.min(quizStep + 1, quizQuestions.length)}/
+                    {quizQuestions.length}
+                  </span>
+                </div>
+                <div className="space-y-3 text-[11px]">
+                  <p className="text-slate-200">
+                    Case: 8-month-old, RR 68, saturations 91% in air, feeding
+                    less, mild recession.
+                  </p>
+                  <p className="text-slate-400">
+                    As you stabilise, we progressively layer in physiology
+                    questions.
+                  </p>
+                </div>
+                <div className="space-y-3">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={quizStep}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.25 }}
+                      className="text-xs"
+                    >
+                      {quizStep < quizQuestions.length ? (
+                        <>
+                          <p className="font-semibold text-slate-100 mb-2">
+                            {quizQuestions[quizStep].question}
+                          </p>
+                          <div className="flex flex-col gap-2">
+                            {quizQuestions[quizStep].options.map(
+                              (opt, idx) => (
+                                <button
+                                  key={idx}
+                                  onClick={() => {
+                                    setAnswers((a) => ({
+                                      ...a,
+                                      [quizQuestions[quizStep].id]: idx,
+                                    }));
+                                    setQuizStep((s) => s + 1);
+                                  }}
+                                  className="w-full text-left px-3 py-2 rounded-lg border border-slate-700/80 bg-slate-950/80 text-slate-200 hover:border-emerald-400/70 hover:bg-emerald-500/10 transition-colors"
+                                >
+                                  {opt}
+                                </button>
+                              )
+                            )}
+                          </div>
+                        </>
+                      ) : (
+                        <div className="space-y-2">
+                          <p className="font-semibold text-emerald-200">
+                            Quiz complete – now compare your reasoning.
+                          </p>
+                          {quizQuestions.map((q) => {
+                            const chosen = answers[q.id];
+                            const correct = q.correct;
+                            const correctLabel = q.options[correct];
+                            const chosenLabel =
+                              chosen !== undefined ? q.options[chosen] : null;
+                            const isCorrect = chosen === correct;
+                            return (
+                              <div
+                                key={q.id}
+                                className="rounded-lg border border-slate-700/80 bg-slate-950/80 p-2 text-[11px]"
+                              >
+                                <p className="text-slate-100 mb-1">
+                                  {q.question}
+                                </p>
+                                <p
+                                  className={
+                                    isCorrect
+                                      ? "text-emerald-300"
+                                      : "text-amber-300"
+                                  }
+                                >
+                                  Your answer:{" "}
+                                  {chosenLabel || "Not answered"}
+                                </p>
+                                <p className="text-sky-300">
+                                  Physiology key: {correctLabel}
+                                </p>
+                                <p className="text-slate-400 mt-1">
+                                  {q.explanation}
+                                </p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                <div className="border-t border-slate-800/80 pt-3 space-y-2">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="text-sky-200 uppercase tracking-[0.18em]">
+                      Physiology code cell
+                    </span>
+                    <span className="text-slate-400">
+                      Try quick calculations (e.g. anion gap).
+                    </span>
+                  </div>
+                  <div className="rounded-lg border border-slate-800/80 bg-slate-950/80 p-2 space-y-2 text-[11px]">
+                    <textarea
+                      value={codeInput}
+                      onChange={(e) => setCodeInput(e.target.value)}
+                      className="w-full h-16 bg-transparent outline-none resize-none text-slate-100"
+                    />
+                    <div className="flex items-center justify-between">
+                      <button
+                        onClick={() => setCodeOutput(runCode(codeInput))}
+                        className="px-3 py-1 rounded-full border border-emerald-400/70 text-emerald-200 hover:bg-emerald-500/10 text-[11px]"
+                      >
+                        Run snippet
+                      </button>
+                      <span className="text-slate-500">
+                        Example: (140 + 4) - (104 + 24)
+                      </span>
+                    </div>
+                    {codeOutput && (
+                      <div className="mt-2 text-[11px] text-emerald-200">
+                        Output: {codeOutput}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const Pricing = () => (
+      <section id="pricing" className="py-12 md:py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ staggerChildren: 0.06 }}
+            className="text-center mb-10"
+          >
+            <motion.p
+              variants={fadeInUp}
+              className="text-[11px] uppercase tracking-[0.22em] text-emerald-200 mb-2"
+            >
+              Pricing
+            </motion.p>
+            <motion.h2
+              variants={fadeInUp}
+              className="text-xl md:text-2xl font-semibold text-slate-50 mb-2"
+            >
+              Free foundations. Retro lab when you are ready.
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-sm text-slate-300 max-w-xl mx-auto"
+            >
+              Start with free physiology explainers and paediatric cases, then
+              unlock the full interactive library, admin dashboard, and premium
+              illness breakdowns when you subscribe.
+            </motion.p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.4 }}
+              className="rounded-2xl border border-slate-800/70 bg-slate-950/80 backdrop-blur-xl p-5 flex flex-col"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-sm font-semibold text-slate-100">
+                  Free tier – Clinical Curiosity
+                </h3>
+                <span className="text-[11px] text-emerald-300 uppercase tracking-[0.18em]">
+                  £0 / month
+                </span>
+              </div>
+              <p className="text-xs text-slate-300 mb-3">
+                Ideal for students and early trainees who want to revisit
+                physiology with paediatric-flavoured scenarios.
+              </p>
+              <ul className="text-xs text-slate-200 space-y-1 mb-4">
+                <li>• Access to selected physiology explainers and videos</li>
+                <li>• Limited interactive quizzes with saved progress</li>
+                <li>• Bookmarks and basic progress tracking</li>
+                <li>• Monthly retro case-of-the-month email</li>
+              </ul>
+              <button className="mt-auto text-xs font-semibold tracking-wide text-slate-100 border border-slate-700/80 rounded-full px-4 py-2 hover:border-emerald-400/70 hover:bg-emerald-500/10 transition-colors">
+                Get started free
+              </button>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.4, delay: 0.08 }}
+              className="relative rounded-2xl border border-emerald-400/70 bg-gradient-to-br from-emerald-500/18 via-slate-950 to-slate-950/95 backdrop-blur-xl p-5 flex flex-col"
+            >
+              <div className="absolute -top-3 right-4 text-[10px] px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 uppercase tracking-[0.18em] shadow-md">
+                Recommended
+              </div>
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-sm font-semibold text-slate-100">
+                  MeducateMe Plus – Physiology Lab
+                </h3>
+                <span className="text-[11px] text-emerald-50 uppercase tracking-[0.18em]">
+                  £19 / month
+                </span>
+              </div>
+              <p className="text-xs text-slate-100 mb-3">
+                For doctors, medical students, and nurses who want a physiology-
+                first edge in paediatrics and beyond.
+              </p>
+              <ul className="text-xs text-slate-100 space-y-1 mb-4">
+                <li>• Full library of paediatric + adult physiology lessons</li>
+                <li>• All interactive labs, drag-and-drop and diagrams</li>
+                <li>• Custom video players with annotations and key frames</li>
+                <li>• Admin dashboard to publish new retro cases in minutes</li>
+                <li>• Priority roadmap influence and early feature access</li>
+              </ul>
+              <button className="mt-auto text-xs font-semibold tracking-wide text-slate-950 bg-gradient-to-r from-emerald-400 to-sky-400 rounded-full px-4 py-2 shadow-lg shadow-emerald-500/40 hover:scale-[1.02] transition-transform">
+                Start 14-day trial
+              </button>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+    );
+
+    const VideoPlayerCard = () => {
+      const [isPlaying, setIsPlaying] = useState(false);
+      const [progress, setProgress] = useState(32);
+      useEffect(() => {
+        let interval;
+        if (isPlaying) {
+          interval = setInterval(() => {
+            setProgress((p) => (p < 100 ? p + 1 : 0));
+          }, 400);
+        }
+        return () => clearInterval(interval);
+      }, [isPlaying]);
+      return (
+        <div className="rounded-2xl border border-slate-800/70 bg-slate-950/80 p-4 flex flex-col gap-3">
+          <div className="flex items-center justify-between text-[11px]">
+            <span className="uppercase tracking-[0.2em] text-sky-200">
+              Retro video explainer
+            </span>
+            <span className="text-slate-400">02:14 / 06:32</span>
+          </div>
+          <div className="relative rounded-xl overflow-hidden border border-slate-800/80 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-950">
+            <div className="aspect-video flex items-center justify-center">
+              <div className="relative w-32 h-32">
+                <svg
+                  className="w-full h-full text-emerald-300"
+                  viewBox="0 0 120 120"
+                >
+                  <circle
+                    cx="60"
+                    cy="60"
+                    r="50"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    strokeDasharray="4 6"
+                  />
+                  <circle
+                    cx="60"
+                    cy="60"
+                    r="40"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    strokeDasharray="2 4"
+                  />
+                  <path
+                    d="M50 45 C55 30 65 30 70 45 C75 60 75 75 60 80 C45 75 45 60 50 45 Z"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <button
+                    onClick={() => setIsPlaying((p) => !p)}
+                    className="w-10 h-10 rounded-full bg-emerald-400 text-slate-950 flex items-center justify-center shadow-lg shadow-emerald-500/40 hover:scale-110 transition-transform"
+                  >
+                    {isPlaying ? "❚❚" : "▶"}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="absolute left-4 bottom-3 text-[10px] text-slate-100 bg-slate-950/80 backdrop-blur-sm px-2 py-1 rounded-full border border-slate-700/80">
+              Annotated: Alveolar gas equation
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-emerald-400 via-cyan-300 to-sky-400"
+                style={{ width: progress + "%" }}
+              />
+            </div>
+            <div className="flex items-center justify-between text-[11px]">
+              <span className="text-slate-400">
+                Annotation at 01:12 – “Why does PaCO₂ rise first?”
+              </span>
+              <span className="text-emerald-300">3 notes saved</span>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const Dashboard = ({ user, publishedContent, onPublish }) => {
+      const [draftText, setDraftText] = useState("");
+      const [isModalOpen, setIsModalOpen] = useState(false);
+      const [formState, setFormState] = useState({
+        title: "",
+        level: "Intermediate",
+        category: "Paediatrics",
+        premium: true,
+      });
+      const isAdmin = user && user.role === "admin";
+
+      const handlePublish = () => {
+        if (!draftText.trim() || !formState.title.trim()) return;
+        onPublish({
+          ...formState,
+          text: draftText.trim(),
+        });
+        setDraftText("");
+        setFormState({
+          title: "",
+          level: "Intermediate",
+          category: "Paediatrics",
+          premium: true,
+        });
+        setIsModalOpen(true);
+      };
+
+      return (
+        <section id="dashboard" className="py-12 md:py-16">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="flex flex-col md:flex-row md:items-end gap-6 mb-8">
+              <div className="flex-1">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-emerald-200 mb-2">
+                  Admin dashboard
+                </p>
+                <h2 className="text-xl md:text-2xl font-semibold text-slate-50 mb-2">
+                  Ship new illness explainers in minutes, not weeks.
+                </h2>
+                <p className="text-sm text-slate-300 max-w-xl">
+                  Paste your teaching notes, clinical cases, or physiology threads,
+                  choose free vs premium, and publish instantly to the homepage
+                  behind the paywall. Designed for busy clinicians.
+                </p>
+              </div>
+              <div className="text-xs text-slate-300 flex flex-col gap-1">
+                <span>
+                  • Real-time validation on title, category, and level
+                </span>
+                <span>• Preview new content before pushing live</span>
+                <span>• Retro SaaS dashboard styling for clarity</span>
+              </div>
             </div>
 
-            <div class="learning-step">
-              <small>Step 1</small
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="rounded-2xl border border-slate-800/70 bg-slate-950/80 backdrop-blur-xl p-4 flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] uppercase tracking-[0.2em] text-sky-200">
+                    Composer
+                  </span>
+                  <span className="text-[11px] text-slate-400">
+                    Status: {isAdmin ? "Admin logged in" : "Read-only"}
+                  </span>
+                </div>
+
+                <div className="flex flex-col gap-3 text-[11px]">
+                  <div className="flex gap-2">
+                    <input
+                      value={formState.title}
+                      onChange={(e) =>
+                        setFormState((f) => ({
+                          ...f,
+                          title: e.target.value,
+                        }))
+                      }
+                      placeholder="Title (e.g., 'DKA in Children: Osmolality & Osmotic Shifts')"
+                      className="flex-1 rounded-lg border border-slate-800/80 bg-slate-950/80 px-3 py-2 text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-400/70"
+                    />
+                    <select
+                      value={formState.level}
+                      onChange={(e) =>
+                        setFormState((f) => ({
+                          ...f,
+                          level: e.target.value,
+                        }))
+                      }
+                      className="w-32 rounded-lg border border-slate-800/80 bg-slate-950/80 px-2 py-2 text-slate-100 focus:outline-none focus:border-emerald-400/70"
+                    >
+                      <option>Beginner</option>
+                      <option>Intermediate</option>
+                      <option>Advanced</option>
+                    </select>
+                  </div>
+                  <div className="flex gap-2">
+                    <select
+                      value={formState.category}
+                      onChange={(e) =>
+                        setFormState((f) => ({
+                          ...f,
+                          category: e.target.value,
+                        }))
+                      }
+                      className="w-40 rounded-lg border border-slate-800/80 bg-slate-950/80 px-2 py-2 text-slate-100 focus:outline-none focus:border-emerald-400/70"
+                    >
+                      <option>Paediatrics</option>
+                      <option>Physiology</option>
+                      <option>Acute Care</option>
+                      <option>Neonates</option>
+                    </select>
+                    <label className="flex items-center gap-2 text-slate-200">
+                      <input
+                        type="checkbox"
+                        checked={formState.premium}
+                        onChange={(e) =>
+                          setFormState((f) => ({
+                            ...f,
+                            premium: e.target.checked,
+                          }))
+                        }
+                        className="rounded border-slate-700/80 bg-slate-950/80"
+                      />
+                      Premium (behind paywall)
+                    </label>
+                  </div>
+                  <textarea
+                    value={draftText}
+                    onChange={(e) => setDraftText(e.target.value)}
+                    placeholder="Paste your notes, illness explanation, or physiology thread here..."
+                    className="min-h-[150px] rounded-lg border border-slate-800/80 bg-slate-950/80 px-3 py-2 text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-400/70 resize-y"
+                  />
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-500">
+                      {draftText.length} characters • Autosave simulated
+                    </span>
+                    <button
+                      disabled={!isAdmin}
+                      onClick={handlePublish}
+                      className={
+                        "px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide " +
+                        (isAdmin
+                          ? "bg-gradient-to-r from-emerald-400 to-sky-400 text-slate-950 shadow-lg shadow-emerald-500/40 hover:scale-[1.02] transition-transform"
+                          : "bg-slate-800 text-slate-500 cursor-not-allowed")
+                      }
+                    >
+                      Publish to homepage
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-slate-800/70 bg-slate-950/80 backdrop-blur-xl p-4 flex flex-col gap-4">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="uppercase tracking-[0.2em] text-emerald-200">
+                    Live preview
+                  </span>
+                  <span className="text-slate-400">
+                    Latest published entries: {publishedContent.length}
+                  </span>
+                </div>
+                <div className="space-y-3 text-[11px]">
+                  {publishedContent.length === 0 && (
+                    <p className="text-slate-400">
+                      Once you publish, new lessons appear here and on the
+                      premium homepage stream.
+                    </p>
+                  )}
+                  {publishedContent.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="rounded-lg border border-slate-800/80 bg-slate-950/80 p-3"
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <div>
+                          <p className="text-slate-100 font-semibold">
+                            {item.title}
+                          </p>
+                          <p className="text-slate-400">
+                            {item.category} • {item.level}
+                          </p>
+                        </div>
+                        <span
+                          className={
+                            item.premium
+                              ? "text-amber-300 text-[10px]"
+                              : "text-emerald-300 text-[10px]"
+                          }
+                        >
+                          {item.premium ? "Premium" : "Free"}
+                        </span>
+                      </div>
+                      <p className="text-slate-300 line-clamp-3 whitespace-pre-wrap">
+                        {item.text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <VideoPlayerCard />
+              </div>
+            </div>
+
+            <AnimatePresence>
+              {isModalOpen && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-50 bg-slate-950/70 flex items-center justify-center px-4"
+                >
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                    className="max-w-md w-full rounded-2xl border border-emerald-400/70 bg-slate-950/90 backdrop-blur-xl p-4 space-y-3"
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-semibold text-emerald-100">
+                        Lesson published
+                      </h3>
+                      <button
+                        onClick={() => setIsModalOpen(false)}
+                        className="text-[12px] text-slate-400"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <p className="text-xs text-slate-300">
+                      Your new teaching content is now visible on the homepage
+                      stream for subscribed users. You can edit or unpublish it
+                      from the dashboard in a future release.
+                    </p>
+                    <button
+                      onClick={() => setIsModalOpen(false)}
+                      className="text-xs font-semibold tracking-wide text-slate-950 bg-emerald-400 rounded-full px-4 py-1.5"
+                    >
+                      Back to dashboard
+                    </button>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </section>
+      );
+    };
+
+    const App = () => {
+      const { user, login, logout } = useAuth();
+      const [lessons, setLessons] = useState(initialLessons);
+      const [search, setSearch] = useState("");
+      const [category, setCategory] = useState("All");
+      const [level, setLevel] = useState("All");
+      const [bookmarks, setBookmarks] = useState([]);
+      const [publishedContent, setPublishedContent] = useState([]);
+
+      const handleScrollToSection = (id) => {
+        const el = document.getElementById(id);
+        if (el) {
+          const y =
+            el.getBoundingClientRect().top + window.scrollY - 70;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      };
+
+      const toggleBookmark = (id) => {
+        setBookmarks((prev) =>
+          prev.includes(id)
+            ? prev.filter((b) => b !== id)
+            : [...prev, id]
+        );
+      };
+
+      const handlePublish = (item) => {
+        const newLesson = {
+          id: lessons.length + 1,
+          title: item.title,
+          category: item.category,
+          level: item.level,
+          free: !item.premium,
+          tags: ["new", "admin"],
+          type: "lesson",
+          description:
+            item.text.slice(0, 120) + (item.text.length > 120 ? "..." : ""),
+        };
+        setLessons((prev) => [newLesson, ...prev]);
+        setPublishedContent((prev) => [item, ...prev]);
+      };
+
+      return (
+        <>
+          <RetroBackground />
+          <NavBar
+            user={user}
+            onLogin={login}
+            onLogout={logout}
+            onScrollToSection={handleScrollToSection}
+          />
+          <main className="min-h-screen">
+            <Hero user={user} onScrollToSection={handleScrollToSection} />
+            <CurriculumSection
+              lessons={lessons}
+              search={search}
+              category={category}
+              level={level}
+              onSearch={setSearch}
+              onCategory={setCategory}
+              onLevel={setLevel}
+              bookmarks={bookmarks}
+              toggleBookmark={toggleBookmark}
+            />
+            <InteractiveLab />
+            <Pricing />
+            <Dashboard
+              user={user}
+              publishedContent={publishedContent}
+              onPublish={handlePublish}
+            />
+          </main>
+          <footer className="border-t border-slate-800/80 py-4">
+            <div className="mx-auto max-w-6xl px-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2 text-[11px] text-slate-500">
+              <span>
+                MeducateMe • Retro physiology & paediatrics teaching platform.
+              </span>
+              <span>
+                Built for doctors, medical students, and nurses who ask “why?”
+                before “what next?”.
+              </span>
+            </div>
+          </footer>
+        </>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
