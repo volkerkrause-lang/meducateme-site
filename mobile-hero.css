@@ -1,5 +1,106 @@
 @media (max-width:600px){
-  .hero-type{left:22px;right:22px;top:29svh;max-width:calc(100vw - 44px);}
-  .hero h1{font-size:clamp(44px,13.4vw,60px);line-height:.88;letter-spacing:-.012em;max-width:100%;}
-  .hero-sub{font-size:clamp(15px,4.2vw,18px);letter-spacing:.065em;}
+  /* A genuinely separate mobile composition using the same hero content. */
+  .hero{
+    height:100svh;
+    min-height:620px;
+    display:grid;
+    grid-template-rows:52% 48%;
+    overflow:hidden;
+    background:#0b0b0a;
+  }
+  .hero-media{
+    position:relative;
+    inset:auto;
+    grid-row:1 / span 2;
+    width:100%;
+    height:100%;
+    transform:none!important;
+    overflow:hidden;
+  }
+  .hero-media img{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:58%;
+    object-fit:cover;
+    object-position:52% 40%;
+    opacity:1;
+    transform:scale(1.02)!important;
+    filter:saturate(1.06) contrast(1.04)!important;
+  }
+  .wash{
+    background:
+      linear-gradient(180deg,rgba(11,11,10,.05) 0%,rgba(11,11,10,.12) 35%,rgba(11,11,10,.72) 56%,#0b0b0a 72%,#0b0b0a 100%),
+      linear-gradient(90deg,rgba(11,11,10,.28),transparent 55%,rgba(11,11,10,.16));
+  }
+  .hero-type{
+    position:absolute;
+    z-index:3;
+    left:20px;
+    right:20px;
+    top:auto;
+    bottom:118px;
+    max-width:none;
+    transform:none!important;
+    opacity:1!important;
+  }
+  .hero-kicker{
+    display:block;
+    margin-bottom:18px;
+    font-size:9px;
+    line-height:1.35;
+    letter-spacing:.17em;
+    white-space:normal;
+  }
+  .hero h1{
+    margin:0 0 14px;
+    width:100%;
+    max-width:100%;
+    font-size:clamp(42px,11.5vw,54px);
+    line-height:.9;
+    letter-spacing:-.018em;
+    overflow:visible;
+    overflow-wrap:normal;
+    word-break:normal;
+  }
+  .hero-sub{
+    margin:0;
+    max-width:100%;
+    font-size:clamp(15px,4.1vw,18px);
+    line-height:1.2;
+    letter-spacing:.055em;
+    white-space:normal;
+  }
+  .hero-meta{
+    left:20px;
+    right:82px;
+    bottom:22px;
+    font-size:8px;
+    letter-spacing:.16em;
+  }
+  .hero-meta span:last-child{display:none}
+  .arrowbox{
+    width:64px;
+    height:64px;
+  }
+
+  /* Preserve motion language without desktop parallax distortion. */
+  .hero-media img{animation:mobileHeroFloat 9s ease-in-out infinite alternate}
+  @keyframes mobileHeroFloat{
+    from{transform:scale(1.02) translateY(0)!important}
+    to{transform:scale(1.07) translateY(-6px)!important}
+  }
+}
+
+@media (max-width:380px){
+  .hero{min-height:590px}
+  .hero-type{left:18px;right:18px;bottom:106px}
+  .hero h1{font-size:clamp(39px,11vw,47px)}
+  .hero-kicker{font-size:8px}
+  .hero-sub{font-size:15px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-media img{animation:none!important}
 }
