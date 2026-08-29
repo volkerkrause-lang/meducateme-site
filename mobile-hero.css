@@ -1,0 +1,5 @@
+@media (max-width:600px){
+  .hero-type{left:22px;right:22px;top:29svh;max-width:calc(100vw - 44px);}
+  .hero h1{font-size:clamp(44px,13.4vw,60px);line-height:.88;letter-spacing:-.012em;max-width:100%;}
+  .hero-sub{font-size:clamp(15px,4.2vw,18px);letter-spacing:.065em;}
+}
