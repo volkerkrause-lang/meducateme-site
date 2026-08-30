@@ -1,1 +1,0 @@
-Cloudflare deployment trigger for MeducateMe commentary sync.
