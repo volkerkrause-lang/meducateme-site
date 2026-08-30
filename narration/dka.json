@@ -1,0 +1,46 @@
+{
+  "lesson": "Diabetic ketoacidosis",
+  "voice_profile": "Mature British male medical lecturer. Deep, warm, calm and intelligent voice. Natural conversational delivery, like teaching a small group at the bedside. Use subtle thoughtful pauses after clinical findings. Restrained authority, not theatrical, not an advertisement, not an audiobook performance. Clear UK pronunciation. Avoid exaggerated emotion, breathiness, sighing or vocal fry.",
+  "stages": [
+    {
+      "id": "01-case-presentation",
+      "script": "So, here we have Maya, aged twelve, presenting with three weeks of increased thirst, passing a lot of urine and weight loss. Already, that should make you think about the differential diagnosis of polyuria and polydipsia. But today she also has abdominal pain, vomiting and unusually deep breathing. Let's look at the observations. Her heart rate is 128, so she's tachycardic. Her respiratory rate is 32 and the breaths are deep. Her temperature is 37.1, so there isn't an obvious fever here, and she is still alert, although clinically dry. Now put those findings together: polyuria, polydipsia, weight loss, vomiting, abdominal pain, tachycardia and deep rapid breathing. Don't jump straight to the diagnosis. Ask yourself: what single physiological disturbance could connect all of these findings?"
+    },
+    {
+      "id": "02-first-decision",
+      "script": "Before we go any further, commit to an answer. This is important. In real clinical reasoning you don't get to see the blood gas before you form an initial hypothesis. Gastroenteritis can explain vomiting and dehydration. Sepsis can explain tachycardia and acidosis. Appendicitis can explain abdominal pain and vomiting. But none of those comfortably explains three weeks of thirst, polyuria and weight loss together with deep breathing. Choose the diagnosis that explains both the preceding weeks and the acute deterioration."
+    },
+    {
+      "id": "03-normal-physiology",
+      "script": "Now let's reconstruct the normal system before looking at what has failed. After a meal, glucose rises in the blood. Pancreatic beta cells sense that rise and release insulin. Insulin is not simply a glucose-lowering hormone. It is a whole-body signal that says fuel is available. In muscle and adipose tissue it promotes glucose uptake and storage. In the liver it suppresses further glucose production. In adipose tissue it switches off lipolysis. So insulin coordinates the fed state: use glucose, store energy and stop manufacturing emergency fuel. Keep that idea in mind, because DKA is what happens when that signal disappears."
+    },
+    {
+      "id": "04-disruption",
+      "script": "In type one diabetes, immune-mediated beta-cell destruction produces absolute insulin deficiency. Now notice the paradox: there is plenty of glucose in the bloodstream, but insulin-dependent tissues cannot use it normally, and the liver behaves as though the body is starving. Two pathways now run in parallel. First, glucose rises further because peripheral use falls and hepatic output continues. Once glucose spills into the urine it drags water and electrolytes with it. Second, the brake on lipolysis is removed. Free fatty acids reach the liver and are converted into ketone bodies. Those ketones are acids. So one missing hormone produces both severe dehydration and metabolic acidosis."
+    },
+    {
+      "id": "05-symptoms",
+      "script": "Let's apply that mechanism to the symptoms. Why has Maya been passing so much urine? As the filtered glucose load rises, the kidney can no longer reabsorb all of it. Glucose remains in the renal tubule and holds water there osmotically. That produces a large urinary water loss: osmotic diuresis. The resulting dehydration raises plasma osmolality and stimulates thirst, so she drinks more. Her weight loss is also mechanistic: she is losing water and, because insulin is absent, breaking down fat and other energy stores despite having abundant glucose in the blood."
+    },
+    {
+      "id": "06-signs",
+      "script": "Now look at the signs, especially the breathing. The lungs are not the primary problem. Ketone bodies generate a metabolic acidosis. The body cannot rapidly remove that acid through the kidneys, so it uses respiratory compensation. Chemoreceptors sense the fall in pH and ventilation increases. By breathing deeply and rapidly, Maya blows off carbon dioxide. That reduces the respiratory component of the acid load and partially compensates for the metabolic acidosis. This characteristic deep breathing is Kussmaul respiration. Her tachycardia, meanwhile, fits the intravascular volume depletion from osmotic diuresis."
+    },
+    {
+      "id": "07-investigations",
+      "script": "Now read the investigations as consequences rather than as a list of abnormal numbers. The glucose is high because insulin is absent and hepatic glucose output continues. The ketones are high because lipolysis and hepatic ketogenesis are unrestrained. The pH and bicarbonate are low because ketone acids consume bicarbonate buffering capacity. The potassium is the subtle result. A serum potassium of 4.7 may look reassuring, but total-body potassium is usually depleted because of urinary losses. Insulin deficiency and acidosis shift potassium out of cells, temporarily masking that depletion in the blood sample. Once insulin treatment starts, potassium moves back into cells and the serum level can fall quickly."
+    },
+    {
+      "id": "08-treatment",
+      "script": "Treatment becomes easier to remember if you connect each step to the mechanism. Fluids restore the circulating volume and improve renal perfusion. Insulin is essential because it switches off lipolysis and ketone production; the goal is not merely to lower the glucose. Potassium must be anticipated because total-body stores are depleted and insulin drives potassium back into cells. As glucose falls, dextrose may need to be added so insulin can continue long enough to clear the ketones and resolve the acidosis. In a child, use the current paediatric DKA guideline and local pathway rather than an adult protocol, with careful neurological monitoring throughout."
+    },
+    {
+      "id": "09-transfer-case",
+      "script": "Let's test whether you really own the mechanism rather than simply recognising Maya's numbers. This second child has known type one diabetes and a pump interruption. Her glucose is only 14.2, which is much less dramatic, but she has substantial ketonaemia and a venous pH of 7.19. The important lesson is that glucose alone does not define the metabolic emergency. Ask what the insulin deficiency is doing: is ketogenesis active, and has it produced metabolic acidosis? If the answer is yes, the same pathological process is operating even when the glucose is not extremely high."
+    },
+    {
+      "id": "10-synthesis",
+      "script": "Finally, explain the entire case back to yourself as a causal chain. Beta-cell failure leads to absolute insulin deficiency. That causes hyperglycaemia through reduced glucose use and continued hepatic glucose production. Glycosuria produces osmotic diuresis, dehydration, thirst and tachycardia. Loss of insulin's brake on lipolysis causes ketone production and metabolic acidosis. The acidosis produces Kussmaul breathing as respiratory compensation. Treatment then reverses those mechanisms: fluid restores perfusion, insulin stops ketogenesis, and potassium is monitored and replaced because whole-body stores are depleted. If you can reconstruct that chain without memorising a symptom list, you understand DKA."
+    }
+  ]
+}
