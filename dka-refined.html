@@ -48,21 +48,21 @@ frame.addEventListener('load',()=>{
     if(tr) tr.textContent=c.dataset.speech || '';
   });
 
-  /* Replace the original lock-and-reveal MCQ handlers with retry-until-correct logic. */
+  /* Retryable MCQs: learners may explore every option until they find the correct answer. */
   const hints={
-    'THINK 01':'Not quite. Focus on what can change body weight quickly over only three weeks, especially with very large urine volumes.',
-    'THINK 02':'Not quite. Compare the timeline: the polyuria and thirst started weeks before the vomiting.',
-    'THINK 03':'Not quite. Her oxygen saturation is normal. Ask what metabolic disturbance makes ventilation become deep and rapid.',
-    'DIAGNOSTIC CHECKPOINT':'Not quite. Look for one diagnosis that explains polyuria, polydipsia, weight loss, abdominal symptoms and metabolic-acidosis-type breathing together.',
-    'THINK 04':'Not quite. Think of insulin as a signal that usable energy is available and that stored fuel does not need to be broken down.',
-    'THINK 05':'Not quite. Think about what happens when filtered glucose remains inside the renal tubule.',
-    'THINK 06':'Not quite. Respiratory compensation for a metabolic acidosis must reduce the acidifying respiratory component.',
-    'THINK 07':'Not quite. A serum concentration is not the same as total-body content; consider urinary potassium losses and redistribution.',
-    'THINK 08':'Not quite. Ask what insulin is treating in DKA besides the blood glucose concentration.',
-    'THINK 09':'Not quite. New headache, drowsiness, falling heart rate and rising blood pressure are neurological red flags in paediatric DKA.',
-    'THINK 10':'Not quite. Start with the causal failure rather than a downstream symptom or laboratory result.',
-    'THINK 11':'Not quite. Abdominal pain and vomiting can be consequences of ketoacidosis itself.',
-    'ONE LAST QUESTION':'Not quite. Start with the missing insulin signal and ask what metabolic state follows.'
+    'THINK 01':'Focus on what can change body weight quickly over only three weeks, especially with very large urine volumes.',
+    'THINK 02':'Compare the timeline: the polyuria and thirst started weeks before the vomiting.',
+    'THINK 03':'Her oxygen saturation is normal. Ask what metabolic disturbance makes ventilation become deep and rapid.',
+    'DIAGNOSTIC CHECKPOINT':'Look for one diagnosis that explains polyuria, polydipsia, weight loss, abdominal symptoms and metabolic-acidosis-type breathing together.',
+    'THINK 04':'Think of insulin as a signal that usable energy is available and that stored fuel does not need to be broken down.',
+    'THINK 05':'Think about what happens when filtered glucose remains inside the renal tubule.',
+    'THINK 06':'Respiratory compensation for a metabolic acidosis must reduce the acidifying respiratory component.',
+    'THINK 07':'A serum concentration is not the same as total-body content; consider urinary potassium losses and redistribution.',
+    'THINK 08':'Ask what insulin is treating in DKA besides the blood glucose concentration.',
+    'THINK 09':'New headache, drowsiness, falling heart rate and rising blood pressure are neurological red flags in paediatric DKA.',
+    'THINK 10':'Start with the causal failure rather than a downstream symptom or laboratory result.',
+    'THINK 11':'Abdominal pain and vomiting can be consequences of ketoacidosis itself.',
+    'ONE LAST QUESTION':'Start with the missing insulin signal and ask what metabolic state follows.'
   };
 
   d.querySelectorAll('.choices').forEach(group=>{
@@ -78,22 +78,30 @@ frame.addEventListener('load',()=>{
       if(feedback) mcq.insertBefore(wrongBox,feedback); else mcq.appendChild(wrongBox);
     }
     fresh.querySelectorAll('.choice').forEach((btn,i)=>btn.addEventListener('click',()=>{
+      if(fresh.dataset.completed==='1') return;
       const ans=Number(fresh.dataset.answer);
       if(i===ans){
-        fresh.querySelectorAll('.choice').forEach((b,j)=>{b.classList.remove('wrong'); if(j===ans)b.classList.add('correct'); b.disabled=true;});
+        fresh.dataset.completed='1';
+        fresh.querySelectorAll('.choice').forEach((b,j)=>{
+          if(j===ans)b.classList.add('correct');
+          b.disabled=true;
+        });
         if(wrongBox) wrongBox.classList.remove('show');
         if(feedback) feedback.classList.add('show');
       }else{
-        btn.classList.add('wrong'); btn.disabled=true;
+        btn.classList.add('wrong');
         if(feedback) feedback.classList.remove('show');
-        if(wrongBox){wrongBox.innerHTML='<b>Not quite.</b> '+(hints[qno]||'That option does not explain the whole physiological pattern. Try another answer.'); wrongBox.classList.add('show');}
+        if(wrongBox){
+          wrongBox.innerHTML='<b>Not quite — try another answer.</b> '+(hints[qno]||'That option does not explain the whole physiological pattern.');
+          wrongBox.classList.add('show');
+        }
       }
     }));
   });
 
-  /* Make disabled wrong choices visibly distinct without looking selected as correct. */
+  /* Wrong answers stay available so the learner can explore every option. */
   const style=d.createElement('style');
-  style.textContent='.choice:disabled{cursor:default;opacity:.9}.choice.wrong:disabled{opacity:.68}.wrong-feedback{border-left:3px solid var(--red);background:#291714}.feedback:not(.wrong-feedback){border-left:3px solid var(--green)}';
+  style.textContent='.choice.wrong{border-color:var(--red);background:#291714}.choice.correct{border-color:var(--green);background:#12251c}.choice:disabled{cursor:default}.wrong-feedback{border-left:3px solid var(--red);background:#291714}.feedback:not(.wrong-feedback){border-left:3px solid var(--green)}';
   d.head.appendChild(style);
 });
 </script>
