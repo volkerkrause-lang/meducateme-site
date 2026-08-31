@@ -18,6 +18,15 @@ frame.addEventListener('load',()=>{
   const heroMicro=d.querySelector('.hero .micro');
   if(heroMicro) heroMicro.textContent='CASE 01 · CLINICAL REASONING';
 
+  const stage1=d.getElementById('stage1');
+  if(stage1){
+    const c=stage1.querySelector('.commentator');
+    if(c){
+      c.dataset.speech="Okay, we have a 12-year-old girl here who presents with polydipsia and polyuria, with weight loss, abdominal pain and vomiting, and some abnormal breathing. Many of you will already know where this is going, but let's take this logically, step by step, and then start explaining what is actually happening.";
+      const small=c.querySelector('small'); if(small) small.textContent='Opening overview';
+    }
+  }
+
   const stage3=d.getElementById('stage3');
   if(stage3){
     const c=stage3.querySelector('.commentator');
