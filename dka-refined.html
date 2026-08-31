@@ -7,13 +7,11 @@
 <style>html,body{margin:0;width:100%;height:100%;background:#0b0b0a;overflow:hidden}iframe{display:block;width:100%;height:100%;border:0;background:#0b0b0a}</style>
 </head>
 <body>
-<iframe id="lesson" src="dka.html" title="MeducateMe DKA lesson"></iframe>
+<iframe id="lesson" src="dka-base.html" title="MeducateMe DKA lesson"></iframe>
 <script>
 const frame=document.getElementById('lesson');
 frame.addEventListener('load',()=>{
   const d=frame.contentDocument,w=frame.contentWindow;
-
-  /* Keep the opening diagnostically neutral. */
   d.title='Maya — Clinical reasoning | MeducateMe';
   const heroMicro=d.querySelector('.hero .micro');
   if(heroMicro) heroMicro.textContent='CASE 01 · CLINICAL REASONING';
@@ -23,6 +21,7 @@ frame.addEventListener('load',()=>{
     const c=stage1.querySelector('.commentator');
     if(c){
       c.dataset.speech="Okay, we have a 12-year-old girl here who presents with polydipsia and polyuria, with weight loss, abdominal pain and vomiting, and some abnormal breathing. Many of you will already know where this is going, but let's take this. Let's look at this logically, step by step, and then start explaining.";
+      const tr=c.querySelector('.transcript'); if(tr) tr.textContent=c.dataset.speech;
       const small=c.querySelector('small'); if(small) small.textContent='Opening overview';
     }
   }
@@ -34,7 +33,6 @@ frame.addEventListener('load',()=>{
       c.dataset.speech="Maya is not just breathing quickly. Her breaths are unusually deep. Her oxygen saturation is 99 percent, so primary hypoxaemic respiratory failure is not the obvious explanation. Deep rapid breathing can be a compensatory response to metabolic acidosis, because increasing ventilation lowers carbon dioxide. So now let us put the clues together without jumping ahead. We have several weeks of polyuria, polydipsia and marked weight loss, followed by abdominal pain and vomiting, and now deep breathing suggesting an acid base disturbance. At this point we have enough information to ask which diagnosis can unify the whole pattern.";
       const small=c.querySelector('small'); if(small) small.textContent='Put the clues together';
     }
-
     if(!d.getElementById('diagnosis-check')){
       const box=d.createElement('div');
       box.className='mcq'; box.id='diagnosis-check';
@@ -51,13 +49,11 @@ frame.addEventListener('load',()=>{
     if(micro) micro.textContent='Diagnosis established · normal first';
   }
 
-  /* Transcript must be exactly the words sent to speech synthesis. */
   d.querySelectorAll('.commentator').forEach(c=>{
     const tr=c.querySelector('.transcript');
     if(tr) tr.textContent=c.dataset.speech || '';
   });
 
-  /* Retryable MCQs: learners may explore every option until they find the correct answer. */
   const hints={
     'THINK 01':'Focus on what can change body weight quickly over only three weeks, especially with very large urine volumes.',
     'THINK 02':'Compare the timeline: the polyuria and thirst started weeks before the vomiting.',
@@ -75,9 +71,8 @@ frame.addEventListener('load',()=>{
   };
 
   d.querySelectorAll('.choices').forEach(group=>{
-    const old=group;
-    const fresh=old.cloneNode(true);
-    old.replaceWith(fresh);
+    const fresh=group.cloneNode(true);
+    group.replaceWith(fresh);
     const mcq=fresh.closest('.mcq');
     const feedback=mcq && mcq.querySelector('.feedback');
     const qno=mcq && mcq.querySelector('.qno') ? mcq.querySelector('.qno').textContent.trim() : '';
@@ -91,24 +86,17 @@ frame.addEventListener('load',()=>{
       const ans=Number(fresh.dataset.answer);
       if(i===ans){
         fresh.dataset.completed='1';
-        fresh.querySelectorAll('.choice').forEach((b,j)=>{
-          if(j===ans)b.classList.add('correct');
-          b.disabled=true;
-        });
+        fresh.querySelectorAll('.choice').forEach((b,j)=>{if(j===ans)b.classList.add('correct');b.disabled=true;});
         if(wrongBox) wrongBox.classList.remove('show');
         if(feedback) feedback.classList.add('show');
       }else{
         btn.classList.add('wrong');
         if(feedback) feedback.classList.remove('show');
-        if(wrongBox){
-          wrongBox.innerHTML='<b>Not quite — try another answer.</b> '+(hints[qno]||'That option does not explain the whole physiological pattern.');
-          wrongBox.classList.add('show');
-        }
+        if(wrongBox){wrongBox.innerHTML='<b>Not quite — try another answer.</b> '+(hints[qno]||'That option does not explain the whole physiological pattern.');wrongBox.classList.add('show');}
       }
     }));
   });
 
-  /* Wrong answers stay available so the learner can explore every option. */
   const style=d.createElement('style');
   style.textContent='.choice.wrong{border-color:var(--red);background:#291714}.choice.correct{border-color:var(--green);background:#12251c}.choice:disabled{cursor:default}.wrong-feedback{border-left:3px solid var(--red);background:#291714}.feedback:not(.wrong-feedback){border-left:3px solid var(--green)}';
   d.head.appendChild(style);
