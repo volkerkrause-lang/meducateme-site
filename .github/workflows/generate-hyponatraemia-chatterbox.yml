@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'narration/references/british-male-deep.wav'
+      - 'narration/references/voice-reference.wav'
       - 'tools/generate_hyponatraemia_chatterbox.py'
       - 'narration/hyponatraemia.json'
       - '.github/workflows/generate-hyponatraemia-chatterbox.yml'
