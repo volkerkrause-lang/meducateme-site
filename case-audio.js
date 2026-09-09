@@ -1,0 +1,38 @@
+(()=>{
+const tracks=[
+ ['01-case-presentation','Case presentation'],
+ ['02-first-decision','Clinical reasoning'],
+ ['07-investigations','Investigations'],
+ ['03-normal-physiology','Normal insulin physiology'],
+ ['04-disruption','What insulin deficiency changes'],
+ ['05-symptoms','Explain the symptoms'],
+ ['06-signs','Explain the signs'],
+ ['08-treatment','Treatment through physiology'],
+ ['10-synthesis','Reconstruct the case']
+];
+const scripts={
+ '01-case-presentation':'Here we have Maya, twelve years old. Three weeks of thirst, polyuria and weight loss, and now abdominal pain, vomiting and unusually deep breathing. Her pulse is 128 and respiratory rate 32. She is dry, but alert and afebrile. Before naming the diagnosis, look for a single physiological disturbance that could connect the whole story. The chronic symptoms tell us this started well before today. The breathing tells us the body is now compensating for something important. Keep those two timescales in mind.',
+ '02-first-decision':'DKA is the best unifying diagnosis, but do not move on just because you recognised it. Ask what that diagnosis now has to prove. It must explain why glucose is accumulating in blood while the child is losing weight. It must explain why glucose in the urine causes profound water loss. It must explain why fat suddenly becomes an emergency fuel and why that produces an acidosis. And finally it must explain why the lungs respond to a metabolic problem. That is the reasoning chain we are going to build.',
+ '03-normal-physiology':'Look at the normal system on the screen. The useful way to think about insulin is not simply as a glucose-lowering hormone. Think of it as the body’s fed-state signal: fuel has arrived, use it and store it. Muscle takes up glucose and makes glycogen. The liver stops manufacturing glucose and favours storage. Adipose tissue receives an equally important instruction: stop releasing fat. That last action is crucial for understanding DKA.',
+ '04-disruption':'Now remove insulin and follow the split on the diagram. On the glucose side, peripheral utilisation falls while the liver continues glycogenolysis and gluconeogenesis. Blood glucose rises. Eventually glucose remains in tubular fluid and water follows it: osmotic diuresis. On the other side, loss of insulin’s restraint on lipolysis releases free fatty acids. The liver converts these into ketone bodies. These acids consume bicarbonate. One missing signal creates a glucose-volume problem and a fat-acid problem.',
+ '05-symptoms':'Now use the mechanism map rather than a symptom list. Polyuria follows glycosuria and osmotic diuresis. Thirst responds to water loss and altered effective osmolality. Weight loss comes from dehydration, urinary calorie loss and catabolism. Vomiting and abdominal pain sit downstream of ketosis, acidaemia and dehydration.',
+ '06-signs':'The tachycardia belongs naturally on the volume-loss pathway. Now follow the acid pathway to the lungs. Ketoacids consume bicarbonate and pH falls. Chemoreceptor-driven ventilation increases, carbon dioxide falls and this partially defends pH. That is Kussmaul respiration.',
+ '07-investigations':'Each investigation should attach to a point on the map. Glucose asks whether carbohydrate regulation has failed. Blood beta-hydroxybutyrate asks whether ketogenesis is active. Venous pH and bicarbonate show the acid-base consequence. Sodium, potassium, urea and creatinine help assess osmotic diuresis, water shifts and renal perfusion. A normal-looking serum potassium can conceal substantial total-body depletion.',
+ '08-treatment':'Now run the physiology in reverse. Fluids address the volume pathway. Insulin restores the missing metabolic signal, suppresses lipolysis and switches off ketogenesis. Potassium must be anticipated because whole-body stores are depleted and insulin drives potassium intracellularly. Exact treatment should follow the current paediatric DKA pathway.',
+ '10-synthesis':'Finish by rebuilding the case. Loss of insulin produces hyperglycaemia and glycosuria, driving osmotic diuresis, polyuria, thirst and dehydration. Simultaneously, loss of inhibition of lipolysis produces ketones, bicarbonate falls and metabolic acidosis develops. Kussmaul ventilation lowers carbon dioxide to partially defend pH. Treatment reverses those processes.'
+};
+const style=document.createElement('style');style.textContent=`.case-audio{position:fixed;right:20px;bottom:20px;z-index:180;width:min(390px,calc(100vw - 28px));border:1px solid #e9a51b66;background:#0b0c0ff2;backdrop-filter:blur(16px);box-shadow:0 18px 55px #0009;padding:14px}.ca-top{display:flex;align-items:center;gap:12px}.ca-play{width:52px;height:52px;border-radius:50%;border:1px solid #e9a51b;background:#e9a51b;color:#090a0c;font-size:20px}.ca-copy{flex:1}.ca-copy small{display:block;color:#e9a51b;font-size:8px;letter-spacing:.15em;text-transform:uppercase}.ca-copy strong{display:block;margin-top:4px}.ca-controls{display:flex;gap:6px;margin-top:10px}.ca-controls button{border:1px solid #ffffff22;background:#ffffff08;color:#eee;padding:7px 10px}.ca-progress{height:3px;background:#ffffff16;margin-top:10px}.ca-progress i{display:block;height:100%;background:#e9a51b;width:0}.ca-transcript{display:none;margin-top:10px;max-height:120px;overflow:auto;color:#b9b9b4;font-size:12px;line-height:1.45;border-top:1px solid #ffffff18;padding-top:9px}.ca-transcript.open{display:block}@media(max-width:600px){.case-audio{right:10px;bottom:10px;width:calc(100vw - 20px)}}`;document.head.append(style);
+const box=document.createElement('aside');box.className='case-audio';box.innerHTML=`<div class="ca-top"><button class="ca-play" aria-label="Play recorded guided lesson">▶</button><div class="ca-copy"><small>Recorded guided lesson</small><strong class="ca-title">Case presentation</strong></div></div><div class="ca-controls"><button data-a="prev">←</button><button data-a="next">→</button><button data-a="cc">Transcript</button><button data-a="speed">1×</button></div><div class="ca-progress"><i></i></div><div class="ca-transcript"></div>`;document.body.append(box);
+const audio=document.createElement('audio');audio.preload='metadata';audio.playsInline=true;audio.setAttribute('playsinline','');document.body.append(audio);
+let i=0,rate=1;const play=box.querySelector('.ca-play'),title=box.querySelector('.ca-title'),bar=box.querySelector('.ca-progress i'),tr=box.querySelector('.ca-transcript');
+function load(autoplay=false){const [id,label]=tracks[i];audio.src=`audio/dka/${id}.mp3`;audio.playbackRate=rate;title.textContent=`${i+1}/${tracks.length} · ${label}`;tr.textContent=scripts[id]||'';bar.style.width='0';if(autoplay)audio.play().then(()=>play.textContent='Ⅱ').catch(()=>play.textContent='▶');}
+play.onclick=()=>{if(audio.paused)audio.play().then(()=>play.textContent='Ⅱ');else{audio.pause();play.textContent='▶'}};
+box.querySelector('[data-a=prev]').onclick=()=>{i=(i-1+tracks.length)%tracks.length;load(true)};
+box.querySelector('[data-a=next]').onclick=()=>{i=(i+1)%tracks.length;load(true)};
+box.querySelector('[data-a=cc]').onclick=()=>tr.classList.toggle('open');
+box.querySelector('[data-a=speed]').onclick=e=>{rate=rate===1?1.15:rate===1.15?.85:1;audio.playbackRate=rate;e.currentTarget.textContent=rate+'×'};
+audio.ontimeupdate=()=>{if(audio.duration)bar.style.width=(audio.currentTime/audio.duration*100)+'%'};
+audio.onended=()=>{if(i<tracks.length-1){i++;load(true)}else play.textContent='▶'};
+audio.onerror=()=>{title.textContent='Recording unavailable';play.textContent='▶'};
+load();
+})();
