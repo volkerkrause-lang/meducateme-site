@@ -1,0 +1,53 @@
+name: Generate hyponatraemia Chatterbox audition
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'narration/references/british-male-deep.wav'
+      - 'tools/generate_hyponatraemia_chatterbox.py'
+      - 'narration/hyponatraemia.json'
+      - '.github/workflows/generate-hyponatraemia-chatterbox.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  narrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: Install Chatterbox
+        run: pip install chatterbox-tts
+
+      - name: Generate first hyponatraemia lesson step
+        env:
+          CHATTERBOX_STAGE: '01-reframe'
+          CHATTERBOX_EXAGGERATION: '0.65'
+          CHATTERBOX_CFG_WEIGHT: '0.35'
+        run: python tools/generate_hyponatraemia_chatterbox.py
+
+      - name: Commit audition MP3
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add audio/hyponatraemia-chatterbox/01-reframe.mp3
+          if git diff --cached --quiet; then
+            echo 'No audio changes to commit'
+          else
+            git commit -m 'Generate Chatterbox hyponatraemia audition'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
