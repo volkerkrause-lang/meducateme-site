@@ -36,7 +36,7 @@ jobs:
       - name: Generate narration
         env:
           KOKORO_VOICE: bm_george
-          KOKORO_SPEED: '0.94'
+          KOKORO_SPEED: '0.80'
         run: python tools/generate_hyponatraemia_kokoro.py
 
       - name: Commit generated MP3s
