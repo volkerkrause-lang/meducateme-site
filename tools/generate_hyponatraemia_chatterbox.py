@@ -2,7 +2,6 @@
 import json
 import os
 import subprocess
-import tempfile
 from pathlib import Path
 
 import torch
@@ -12,7 +11,7 @@ from chatterbox.tts import ChatterboxTTS
 ROOT = Path(__file__).resolve().parents[1]
 NARRATION = ROOT / "narration" / "hyponatraemia.json"
 OUT = ROOT / "audio" / "hyponatraemia-chatterbox"
-REFERENCE = ROOT / "narration" / "references" / "british-male-deep.wav"
+REFERENCE = ROOT / "narration" / "references" / "voice-reference.wav"
 
 STAGE_ID = os.environ.get("CHATTERBOX_STAGE", "01-reframe")
 EXAGGERATION = float(os.environ.get("CHATTERBOX_EXAGGERATION", "0.65"))
@@ -26,7 +25,7 @@ if not stage:
     raise SystemExit(f"Unknown stage: {STAGE_ID}")
 if not REFERENCE.exists():
     raise SystemExit(
-        f"Missing reference voice: {REFERENCE}. Add a clean 5–20 second deep British male voice sample that you have permission to use."
+        f"Missing reference voice: {REFERENCE}. Add the permitted voice reference WAV before generating narration."
     )
 
 OUT.mkdir(parents=True, exist_ok=True)
