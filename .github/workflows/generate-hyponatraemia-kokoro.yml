@@ -1,0 +1,53 @@
+name: Generate hyponatraemia Kokoro narration
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'narration/hyponatraemia.json'
+      - 'tools/generate_hyponatraemia_kokoro.py'
+      - '.github/workflows/generate-hyponatraemia-kokoro.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  narrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq espeak-ng ffmpeg
+
+      - name: Install Kokoro
+        run: pip install 'kokoro>=0.9.4' soundfile numpy
+
+      - name: Generate narration
+        env:
+          KOKORO_VOICE: bm_george
+          KOKORO_SPEED: '0.94'
+        run: python tools/generate_hyponatraemia_kokoro.py
+
+      - name: Commit generated MP3s
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add audio/hyponatraemia/*.mp3
+          if git diff --cached --quiet; then
+            echo 'No audio changes to commit'
+          else
+            git commit -m 'Generate hyponatraemia narration with Kokoro'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
