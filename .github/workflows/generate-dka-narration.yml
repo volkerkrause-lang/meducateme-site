@@ -3,11 +3,11 @@ name: Generate DKA Gemini narration
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
-      - "narration/dka.json"
-      - "tools/generate_dka_narration.py"
+      - 'narration/dka.json'
+      - 'tools/generate_dka_narration.py'
+      - '.github/workflows/generate-dka-narration.yml'
 
 permissions:
   contents: write
@@ -37,13 +37,13 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_TTS_MODEL: gemini-2.5-flash-preview-tts
-          GEMINI_TTS_VOICE: Gacrux
+          GEMINI_TTS_VOICE: Algenib
         run: python tools/generate_dka_narration.py
 
       - name: Commit generated recordings
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email "4189827+github-actions[bot]@users.noreply.github.com"
           git add audio/dka/*.mp3
           if git diff --cached --quiet; then
             echo "No audio changes to commit."
