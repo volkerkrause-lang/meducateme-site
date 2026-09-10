@@ -1,5 +1,5 @@
 (() => {
-  const AUDIO_REVISION = '20260910-1';
+  const AUDIO_REVISION = '20260910-2';
   const order = [
     '01-reframe',
     '02-tonicity',
@@ -101,6 +101,8 @@
 
   function loadStage() {
     audio.pause();
+    orb.classList.remove('playing');
+    orb.setAttribute('aria-label', 'Play narration. Hold for speed and captions');
     retryCount = 0;
     audio.src = source();
     audio.load();
@@ -147,6 +149,7 @@
   }
 
   audio.addEventListener('playing', () => {
+    if (audio.paused) return;
     orb.classList.add('playing');
     orb.setAttribute('aria-label', 'Pause narration');
     setNote('Playing');
