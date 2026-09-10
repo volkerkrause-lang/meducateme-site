@@ -20,10 +20,11 @@ TEXT = (
 
 # A/B/C comparison. Chatterbox has no explicit British-accent selector; lowering
 # CFG reduces how strongly pronunciation/prosody from the reference is carried over.
+# Keep cfg_weight above zero: Chatterbox divides by this value internally.
 VARIANTS = {
     "A-current": {"exaggeration": 0.65, "cfg_weight": 0.35},
     "B-neutral-british-subtle": {"exaggeration": 0.55, "cfg_weight": 0.15},
-    "C-neutral-british-stronger": {"exaggeration": 0.50, "cfg_weight": 0.00},
+    "C-neutral-british-stronger": {"exaggeration": 0.50, "cfg_weight": 0.05},
 }
 
 if not REFERENCE.exists():
