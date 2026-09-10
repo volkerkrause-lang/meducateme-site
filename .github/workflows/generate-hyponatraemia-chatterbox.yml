@@ -1,4 +1,4 @@
-name: Generate hyponatraemia Chatterbox audition
+name: Generate hyponatraemia Chatterbox narration
 
 on:
   workflow_dispatch:
@@ -13,10 +13,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: hyponatraemia-chatterbox
+  cancel-in-progress: true
+
 jobs:
   narrate:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
         with:
@@ -32,22 +36,31 @@ jobs:
       - name: Install Chatterbox
         run: pip install chatterbox-tts
 
-      - name: Generate first hyponatraemia lesson step
+      - name: Generate complete hyponatraemia narration
         env:
-          CHATTERBOX_STAGE: '01-reframe'
+          CHATTERBOX_STAGE: 'all'
           CHATTERBOX_EXAGGERATION: '0.65'
           CHATTERBOX_CFG_WEIGHT: '0.35'
+          CHATTERBOX_MAX_CHARS: '280'
+          CHATTERBOX_PAUSE_MS: '180'
         run: python tools/generate_hyponatraemia_chatterbox.py
 
-      - name: Commit audition MP3
+      - name: Verify all lesson audio exists
+        run: |
+          set -e
+          for f in 01-reframe 02-tonicity 03-firstfork 04-adh 05-uosm 06-unasodium 07-causes 08-volume 09-emergency 10-reconstruct; do
+            test -s "audio/hyponatraemia-chatterbox/$f.mp3" || { echo "Missing $f.mp3"; exit 1; }
+          done
+
+      - name: Commit complete Chatterbox narration
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add audio/hyponatraemia-chatterbox/01-reframe.mp3
+          git add audio/hyponatraemia-chatterbox/*.mp3
           if git diff --cached --quiet; then
             echo 'No audio changes to commit'
           else
-            git commit -m 'Generate Chatterbox hyponatraemia audition'
+            git commit -m 'Generate complete Chatterbox hyponatraemia narration'
             git pull --rebase origin main
             git push origin HEAD:main
           fi
