@@ -1,0 +1,54 @@
+name: Generate Chatterbox accent test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/generate_voice_accent_test.py'
+      - '.github/workflows/generate-voice-accent-test.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: chatterbox-accent-test
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: Install Chatterbox
+        run: pip install chatterbox-tts
+
+      - name: Generate A/B/C accent samples
+        run: python tools/generate_voice_accent_test.py
+
+      - name: Verify samples
+        run: |
+          test -s audio/voice-tests/A-current.mp3
+          test -s audio/voice-tests/B-neutral-british-subtle.mp3
+          test -s audio/voice-tests/C-neutral-british-stronger.mp3
+
+      - name: Commit samples
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add audio/voice-tests/*.mp3
+          if git diff --cached --quiet; then
+            echo 'No audio changes to commit'
+          else
+            git commit -m 'Generate Chatterbox accent comparison samples'
+            git push origin HEAD:main
+          fi
