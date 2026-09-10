@@ -1,53 +1,108 @@
-name: Generate DKA Gemini narration
+name: Generate vomiting DKA Chatterbox narration
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
+      - 'narration/references/voice-reference.wav'
       - 'narration/dka.json'
-      - 'tools/generate_dka_narration.py'
+      - 'tools/generate_dka_chatterbox.py'
       - '.github/workflows/generate-dka-narration.yml'
 
 permissions:
   contents: write
 
+concurrency:
+  group: dka-chatterbox
+  cancel-in-progress: true
+
 jobs:
-  narrate:
+  generate:
+    name: Generate ${{ matrix.stage }}
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        stage:
+          - 01-presentation
+          - 02-reason
+          - 03-investigate
+          - 04-explain
+          - 05-findings
+          - 06-manage
+          - 07-reconstruct
+
     steps:
-      - name: Check out site
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
         with:
-          ref: main
+          python-version: '3.11'
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
 
-      - name: Install generator dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install google-genai
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
+      - name: Install Chatterbox
+        run: pip install chatterbox-tts
 
-      - name: Generate Gemini TTS recordings
+      - name: Generate narration section
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_TTS_MODEL: gemini-2.5-flash-preview-tts
-          GEMINI_TTS_VOICE: Algenib
-        run: python tools/generate_dka_narration.py
+          CHATTERBOX_STAGE: ${{ matrix.stage }}
+          CHATTERBOX_EXAGGERATION: '0.65'
+          CHATTERBOX_CFG_WEIGHT: '0.35'
+          CHATTERBOX_MAX_CHARS: '280'
+          CHATTERBOX_PAUSE_MS: '180'
+        run: python tools/generate_dka_chatterbox.py
 
-      - name: Commit generated recordings
+      - name: Verify generated section
+        run: test -s "audio/dka/${{ matrix.stage }}.mp3"
+
+      - name: Upload generated section
+        uses: actions/upload-artifact@v4
+        with:
+          name: dka-${{ matrix.stage }}
+          path: audio/dka/${{ matrix.stage }}.mp3
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    name: Publish complete vomiting case narration
+    needs: generate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update checkout to latest main
+        run: git pull --rebase origin main
+
+      - name: Download all generated sections
+        uses: actions/download-artifact@v4
+        with:
+          pattern: dka-*
+          path: audio/dka
+          merge-multiple: true
+
+      - name: Verify complete lesson
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "4189827+github-actions[bot]@users.noreply.github.com"
+          set -e
+          for f in 01-presentation 02-reason 03-investigate 04-explain 05-findings 06-manage 07-reconstruct; do
+            test -s "audio/dka/$f.mp3" || { echo "Missing $f.mp3"; exit 1; }
+          done
+
+      - name: Commit complete Chatterbox narration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add audio/dka/*.mp3
           if git diff --cached --quiet; then
-            echo "No audio changes to commit."
+            echo 'No audio changes to commit'
           else
-            git commit -m "Add Gemini TTS narration for DKA lesson"
-            git push origin main
+            git commit -m 'Generate Chatterbox narration for vomiting DKA case'
+            git push origin HEAD:main
           fi
