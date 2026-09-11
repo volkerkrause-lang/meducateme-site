@@ -1,0 +1,94 @@
+{
+  "lesson": "Cortisol — build it, then break it",
+  "voice": "MeducateMe Chatterbox voice reference",
+  "stages": [
+    {
+      "id": "01-map",
+      "title": "Adrenal map",
+      "script": "Start with the physical map. The adrenal glands sit on the upper poles of the kidneys, but each gland is really several endocrine systems packed together. The outer cortex makes steroid hormones. The central medulla makes catecholamines. Within the cortex, the middle and broadest layer, the zona fasciculata, is the home of cortisol. Keep that location in mind: fasciculata, cortisol, ACTH. Now make a prediction before we go further. If cortisol suddenly disappeared during a severe illness, which immediate function would become dangerous: adapting to stress, or bone growth?",
+      "feedback": {
+        "correct": "Exactly. The immediate danger is failure of stress adaptation. Cortisol helps maintain glucose availability and vascular responsiveness, so deficiency becomes most dangerous during fasting, infection, trauma or shock.",
+        "wrong": "Bone and growth are affected by chronic cortisol exposure, but they are not the immediate emergency. In acute cortisol deficiency, the dangerous problem is failure to maintain glucose and cardiovascular responsiveness during stress."
+      }
+    },
+    {
+      "id": "02-zones",
+      "title": "Zones",
+      "script": "Read the adrenal from outside to inside. First, zona glomerulosa: it makes aldosterone and is controlled mainly by angiotensin two and plasma potassium. Next, zona fasciculata: the broad middle layer, controlled by ACTH, making cortisol. Then zona reticularis: it contributes adrenal androgens such as DHEA and androstenedione. Finally the medulla, which is not steroid-producing cortex at all. Its chromaffin cells are modified sympathetic cells that release adrenaline and noradrenaline. So the map is already giving you a memory scaffold: salt, sugar, sex, then sympathetic stress.",
+      "feedback": {}
+    },
+    {
+      "id": "03-cholesterol",
+      "title": "Cholesterol",
+      "script": "Now move from anatomy to chemistry. Every adrenal steroid begins with the same raw material: cholesterol. The StAR protein moves cholesterol into the mitochondrion. CYP11A1 then performs side-chain cleavage and converts cholesterol to pregnenolone. Pregnenolone is the common starting junction. From there, the enzymes present in a particular adrenal zone determine which pathway remains open. One branch produces mineralocorticoids such as aldosterone. One produces glucocorticoids, principally cortisol. A third produces adrenal androgens. Disease becomes much easier when you think of steroidogenesis as traffic through branching biochemical roads.",
+      "feedback": {}
+    },
+    {
+      "id": "04-build",
+      "title": "Build cortisol",
+      "script": "Let us build cortisol along the clinically useful route. Cholesterol becomes pregnenolone. Seventeen-alpha-hydroxylase moves the pathway toward glucocorticoid and sex-steroid synthesis. After conversion through seventeen-hydroxy intermediates, twenty-one-hydroxylase converts seventeen-hydroxyprogesterone toward eleven-deoxycortisol. Then eleven-beta-hydroxylase makes cortisol. You do not need to memorise every intermediate first. Anchor three enzyme checkpoints: seventeen-alpha-hydroxylase, twenty-one-hydroxylase, and eleven-beta-hydroxylase. Later, when one is blocked, simply ask what falls downstream, what accumulates upstream, and where the excess substrate can escape.",
+      "feedback": {}
+    },
+    {
+      "id": "05-axis",
+      "title": "HPA axis",
+      "script": "Who turns this cortisol factory on? The hypothalamus releases CRH. CRH stimulates the anterior pituitary to release ACTH. ACTH reaches the adrenal cortex and activates the zona fasciculata. Through the melanocortin two receptor, cyclic AMP and protein kinase A, ACTH increases StAR activity and steroidogenic machinery, raising cortisol production. Cortisol then feeds back negatively to both pituitary and hypothalamus. So this is a controlled loop, not a one-way chain. Stress can increase drive through the axis, while circadian signals create the normal daily rhythm. This feedback loop is what lets you localise adrenal failure from ACTH and cortisol together.",
+      "feedback": {}
+    },
+    {
+      "id": "06-actions",
+      "title": "What cortisol does",
+      "script": "What is cortisol actually for? Think first about surviving physiological stress. In the liver it supports gluconeogenesis, helping preserve circulating glucose. It increases availability of amino-acid and lipid substrates from peripheral tissues. In the vasculature it has an important permissive effect, helping catecholamines maintain vascular tone and blood pressure. It also restrains inflammatory gene expression and immune signalling. These effects are useful during infection, fasting and trauma. Chronic excess, however, becomes harmful: growth is suppressed, bone formation falls, muscle is catabolised, glucose rises and immune responses are dampened. Acute deficiency and chronic excess therefore produce very different clinical problems.",
+      "feedback": {}
+    },
+    {
+      "id": "07-deficiency",
+      "title": "Remove cortisol",
+      "script": "Now remove cortisol and run the normal physiology backwards. Glucose support falls, especially during fasting or illness. Vascular responsiveness to catecholamines falls, so maintaining blood pressure becomes harder. The patient can become weak, hypoglycaemic and hypotensive, and severe stress can precipitate adrenal crisis. Primary adrenal failure may simultaneously remove aldosterone, which adds sodium loss, volume depletion and potassium retention. Before looking at the answer, predict the direction from physiology alone. Which pair best fits cortisol deficiency: hypoglycaemia with hypotension, or hyperglycaemia with hypertension?",
+      "feedback": {
+        "correct": "Correct. Cortisol deficiency removes gluconeogenic support and reduces vascular responsiveness, so hypoglycaemia and hypotension are exactly the directions predicted by the physiology.",
+        "wrong": "That is the opposite direction. Hyperglycaemia and hypertension fit cortisol excess much better. Deficiency reduces glucose support and vascular responsiveness, so think hypoglycaemia and hypotension."
+      }
+    },
+    {
+      "id": "08-localise",
+      "title": "Localise failure",
+      "script": "Now use the feedback loop to localise the defect. In primary adrenal failure, the adrenal cannot make enough cortisol. Cortisol falls, negative feedback disappears, and ACTH rises. If the cortex is broadly affected, aldosterone may also fall, and chronically elevated ACTH can cause hyperpigmentation through melanocortin activity. In central adrenal insufficiency, the problem is upstream: ACTH drive is low or inappropriately normal, so cortisol falls. Aldosterone is usually preserved because its principal control is the renin-angiotensin-aldosterone system rather than ACTH. One axis diagram therefore predicts both the hormone pattern and several bedside clues.",
+      "feedback": {}
+    },
+    {
+      "id": "09-cah",
+      "title": "CAH logic",
+      "script": "Now we can derive congenital adrenal hyperplasia rather than memorise it. Imagine blocking one enzyme in the steroid pathway. The downstream hormone falls. Precursors before the block accumulate. If cortisol falls, negative feedback to the pituitary falls, so ACTH rises. Higher ACTH chronically stimulates the adrenal cortex and produces hyperplasia. Meanwhile, accumulated substrate is diverted into biochemical pathways that are still open. That is the whole logic of CAH in one sequence: enzyme block, product down, precursor up, cortisol feedback down, ACTH up, adrenal hyperplasia, and shunting into alternative steroid pathways. The phenotype tells you where the traffic jam sits.",
+      "feedback": {}
+    },
+    {
+      "id": "10-21oh",
+      "title": "21-hydroxylase",
+      "script": "Apply that logic to twenty-one-hydroxylase deficiency, the commonest form of congenital adrenal hyperplasia. The block prevents efficient movement from seventeen-hydroxyprogesterone toward cortisol. Cortisol therefore falls and ACTH rises. Seventeen-hydroxyprogesterone accumulates, which is why it is useful diagnostically. Steroid substrate is increasingly diverted toward androgen synthesis, so adrenal androgens rise. In severe, classic salt-wasting disease, mineralocorticoid synthesis is also impaired and aldosterone falls. From one enzyme block you can therefore derive the major pattern: cortisol low, ACTH high, adrenal hyperplasia, androgens high, and in severe disease aldosterone low with salt wasting.",
+      "feedback": {}
+    },
+    {
+      "id": "11-crisis",
+      "title": "Clinical interruption",
+      "script": "Clinical interruption. A ten-day-old baby has poor feeding, weight loss, vomiting and lethargy. Sodium is one hundred and twenty-one, potassium seven point zero, and glucose two point four millimoles per litre. Do not start by naming a disease. Derive the physiology. Hyponatraemia with severe hyperkalaemia suggests loss of mineralocorticoid effect. Hypoglycaemia during illness suggests loss of cortisol support. Together they can produce profound volume depletion and shock. Now choose the single mechanism that best connects the findings: combined cortisol and aldosterone deficiency, excess ADH alone, or insulin deficiency?",
+      "feedback": {
+        "correct": "Yes. Combined cortisol and aldosterone deficiency links the whole pattern. Aldosterone loss causes renal sodium wasting, potassium retention and hypovolaemia. Cortisol loss adds hypoglycaemia and impaired stress adaptation. In a neonate, severe twenty-one-hydroxylase deficiency is a key cause.",
+        "wrong-adh": "Excess ADH can contribute to hyponatraemia, but it does not explain marked hyperkalaemia plus hypoglycaemic stress failure. Those findings point toward combined mineralocorticoid and glucocorticoid deficiency.",
+        "wrong-insulin": "Insulin deficiency would drive glucose upward, not down, and it does not explain this salt-wasting pattern. The combination of hyperkalaemia, hyponatraemia, volume loss and hypoglycaemia points to adrenal hormone deficiency."
+      }
+    },
+    {
+      "id": "12-contrast",
+      "title": "Contrast defects",
+      "script": "Move the enzyme block and watch the phenotype change. In twenty-one-hydroxylase deficiency, cortisol falls, androgens rise, and severe disease can reduce aldosterone: think androgen excess with possible salt wasting. In eleven-beta-hydroxylase deficiency, cortisol still falls and androgens rise, but eleven-deoxycorticosterone accumulates. It has mineralocorticoid activity, so hypertension replaces salt wasting. In seventeen-alpha-hydroxylase deficiency, sex-steroid synthesis falls while mineralocorticoid precursors accumulate, again producing hypertension but with reduced sex-steroid effects. The point is not three lists. The point is that the position of the block determines which hormones disappear and which precursors escape.",
+      "feedback": {}
+    },
+    {
+      "id": "13-reconstruct",
+      "title": "Reconstruct",
+      "script": "Now rebuild the entire story. Adrenal zones determine which enzymes are present, and therefore which hormones are made. Cholesterol supplies every steroid pathway. ACTH drives cortisol production in the zona fasciculata. Cortisol preserves fuel availability, vascular responsiveness and controlled inflammation during stress, while feeding back to suppress CRH and ACTH. Remove cortisol and you predict hypoglycaemia, hypotension and stress failure. Block twenty-one-hydroxylase and cortisol falls, ACTH rises, adrenal androgens rise, and in severe disease aldosterone falls. That is the MeducateMe model: zone to enzyme, enzyme to hormone, hormone to feedback, feedback to physiology, then run the same chain forward into disease.",
+      "feedback": {}
+    }
+  ]
+}
