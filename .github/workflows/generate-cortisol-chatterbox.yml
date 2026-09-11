@@ -1,0 +1,114 @@
+name: Generate cortisol Chatterbox narration
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'narration/references/voice-reference.wav'
+      - 'tools/generate_cortisol_chatterbox.py'
+      - 'narration/cortisol-guided.json'
+      - '.github/workflows/generate-cortisol-chatterbox.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cortisol-chatterbox
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    name: Generate ${{ matrix.stage }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        stage:
+          - 01-map
+          - 02-zones
+          - 03-cholesterol
+          - 04-build
+          - 05-axis
+          - 06-actions
+          - 07-deficiency
+          - 08-localise
+          - 09-cah
+          - 10-21oh
+          - 11-crisis
+          - 12-contrast
+          - 13-reconstruct
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: Install Chatterbox
+        run: pip install chatterbox-tts
+
+      - name: Generate narration section
+        env:
+          CHATTERBOX_STAGE: ${{ matrix.stage }}
+          CHATTERBOX_EXAGGERATION: '0.65'
+          CHATTERBOX_CFG_WEIGHT: '0.35'
+          CHATTERBOX_MAX_CHARS: '280'
+          CHATTERBOX_PAUSE_MS: '180'
+        run: python tools/generate_cortisol_chatterbox.py
+
+      - name: Verify generated section
+        run: test -s "audio/cortisol-chatterbox/${{ matrix.stage }}.mp3"
+
+      - name: Upload generated section
+        uses: actions/upload-artifact@v4
+        with:
+          name: cortisol-${{ matrix.stage }}
+          path: audio/cortisol-chatterbox/${{ matrix.stage }}*.mp3
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    name: Publish complete cortisol lesson
+    needs: generate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update checkout to latest main
+        run: git pull --rebase origin main
+
+      - name: Download all generated sections
+        uses: actions/download-artifact@v4
+        with:
+          pattern: cortisol-*
+          path: audio/cortisol-chatterbox
+          merge-multiple: true
+
+      - name: Verify complete lesson
+        run: |
+          set -e
+          for f in 01-map 02-zones 03-cholesterol 04-build 05-axis 06-actions 07-deficiency 08-localise 09-cah 10-21oh 11-crisis 12-contrast 13-reconstruct; do
+            test -s "audio/cortisol-chatterbox/$f.mp3" || { echo "Missing $f.mp3"; exit 1; }
+          done
+
+      - name: Commit complete Chatterbox narration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add audio/cortisol-chatterbox/*.mp3
+          if git diff --cached --quiet; then
+            echo 'No audio changes to commit'
+          else
+            git commit -m 'Generate complete Chatterbox cortisol narration'
+            git push origin HEAD:main
+          fi
