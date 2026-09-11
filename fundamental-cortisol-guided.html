@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Cortisol — guided flagship lesson | MeducateMe</title>
+  <link rel="stylesheet" href="site-v2.css?v=11" />
+  <style>
+    :root{--cort:#e9a51b;--aldo:#56b7a9;--andr:#ba86ff;--danger:#ff6b62;--panel:#0d0e11;--line2:#ffffff18}
+    *{box-sizing:border-box}.topbar{height:62px;display:flex;align-items:center;gap:18px;padding:0 4vw;border-bottom:1px solid var(--line);background:#090a0cf4;position:relative;z-index:20}.back{font-size:10px;color:var(--muted);letter-spacing:.1em}.lesson-progress{margin-left:auto;min-width:150px}.lesson-progress small{display:flex;justify-content:space-between;color:var(--muted);font-size:9px;letter-spacing:.09em}.track{height:3px;background:#ffffff12;margin-top:7px;overflow:hidden}.track i{display:block;height:100%;width:0;background:var(--cort);transition:width .25s ease}
+    main{width:min(1160px,94vw);height:calc(100dvh - 62px);margin:auto;position:relative;overflow:hidden}.stage{display:none;height:100%;overflow:auto;padding:34px 2px 116px;scrollbar-width:thin}.stage.active{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(26px,5vw,70px);align-content:center}.stage h1,.stage h2{font-size:clamp(38px,6vw,76px);line-height:.9;letter-spacing:-.045em;margin:10px 0;text-transform:uppercase}.stage em{font-style:normal;color:var(--cort)}.stage p{color:var(--muted);font-size:16px;line-height:1.58}.panel,.question,.organ,.compare article,.zone,.path{border:1px solid var(--line);background:var(--panel);padding:18px}.visual{position:relative}.hero-img{display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border:1px solid var(--line2);background:radial-gradient(circle at 65% 45%,#e9a51b14,transparent 43%),#090a0c;box-shadow:0 24px 70px #0009}.key{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line2);border-top:0}.key div{padding:9px;border-right:1px solid var(--line2);font-size:10px;color:var(--muted)}.key b{display:block;color:var(--ink);font-size:11px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:currentColor}.zones,.organs,.compare{display:grid;gap:8px}.zone{display:grid;grid-template-columns:14px 1fr auto;gap:10px;align-items:center}.zone strong{color:var(--ink)}.zone small{color:var(--muted)}.zg{color:#d9a843}.zf{color:#c7783e}.zr{color:#a5524e}.zm{color:#8c5a8a}.paths{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.path:nth-child(1){border-top:3px solid var(--aldo)}.path:nth-child(2){border-top:3px solid var(--cort)}.path:nth-child(3){border-top:3px solid var(--andr)}.flow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.node{border:1px solid var(--line);padding:13px 14px;font-weight:800;background:#0a0b0d}.arrow{font-size:22px;color:var(--cort)}.chem{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;line-height:1.9}.enzyme{color:var(--cort)}.block{display:inline-block;border:1px solid var(--danger);color:var(--danger);padding:1px 5px}.organs{grid-template-columns:repeat(2,1fr)}.organ strong{display:block;color:var(--cort);margin-bottom:4px}.question{border-color:#e9a51b88;margin-top:15px}.answers{display:flex;gap:7px;flex-wrap:wrap}.answers button{border:1px solid var(--line);background:#ffffff04;color:var(--ink);padding:10px 12px;cursor:pointer}.answers button.good{border-color:#77d7a1;background:#77d7a112}.answers button.bad{border-color:var(--danger);background:#ff6b6210}.feedback{min-height:22px;color:var(--ink);margin-top:10px}.compare{grid-template-columns:1fr 1fr}.compare article b{color:var(--cort)}
+    .cue{transition:opacity .45s ease,transform .45s ease,filter .45s ease}.guided .stage.active .cue{opacity:.14;transform:translateY(8px);filter:saturate(.45)}.guided .stage.active .cue.is-on{opacity:1;transform:none;filter:none}.checkpoint{display:none}.checkpoint.ready{display:block;animation:rise .4s ease both}@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    .lesson-controls{position:absolute;z-index:30;left:0;right:0;bottom:10px;display:flex;gap:8px;align-items:center;padding:8px;border:1px solid #ffffff18;background:#090a0cf2;backdrop-filter:blur(12px)}.lesson-controls button,.lesson-controls select{height:38px;border:1px solid var(--line);background:#111216;color:var(--ink);padding:0 12px;font-weight:700}.lesson-controls .play{background:var(--cort);border-color:var(--cort);color:#090a0c}.lesson-controls .spacer{flex:1}.lesson-controls button:disabled{opacity:.35}.caption{position:absolute;z-index:25;left:50%;bottom:66px;transform:translateX(-50%);width:min(780px,calc(100vw - 28px));max-height:27vh;overflow:auto;display:none;padding:12px 15px;border:1px solid #ffffff1f;background:#050608f5;color:#fff;font-size:13px;line-height:1.6;box-shadow:0 8px 30px #000a}.caption.open{display:block}.audio-note{position:absolute;z-index:26;right:8px;bottom:68px;color:var(--cort);font-size:9px;letter-spacing:.1em;text-transform:uppercase}.start-card{position:fixed;z-index:100;inset:0;background:radial-gradient(circle at 72% 42%,#e9a51b16,transparent 34%),#08090beF;display:grid;place-items:center;padding:22px}.start-card[hidden]{display:none}.start-inner{width:min(760px,94vw);border:1px solid #ffffff1f;background:#0c0d10;padding:clamp(24px,5vw,54px);box-shadow:0 30px 90px #000}.start-inner h1{font-size:clamp(42px,8vw,82px);line-height:.88;letter-spacing:-.05em;text-transform:uppercase;margin:10px 0}.start-inner em{font-style:normal;color:var(--cort)}.start-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.start-actions button{padding:13px 18px;border:1px solid var(--line);background:#15161a;color:var(--ink);font-weight:800}.start-actions .primary{background:var(--cort);border-color:var(--cort);color:#090a0c}.micro{font-size:11px!important;color:var(--muted)!important}.free .cue{opacity:1!important;transform:none!important;filter:none!important}.free .checkpoint{display:block}
+    @media(max-width:820px){.topbar{height:58px;padding:0 3vw;gap:10px}.back{display:none}.lesson-progress{min-width:120px}main{height:calc(100dvh - 58px)}.stage.active{grid-template-columns:1fr;align-content:start;gap:18px;padding-top:20px}.stage h1,.stage h2{font-size:clamp(34px,11vw,54px)}.stage p{font-size:14px}.hero-img{max-height:38vh}.key{grid-template-columns:repeat(2,1fr)}.paths,.organs,.compare{grid-template-columns:1fr}.panel,.question,.organ,.compare article,.zone,.path{padding:14px}.lesson-controls{left:0;right:0;bottom:7px;overflow-x:auto}.lesson-controls button,.lesson-controls select{flex:0 0 auto;height:36px;padding:0 10px}.lesson-controls .label-hide{display:none}.caption{bottom:60px}.audio-note{display:none}}
+    @media(prefers-reduced-motion:reduce){.cue,.checkpoint{transition:none!important;animation:none!important}}
+  </style>
+</head>
+<body>
+  <div class="start-card" id="start-card">
+    <div class="start-inner">
+      <span class="eyebrow">Flagship fundamental · guided lesson</span>
+      <h1>Cortisol<br><em>build it, then break it</em></h1>
+      <p>One continuous teaching journey. Narration drives the diagrams, pauses for predictions, gives spoken feedback and then rebuilds the entire mechanism.</p>
+      <div class="start-actions"><button class="primary" id="start-guided">▶ Start guided lesson</button><button id="start-free">Explore freely</button></div>
+      <p class="micro">Audio uses the MeducateMe Chatterbox voice when available, with a device voice as an automatic fallback.</p>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="hub.html"><b>MEDUCATE</b>ME</a>
+    <a class="back" href="fundamentals.html">← FUNDAMENTALS</a>
+    <div class="lesson-progress"><small><span id="step-label">STEP 1</span><span id="step-title">ADRENAL MAP</span></small><div class="track"><i id="progress-fill"></i></div></div>
+  </header>
+
+  <main id="lesson">
+    <section class="stage active" data-stage="01-map" data-title="Adrenal map">
+      <div><span class="eyebrow cue" data-cue="0">Start from zero</span><h1 class="cue" data-cue=".04">Meet the <em>adrenal gland</em></h1><p class="cue" data-cue=".16">Two small glands above the kidneys contain several endocrine systems. Build the anatomy first. Disease will become much easier once every hormone has a physical home.</p><div class="question checkpoint"><h3>Prediction: if cortisol vanished during severe illness, what becomes dangerous first?</h3><div class="answers"><button data-feedback-key="correct" data-correct="true">Stress adaptation</button><button data-feedback-key="wrong" data-correct="false">Bone growth</button></div><div class="feedback" aria-live="polite"></div></div></div>
+      <div class="visual cue" data-cue=".28"><img class="hero-img" src="adrenal-anatomy-plate.webp" alt="Kidney and adrenal gland with magnified cortical layers and medulla"><div class="key"><div class="zg"><b><i class="dot"></i>Glomerulosa</b>Aldosterone</div><div class="zf cue" data-cue=".55"><b><i class="dot"></i>Fasciculata</b>Cortisol</div><div class="zr"><b><i class="dot"></i>Reticularis</b>Androgens</div><div class="zm"><b><i class="dot"></i>Medulla</b>Catecholamines</div></div></div>
+    </section>
+
+    <section class="stage" data-stage="02-zones" data-title="Zones">
+      <div><span class="eyebrow cue" data-cue="0">Anatomy predicts chemistry</span><h2 class="cue" data-cue=".05">Read it <em>outside → in</em></h2><p class="cue" data-cue=".16">The cortical zones look different because they express different steroidogenic enzymes. The medulla is a different tissue altogether.</p></div>
+      <div class="zones"><div class="zone zg cue" data-cue=".22"><i class="dot"></i><div><strong>Zona glomerulosa</strong><br><small>RAAS + potassium</small></div><b>Aldosterone</b></div><div class="zone zf cue" data-cue=".4"><i class="dot"></i><div><strong>Zona fasciculata</strong><br><small>ACTH</small></div><b>Cortisol</b></div><div class="zone zr cue" data-cue=".58"><i class="dot"></i><div><strong>Zona reticularis</strong><br><small>ACTH influence</small></div><b>Androgens</b></div><div class="zone zm cue" data-cue=".76"><i class="dot"></i><div><strong>Medulla</strong><br><small>Sympathetic nerves</small></div><b>Catecholamines</b></div></div>
+    </section>
+
+    <section class="stage" data-stage="03-cholesterol" data-title="Cholesterol">
+      <div><span class="eyebrow cue" data-cue="0">One raw material</span><h2 class="cue" data-cue=".05">Every steroid <em>starts with cholesterol</em></h2><p class="cue" data-cue=".15">StAR moves cholesterol into the mitochondrion. CYP11A1 removes its side chain to make pregnenolone. From that common junction, enzyme availability determines the destination.</p></div>
+      <div class="panel"><div class="flow cue" data-cue=".25"><div class="node">Cholesterol</div><span class="arrow">→</span><div class="node">Pregnenolone</div></div><p class="cue" data-cue=".42"><span class="enzyme">StAR</span> = mitochondrial transport · <span class="enzyme">CYP11A1</span> = side-chain cleavage</p><div class="paths"><div class="path cue" data-cue=".58"><b>Mineralocorticoid</b><p>Aldosterone</p></div><div class="path cue" data-cue=".67"><b>Glucocorticoid</b><p>Cortisol</p></div><div class="path cue" data-cue=".76"><b>Sex steroid</b><p>DHEA / androstenedione</p></div></div></div>
+    </section>
+
+    <section class="stage" data-stage="04-build" data-title="Build cortisol">
+      <div><span class="eyebrow cue" data-cue="0">Assembly line</span><h2 class="cue" data-cue=".05">Build <em>cortisol</em></h2><p class="cue" data-cue=".15">You do not need every enzyme at once. The clinically useful checkpoints are 17-alpha-hydroxylase, 21-hydroxylase and 11-beta-hydroxylase.</p></div>
+      <div class="panel chem"><div class="cue" data-cue=".22">Cholesterol<br>↓ CYP11A1<br>Pregnenolone</div><div class="cue" data-cue=".4">↓ <span class="enzyme">17α-hydroxylase</span><br>17-OH pregnenolone<br>↓ 3β-HSD<br>17-OH progesterone</div><div class="cue" data-cue=".62">↓ <span class="enzyme">21-hydroxylase</span><br>11-deoxycortisol</div><div class="cue" data-cue=".77">↓ <span class="enzyme">11β-hydroxylase</span><br><strong style="color:var(--cort);font-size:1.3em">CORTISOL</strong></div></div>
+    </section>
+
+    <section class="stage" data-stage="05-axis" data-title="HPA axis">
+      <div><span class="eyebrow cue" data-cue="0">Who turns the factory on?</span><h2 class="cue" data-cue=".05">The <em>HPA axis</em></h2><p class="cue" data-cue=".15">The hypothalamus releases CRH. The anterior pituitary releases ACTH. ACTH drives cortisol synthesis in the zona fasciculata. Cortisol then feeds back to both brain levels.</p></div>
+      <div class="panel"><div class="flow"><div class="node cue" data-cue=".28">Hypothalamus<br><small>CRH</small></div><span class="arrow cue" data-cue=".36">→</span><div class="node cue" data-cue=".42">Pituitary<br><small>ACTH</small></div><span class="arrow cue" data-cue=".5">→</span><div class="node cue" data-cue=".56">Adrenal<br><small>Cortisol</small></div></div><p class="cue" data-cue=".7" style="color:var(--cort)">Cortisol ─| CRH and ACTH</p><p class="cue" data-cue=".8">ACTH → MC2R → cAMP / PKA → StAR + steroidogenic enzymes.</p></div>
+    </section>
+
+    <section class="stage" data-stage="06-actions" data-title="What cortisol does">
+      <div><span class="eyebrow cue" data-cue="0">Physiology before pathology</span><h2 class="cue" data-cue=".05">Cortisol helps you <em>survive stress</em></h2><p class="cue" data-cue=".14">Think of three immediate jobs: make fuel available, preserve vascular responsiveness, and restrain excessive inflammation.</p></div>
+      <div class="organs"><div class="organ cue" data-cue=".24"><strong>Liver</strong>↑ gluconeogenesis → preserve glucose</div><div class="organ cue" data-cue=".34"><strong>Muscle</strong>↑ amino-acid substrate</div><div class="organ cue" data-cue=".44"><strong>Adipose</strong>mobilise fuel</div><div class="organ cue" data-cue=".55"><strong>Vasculature</strong>supports catecholamine responsiveness</div><div class="organ cue" data-cue=".66"><strong>Immune system</strong>restrains inflammatory signalling</div><div class="organ cue" data-cue=".78"><strong>Growth & bone</strong>chronic excess suppresses both</div></div>
+    </section>
+
+    <section class="stage" data-stage="07-deficiency" data-title="Remove cortisol">
+      <div><span class="eyebrow cue" data-cue="0">Prediction before revelation</span><h2 class="cue" data-cue=".05">Remove <em>cortisol</em></h2><p class="cue" data-cue=".16">Run normal physiology backwards. During fasting, infection or trauma, glucose support falls and vascular responsiveness falls.</p><div class="question checkpoint"><h3>Which pair best fits cortisol deficiency?</h3><div class="answers"><button data-feedback-key="correct" data-correct="true">Hypoglycaemia + hypotension</button><button data-feedback-key="wrong" data-correct="false">Hyperglycaemia + hypertension</button></div><div class="feedback" aria-live="polite"></div></div></div>
+      <div class="panel chem"><div class="cue" data-cue=".3">Cortisol ↓</div><div class="cue" data-cue=".46">→ gluconeogenic support ↓<br>→ vascular responsiveness ↓</div><div class="cue" data-cue=".66">→ hypoglycaemia + hypotension</div><div class="cue" data-cue=".78">→ severe stress can precipitate <span class="block">ADRENAL CRISIS</span></div></div>
+    </section>
+
+    <section class="stage" data-stage="08-localise" data-title="Localise failure">
+      <div><span class="eyebrow cue" data-cue="0">Use feedback to localise</span><h2 class="cue" data-cue=".05">Primary vs <em>central</em></h2><p class="cue" data-cue=".16">The HPA axis predicts the blood tests. Ask whether the adrenal itself has failed or whether ACTH drive has failed upstream.</p></div>
+      <div class="compare"><article class="cue" data-cue=".3"><h3>Primary adrenal failure</h3><p>Cortisol ↓ → feedback ↓ → <b>ACTH ↑</b>. Aldosterone may also fall. High ACTH can cause hyperpigmentation.</p></article><article class="cue" data-cue=".58"><h3>Central failure</h3><p>ACTH is low or inappropriately normal → cortisol ↓. <b>Aldosterone is usually preserved</b> because RAAS is its main regulator.</p></article></div>
+    </section>
+
+    <section class="stage" data-stage="09-cah" data-title="CAH logic">
+      <div><span class="eyebrow cue" data-cue="0">Now break the pathway</span><h2 class="cue" data-cue=".05">Congenital adrenal <em>hyperplasia</em></h2><p class="cue" data-cue=".15">Do not memorise CAH as a table. Block one enzyme and let the pathway tell you what must happen next.</p></div>
+      <div class="panel chem"><div class="cue" data-cue=".25">Enzyme block → downstream product ↓</div><div class="cue" data-cue=".4">Cortisol ↓ → negative feedback ↓ → ACTH ↑</div><div class="cue" data-cue=".57">ACTH ↑ → adrenal stimulation → <b>hyperplasia</b></div><div class="cue" data-cue=".72">Precursor ↑ → substrate is diverted into pathways that remain open</div></div>
+    </section>
+
+    <section class="stage" data-stage="10-21oh" data-title="21-hydroxylase">
+      <div><span class="eyebrow cue" data-cue="0">The commonest block</span><h2 class="cue" data-cue=".05">21-hydroxylase <em>deficiency</em></h2><p class="cue" data-cue=".15">Cortisol falls. In severe disease aldosterone also falls. 17-hydroxyprogesterone accumulates, while steroid flux is shunted toward androgen synthesis.</p></div>
+      <div class="panel chem"><div class="cue" data-cue=".25">17-OH progesterone<br>↓ <span class="block">21-hydroxylase BLOCK</span><br>11-deoxycortisol → cortisol ↓</div><div class="cue" data-cue=".48">↘ androgens ↑</div><div class="cue" data-cue=".62">ACTH ↑ → adrenal hyperplasia</div><div class="cue" data-cue=".76">Severe defect → aldosterone ↓ → salt wasting</div></div>
+    </section>
+
+    <section class="stage" data-stage="11-crisis" data-title="Clinical interruption">
+      <div><span class="eyebrow cue" data-cue="0">Clinical interruption</span><h2 class="cue" data-cue=".05">A 10-day-old <em>is collapsing</em></h2><p class="cue" data-cue=".17">Poor feeding, weight loss, vomiting and lethargy. Sodium 121, potassium 7.0, glucose 2.4 mmol/L.</p><div class="question checkpoint"><h3>What single mechanism connects the findings?</h3><div class="answers"><button data-feedback-key="correct" data-correct="true">Cortisol + aldosterone deficiency</button><button data-feedback-key="wrong-adh" data-correct="false">Excess ADH alone</button><button data-feedback-key="wrong-insulin" data-correct="false">Insulin deficiency</button></div><div class="feedback" aria-live="polite"></div></div></div>
+      <div class="panel chem"><div class="cue" data-cue=".34">Aldosterone ↓ → renal Na⁺ loss + K⁺ retention</div><div class="cue" data-cue=".52">→ hypovolaemia + hyponatraemia + hyperkalaemia</div><div class="cue" data-cue=".68">Cortisol ↓ → hypoglycaemia + impaired stress response</div><div class="cue" data-cue=".82"><span class="block">SALT-WASTING ADRENAL CRISIS</span></div></div>
+    </section>
+
+    <section class="stage" data-stage="12-contrast" data-title="Contrast defects">
+      <div><span class="eyebrow cue" data-cue="0">Location predicts phenotype</span><h2 class="cue" data-cue=".05">Move the <em>enzyme block</em></h2><p class="cue" data-cue=".15">The phenotype changes because the accumulated precursors and open escape pathways change.</p></div>
+      <div class="compare"><article class="cue" data-cue=".28"><h3>21-hydroxylase ↓</h3><p>Cortisol ↓ · ± aldosterone ↓ · androgens ↑</p><b>Salt wasting + androgen excess</b></article><article class="cue" data-cue=".46"><h3>11β-hydroxylase ↓</h3><p>Cortisol ↓ · DOC ↑ · androgens ↑</p><b>Hypertension + androgen excess</b></article><article class="cue" data-cue=".66"><h3>17α-hydroxylase ↓</h3><p>Cortisol ↓ · sex steroids ↓ · mineralocorticoid precursors ↑</p><b>Hypertension + reduced sex-steroid effects</b></article></div>
+    </section>
+
+    <section class="stage" data-stage="13-reconstruct" data-title="Reconstruct">
+      <div><span class="eyebrow cue" data-cue="0">Reconstruct</span><h2 class="cue" data-cue=".05">One system.<br><em>One causal story.</em></h2><p class="cue" data-cue=".14">If you can rebuild the system from normal anatomy to disease, you no longer need to remember CAH as disconnected facts.</p></div>
+      <div class="panel chem"><div class="cue" data-cue=".22">ADRENAL ZONE → ENZYME SET → HORMONE</div><div class="cue" data-cue=".38">CHOLESTEROL → steroidogenesis → CORTISOL</div><div class="cue" data-cue=".53">CORTISOL → fuel + vascular responsiveness + inflammatory restraint</div><div class="cue" data-cue=".68">CORTISOL ─| CRH / ACTH</div><div class="cue" data-cue=".8"><span class="block">21-OH block</span> → cortisol ↓ + ACTH ↑ + androgens ↑ ± aldosterone ↓</div><p class="cue" data-cue=".92"><a class="btn" href="fundamentals.html">Back to Fundamentals</a></p></div>
+    </section>
+
+    <div class="caption" id="caption" aria-live="polite"></div>
+    <div class="audio-note" id="audio-note">Narration ready</div>
+    <div class="lesson-controls">
+      <button id="prev" aria-label="Previous step">←</button>
+      <button class="play" id="play">▶ <span class="label-hide">Play</span></button>
+      <button id="mute">🔊</button>
+      <select id="speed" aria-label="Narration speed"><option value="0.8">0.8×</option><option value="1" selected>1×</option><option value="1.2">1.2×</option><option value="1.5">1.5×</option></select>
+      <button id="cc">CC</button><button id="free">Explore</button><span class="spacer"></span><button id="next">Continue →</button>
+    </div>
+    <audio id="lesson-audio" preload="metadata" playsinline webkit-playsinline></audio>
+    <audio id="feedback-audio" preload="none" playsinline webkit-playsinline></audio>
+  </main>
+  <script src="cortisol-guided.js?v=1"></script>
+</body>
+</html>
