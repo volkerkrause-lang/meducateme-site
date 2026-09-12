@@ -97,10 +97,9 @@ def get_model(config):
     from chatterbox.mtl_tts import ChatterboxMultilingualTTS
     dev = device_name()
     print(f"Narration device: {dev}")
-    model = ChatterboxMultilingualTTS.from_pretrained(
-        device=dev,
-        t3_model=config["model"].get("t3_model", "v3"),
-    )
+    # Current chatterbox-tts multilingual API accepts the target device here.
+    # Older experimental examples also passed t3_model, but current releases do not.
+    model = ChatterboxMultilingualTTS.from_pretrained(device=dev)
     return model, torch
 
 
@@ -193,7 +192,7 @@ def process_job(job_path, model=None, torch_mod=None):
             if not reference.exists():
                 raise RuntimeError(f"Missing voice reference: {reference}")
             out = output_path(config, slug, lang, test=test)
-            model_version = f"chatterbox-multilingual-{config['model'].get('t3_model','v3')}"
+            model_version = "chatterbox-multilingual-current"
             fingerprint = sha256_text(json.dumps({
                 "text": normalize_space(text),
                 "lang": lang,
