@@ -1,0 +1,5 @@
+.venv-narration/
+.local-narration-tmp/
+__pycache__/
+*.pyc
+.DS_Store
