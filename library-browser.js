@@ -8,7 +8,7 @@
     fundamentals:{eyebrow:'Normal physiology → mental model',title:'Fundamentals',intro:'Understand normal function first. Build physiology systematically, then follow each mechanism into disease and the child at the bedside.',image:'meducate-brain.webp',placeholder:'Search cardiac output, ADH, V/Q, cortisol…',flagLabel:'Flagship fundamental'}
   }[key];
   const liveTitle={cases:'Vomiting + deep breathing',concepts:'Hyponatraemia',fundamentals:'Cortisol physiology'}[key];
-  const liveHref=data.flag.href;
+  const liveHref={cases:'lesson.html?topic=dka',concepts:'concept-hyponatraemia.html',fundamentals:'fundamental-cortisol-guided.html'}[key];
   const shell=document.querySelector('.learning-browser');
   if(!shell)return;
   const title=document.getElementById('preview-title'),desc=document.getElementById('preview-desc'),meta=document.getElementById('preview-meta'),status=document.getElementById('preview-status'),start=document.getElementById('preview-start'),visual=document.querySelector('.lesson-visual');
