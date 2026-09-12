@@ -17,8 +17,7 @@ if [[ "$(uname -m)" != "arm64" ]]; then
 fi
 
 if ! command -v brew >/dev/null 2>&1; then
-  echo "Homebrew is required for the Mac narration setup." >&2
-  echo "Install it from https://brew.sh and run this script again." >&2
+  echo "Homebrew is required. Install it from https://brew.sh and run this script again." >&2
   exit 1
 fi
 
@@ -27,48 +26,38 @@ if ! command -v ffmpeg >/dev/null 2>&1; then
   brew install ffmpeg
 fi
 
-# Chatterbox currently requires Python >=3.10 and is most reliably used with Python 3.11.
-# Do not use the older Python 3.9 that ships with some macOS installations.
-PY311="$(brew --prefix python@3.11 2>/dev/null)/bin/python3.11"
-if [[ ! -x "$PY311" ]]; then
+PYTHON_BIN="$(brew --prefix python@3.11)/bin/python3.11"
+if [[ ! -x "$PYTHON_BIN" ]]; then
   echo "Installing Python 3.11 with Homebrew..."
   brew install python@3.11
-  PY311="$(brew --prefix python@3.11)/bin/python3.11"
+  PYTHON_BIN="$(brew --prefix python@3.11)/bin/python3.11"
 fi
 
-if [[ ! -x "$PY311" ]]; then
-  echo "Python 3.11 installation could not be found." >&2
-  exit 1
-fi
-
-echo "Using Python: $($PY311 --version)"
+echo "Using Python: $($PYTHON_BIN --version)"
 
 VENV="$ROOT/.venv-narration"
-if [[ -d "$VENV" ]]; then
-  EXISTING_VERSION="$($VENV/bin/python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")' 2>/dev/null || true)"
-  if [[ "$EXISTING_VERSION" != "3.11" ]]; then
-    echo "Replacing existing narration environment (Python ${EXISTING_VERSION:-unknown}) with Python 3.11..."
-    rm -rf "$VENV"
-  fi
-fi
-
-if [[ ! -d "$VENV" ]]; then
-  "$PY311" -m venv "$VENV"
-fi
-
+rm -rf "$VENV"
+"$PYTHON_BIN" -m venv "$VENV"
 source "$VENV/bin/activate"
-python -m pip install --upgrade pip setuptools wheel
-# Install NumPy explicitly first to avoid legacy dependency build failures.
-python -m pip install 'numpy>=1.24,<2.0'
+
+# Chatterbox currently depends on resemble-perth, which imports pkg_resources.
+# setuptools 81+ removes pkg_resources and causes PerthImplicitWatermarker to be None.
+python -m pip install --upgrade pip wheel
+python -m pip install "setuptools<81" "numpy<2"
 python -m pip install --upgrade chatterbox-tts
+# Re-assert the compatible setuptools pin in case a dependency upgraded it.
+python -m pip install --force-reinstall "setuptools<81"
 
 python - <<'PY'
-import sys
 import torch
-print("Python:", sys.version.split()[0])
+import perth
+print("Python:", __import__('sys').version.split()[0])
 print("PyTorch:", torch.__version__)
 print("MPS built:", torch.backends.mps.is_built() if hasattr(torch.backends, "mps") else False)
 print("MPS available:", torch.backends.mps.is_available() if hasattr(torch.backends, "mps") else False)
+print("Perth watermarker available:", callable(getattr(perth, "PerthImplicitWatermarker", None)))
+if not callable(getattr(perth, "PerthImplicitWatermarker", None)):
+    raise SystemExit("ERROR: Chatterbox Perth watermark dependency did not initialise correctly.")
 if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
     print("SUCCESS: Apple Silicon GPU acceleration is available.")
 else:
