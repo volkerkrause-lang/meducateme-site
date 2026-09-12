@@ -1,0 +1,23 @@
+{
+  "common": {
+    "mmol/L": "millimoles per litre",
+    "mmol/l": "millimoles per litre",
+    "mg/kg": "milligrams per kilogram",
+    "mcg/kg": "micrograms per kilogram",
+    "mL/kg": "millilitres per kilogram",
+    "Na+": "sodium",
+    "K+": "potassium",
+    "Ca2+": "calcium",
+    "HCO3-": "bicarbonate"
+  },
+  "en": {
+    "ACTH": "A C T H",
+    "ADH": "A D H",
+    "SIADH": "S I A D H",
+    "DKA": "D K A",
+    "PBT": "P B T"
+  },
+  "de": {},
+  "fr": {},
+  "es": {}
+}
