@@ -92,13 +92,13 @@ def ensure_ffmpeg():
         raise RuntimeError("ffmpeg is not installed. Run tools/setup_macos_narration.sh first.")
 
 
-def get_model(config):
+def get_model(config, device_override=None):
     import torch
     from chatterbox.mtl_tts import ChatterboxMultilingualTTS
-    dev = device_name()
+    dev = device_override or device_name()
+    if dev == "mps" and not (hasattr(torch.backends, "mps") and torch.backends.mps.is_available()):
+        raise RuntimeError("MPS was requested but is not available on this Mac")
     print(f"Narration device: {dev}")
-    # Current chatterbox-tts multilingual API accepts the target device here.
-    # Older experimental examples also passed t3_model, but current releases do not.
     model = ChatterboxMultilingualTTS.from_pretrained(device=dev)
     return model, torch
 
@@ -300,6 +300,21 @@ def direct_generate(args):
     process_job(job_path)
 
 
+def test_engine(device):
+    config = load_json(CONFIG_PATH)
+    dictionary = load_json(ROOT / config["paths"]["pronunciations"])
+    reference = ROOT / config["languages"]["en"]["reference"]
+    if not reference.exists():
+        raise RuntimeError(f"Missing voice reference: {reference}")
+    sentence = "Hello. Welcome to MeducateMe. Today we are going to talk about cortisol and how the body responds to stress."
+    out = ROOT / config["paths"]["audio_root"] / "voice-tests" / "engine" / f"chatterbox-{device}.mp3"
+    model, torch_mod = get_model(config, device_override=device)
+    print(f"Creating controlled {device} test...")
+    render_one(model, torch_mod, config, dictionary, sentence, "en", out, reference)
+    print(f"Created: {out.relative_to(ROOT)}")
+    print("This file is deliberately not auto-committed; listen locally first.")
+
+
 def main():
     parser = argparse.ArgumentParser(description="MeducateMe local multilingual narration worker")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -312,6 +327,8 @@ def main():
     p_gen.add_argument("--languages", nargs="+", default=["en"])
     p_gen.add_argument("--force", action="store_true")
     p_gen.add_argument("--test", action="store_true")
+    p_test = sub.add_parser("test-engine", help="Generate a short controlled English sample on a selected device")
+    p_test.add_argument("--device", choices=["mps", "cpu"], required=True)
     args = parser.parse_args()
     if args.command == "once":
         raise SystemExit(run_once())
@@ -319,6 +336,8 @@ def main():
         watch(args.interval)
     if args.command == "generate":
         direct_generate(args)
+    if args.command == "test-engine":
+        test_engine(args.device)
 
 
 if __name__ == "__main__":
