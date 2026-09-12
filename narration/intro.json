@@ -1,0 +1,25 @@
+{
+  "title": "MeducateMe landing introduction",
+  "stages": [
+    {
+      "id": "01-why",
+      "script": "I’ve always loved learning medicine. But anyone who works in healthcare knows there is an enormous amount to remember — diseases, symptoms, investigations, treatments, guidelines and pathways. And there is only so much information our brains can hold onto as isolated facts."
+    },
+    {
+      "id": "02-connect",
+      "script": "I think information sticks much better when we understand how it fits together. When we can work something out, rather than simply memorise it. That is what MeducateMe is about. It is designed to help you understand not only what happens in medicine, but why it happens."
+    },
+    {
+      "id": "03-cases",
+      "script": "Cases start with the patient in front of you. You can explore cases through symptoms and signs, laboratory abnormalities and common clinical presentations — and work through the reasoning step by step."
+    },
+    {
+      "id": "04-fundamentals",
+      "script": "Fundamentals takes you back to how the normal body works. This is the physiology underneath medicine: the mechanisms you need in order to understand what happens when normal function is disrupted."
+    },
+    {
+      "id": "05-concepts",
+      "script": "Clinical Concepts is a structured library of diseases and important clinical topics. Instead of giving you another list of facts to memorise, each topic is broken down logically — what is happening, why it is happening, and how that explains what you see clinically. The aim is simple: understand the mechanism, connect the pieces, and make medicine easier to remember. I hope you enjoy exploring MeducateMe, and that it helps make some of the more complicated parts of medicine feel a little clearer, more logical and easier to remember. And most of all, I hope it helps you enjoy learning medicine as much as I do."
+    }
+  ]
+}
