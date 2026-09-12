@@ -1,0 +1,42 @@
+{
+  "status": "completed",
+  "slug": "voice-test",
+  "languages": [
+    "en",
+    "de",
+    "fr",
+    "es"
+  ],
+  "texts": {
+    "en": "Hello, and welcome to MeducateMe. I’m Dr Volker Krause. Let’s start with the normal physiology, then change one thing and see what follows. The aim is not simply to memorise medicine, but to understand why it happens.",
+    "de": "Hallo und willkommen bei MeducateMe. Ich bin Dr. Volker Krause. Wir beginnen mit der normalen Physiologie, verändern dann einen Teil des Systems und schauen, was daraus folgt. Das Ziel ist nicht, Medizin einfach auswendig zu lernen, sondern zu verstehen, warum etwas passiert.",
+    "fr": "Bonjour et bienvenue sur MeducateMe. Je suis le docteur Volker Krause. Nous allons commencer par la physiologie normale, puis modifier un élément et observer ce qui se passe ensuite. Le but n’est pas simplement de mémoriser la médecine, mais de comprendre pourquoi les choses se produisent.",
+    "es": "Hola y bienvenido a MeducateMe. Soy el doctor Volker Krause. Vamos a empezar por la fisiología normal, después cambiaremos una parte del sistema y veremos qué ocurre a continuación. El objetivo no es simplemente memorizar medicina, sino entender por qué ocurren las cosas."
+  },
+  "force": true,
+  "test": true,
+  "started_at": "2026-09-12T16:59:56.180602+00:00",
+  "completed_at": "2026-09-12T17:03:50.028257+00:00",
+  "results": [
+    {
+      "language": "en",
+      "output": "audio/voice-tests/en/voice-test.mp3",
+      "skipped": false
+    },
+    {
+      "language": "de",
+      "output": "audio/voice-tests/de/voice-test.mp3",
+      "skipped": false
+    },
+    {
+      "language": "fr",
+      "output": "audio/voice-tests/fr/voice-test.mp3",
+      "skipped": false
+    },
+    {
+      "language": "es",
+      "output": "audio/voice-tests/es/voice-test.mp3",
+      "skipped": false
+    }
+  ]
+}

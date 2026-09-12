@@ -1,4 +1,37 @@
 {
   "schema_version": 1,
-  "generated": {}
+  "generated": {
+    "en/voice-test": {
+      "fingerprint": "5a4a35e74f8f382f84f7f8e9eeb26d3fbdeb90298d5b12366e4dde6dedee0b53",
+      "source_hash": "9d6d0765da79e7370a3f5e9e2361ee7e23c2fe2b9f522a1bae0dfaa7727b5cd3",
+      "language": "en",
+      "model": "chatterbox-multilingual-current",
+      "output": "audio/voice-tests/en/voice-test.mp3",
+      "generated_at": "2026-09-12T17:02:02.680296+00:00"
+    },
+    "de/voice-test": {
+      "fingerprint": "d738742a5e3fb4b2f25600179f1755944418e14c6a0c99f86ef6bdd0576b476d",
+      "source_hash": "5c9c3c9b0fd1e13c5d0fff58335b8679540131b4147ee5c84b5fe847b638f656",
+      "language": "de",
+      "model": "chatterbox-multilingual-current",
+      "output": "audio/voice-tests/de/voice-test.mp3",
+      "generated_at": "2026-09-12T17:02:51.402120+00:00"
+    },
+    "fr/voice-test": {
+      "fingerprint": "8f6778815054d5e93040c11d3a3d3a2189aa3e2ee8253ed26e20825068745b3d",
+      "source_hash": "ccf2e000847f89ac652f03e82c10ab38d057e2f2821969bdff05e9439efb2fa2",
+      "language": "fr",
+      "model": "chatterbox-multilingual-current",
+      "output": "audio/voice-tests/fr/voice-test.mp3",
+      "generated_at": "2026-09-12T17:03:15.510696+00:00"
+    },
+    "es/voice-test": {
+      "fingerprint": "61f7fc9ae7ecc9bdaf7a1896967a80f6df793768d0fefb7c6c6e51ad7fef2d3d",
+      "source_hash": "6242062cea8bd7cd020905adfb89a085f1604ed6620b7e196efb16fa5dd3c318",
+      "language": "es",
+      "model": "chatterbox-multilingual-current",
+      "output": "audio/voice-tests/es/voice-test.mp3",
+      "generated_at": "2026-09-12T17:03:50.027832+00:00"
+    }
+  }
 }
