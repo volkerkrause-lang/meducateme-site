@@ -1,0 +1,30 @@
+{
+  "model": {
+    "engine": "chatterbox-multilingual",
+    "t3_model": "v3",
+    "exaggeration": 0.5,
+    "cfg_weight": 0.35,
+    "temperature": 0.8,
+    "pause_ms": 140,
+    "max_chunk_chars": 360
+  },
+  "languages": {
+    "en": {"name": "English", "enabled": true, "reference": "narration/references/voice-reference.wav"},
+    "de": {"name": "German", "enabled": true, "reference": "narration/references/voice-reference.wav"},
+    "fr": {"name": "French", "enabled": true, "reference": "narration/references/voice-reference.wav"},
+    "es": {"name": "Spanish", "enabled": true, "reference": "narration/references/voice-reference.wav"}
+  },
+  "paths": {
+    "jobs": "local-narration/jobs",
+    "manifest": "local-narration/manifest.json",
+    "pronunciations": "local-narration/pronunciations.json",
+    "audio_root": "audio",
+    "temporary": ".local-narration-tmp"
+  },
+  "git": {
+    "remote": "origin",
+    "branch": "main",
+    "auto_commit": true,
+    "auto_push": true
+  }
+}
