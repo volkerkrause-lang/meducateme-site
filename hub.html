@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="site-v2.css?v=6">
 <style>
   body.hub{overflow-x:hidden;background:#07080a}
+  .mobile-explore{display:none}
   .hub-stage{min-height:100svh;position:relative;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding:110px 0 54px;isolation:isolate}
   .hub-stage:before{content:"";position:absolute;inset:-20%;z-index:-3;background:radial-gradient(circle at 50% 42%,rgba(233,165,27,.12),transparent 28%),radial-gradient(circle at 15% 60%,rgba(58,96,125,.09),transparent 24%),#07080a}
   .hub-stage:after{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(90deg,#07080a 0%,transparent 11%,transparent 89%,#07080a 100%),linear-gradient(0deg,#07080a 0%,transparent 18%,transparent 82%,#07080a 100%)}
@@ -59,14 +60,48 @@
   .hub-about-mini{display:grid;grid-template-columns:120px 1fr;gap:28px;align-items:center;padding-top:28px}
   .hub-about-mini img{width:120px;height:120px;object-fit:cover;filter:grayscale(.15);border:1px solid var(--line)}
   .hub-about-mini h3{margin:0 0 6px;font-size:23px}.hub-about-mini .role{color:var(--gold);font-size:10px;letter-spacing:.13em;text-transform:uppercase}
-  @media(max-width:760px){
-    .hub-stage{padding-top:92px;justify-content:flex-start}.hub-stage h1{font-size:43px;padding:0 22px}.hub-sub{margin-bottom:10px}
-    .deck-wrap{height:58svh;min-height:430px}.deck-card{width:82vw;height:48svh;min-height:390px}.deck-card.prev{--x:-68vw;--z:-205px;--ry:21deg;--scale:.89}.deck-card.next{--x:68vw;--z:-205px;--ry:-21deg;--scale:.89}.deck-card.prev,.deck-card.next{opacity:.62;filter:saturate(.8) brightness(.78)}
-    .card-inner{padding:27px}.card-copy h2{font-size:44px}.card-copy p{font-size:14px;line-height:1.5}.card-orbit{width:54px;height:54px}
-    .deck-controls{margin-top:9px}.deck-nav{gap:11px;padding:5px 7px}.deck-arrow{width:39px;height:39px}.swipe-hint{margin-top:9px}
-    .hub-after{grid-template-columns:1fr;padding:80px 7vw}.hub-about-mini{grid-template-columns:88px 1fr}.hub-about-mini img{width:88px;height:88px}.hub-menu a{font-size:44px}
+
+  @media(min-width:700px) and (max-width:1099px){
+    .hub-stage{padding-top:96px}.hub-stage h1{font-size:clamp(48px,7.2vw,70px);padding:0 5vw}.hub-sub{max-width:620px}
+    .deck-card{width:min(72vw,720px)}.deck-card.prev{--x:-57vw}.deck-card.next{--x:57vw}
   }
-  @media(prefers-reduced-motion:reduce){.deck-card,.card-orbit,.deck-arrow,.card-enter,.swipe-hint:before,.swipe-hint:after{animation:none!important;transition:none!important}}
+
+  @media(max-width:699px){
+    body.hub{overflow-y:auto;background:#050608}
+    .desktop-explore,.hub-after,.footer{display:none!important}
+    .hub-top{height:66px;background:linear-gradient(#050608f8,#050608b8 72%,transparent);padding:0 18px}
+    .hub-brand{font-size:15px}.hub-menu-btn{font-size:8px}
+    .mobile-explore{display:block;scroll-snap-type:y mandatory;overflow-y:auto;overscroll-behavior-y:contain;height:100svh;scroll-behavior:smooth;background:#050608}
+    .mobile-panel{position:relative;min-height:100svh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;isolation:isolate;padding:max(92px,calc(env(safe-area-inset-top) + 78px)) 24px max(36px,env(safe-area-inset-bottom));display:flex;align-items:flex-end}
+    .mobile-panel:before{content:"";position:absolute;inset:-3%;z-index:-3;background-size:cover;background-position:center;transform:scale(1.035);animation:mobileDrift 12s ease-in-out infinite alternate}
+    .mobile-panel:after{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(5,6,8,.42) 0%,rgba(5,6,8,.16) 30%,rgba(5,6,8,.62) 66%,#050608 100%),linear-gradient(90deg,rgba(5,6,8,.5),transparent 55%)}
+    .mobile-intro{align-items:center;justify-content:center;text-align:left}
+    .mobile-intro:before{background-image:url('meducate-coronal-brain.webp');background-position:64% 48%;filter:saturate(.8) brightness(.72)}
+    .mobile-intro:after{background:linear-gradient(180deg,rgba(5,6,8,.3),rgba(5,6,8,.66) 68%,#050608 100%),linear-gradient(90deg,#050608df 0%,#05060866 60%,transparent)}
+    .mobile-cases:before{background-image:url('meducate-torso.webp');background-position:58% center;filter:saturate(.86) brightness(.7)}
+    .mobile-concepts:before{background-image:url('meducate-cells.webp');background-position:center;filter:saturate(.9) brightness(.66)}
+    .mobile-fundamentals:before{background-image:url('meducate-brain.webp');background-position:66% center;filter:saturate(.82) brightness(.7)}
+    @keyframes mobileDrift{to{transform:scale(1.07) translate3d(-1.5%,1%,0)}}
+    .mobile-copy{width:100%;max-width:620px;position:relative;z-index:2;padding-bottom:5vh}
+    .mobile-intro .mobile-copy{padding-bottom:1vh}
+    .mobile-kicker{display:block;color:var(--gold);font-size:9px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;margin-bottom:16px}
+    .mobile-copy h1,.mobile-copy h2{margin:0;letter-spacing:-.045em;text-transform:uppercase}
+    .mobile-copy h1{font-size:clamp(47px,14vw,72px);line-height:.84;max-width:92vw}
+    .mobile-copy h1 em,.mobile-copy h2 em{font-style:normal;color:var(--gold)}
+    .mobile-copy h2{font-size:clamp(52px,16vw,78px);line-height:.83;margin-bottom:20px}
+    .mobile-copy p{color:#d1d0cb;font-size:15px;line-height:1.58;max-width:520px;margin:18px 0 26px;text-shadow:0 2px 18px rgba(0,0,0,.38)}
+    .mobile-route-num{position:absolute;right:0;top:-8px;color:#ffffff50;font-size:10px;font-weight:800;letter-spacing:.18em}
+    .mobile-enter{display:inline-flex;align-items:center;justify-content:space-between;gap:28px;min-width:210px;padding:17px 18px;background:var(--gold);color:#090a0c;font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+    .mobile-enter span{font-size:18px;line-height:1}
+    .mobile-scroll-cue{display:flex;align-items:center;gap:12px;margin-top:34px;color:#ffffff82;font-size:8px;font-weight:800;letter-spacing:.17em;text-transform:uppercase}
+    .mobile-scroll-cue i{display:block;width:34px;height:34px;border:1px solid rgba(255,255,255,.2);border-radius:50%;position:relative;animation:cuePulse 2s ease-in-out infinite}
+    .mobile-scroll-cue i:after{content:"↓";position:absolute;inset:0;display:grid;place-items:center;color:var(--gold);font-style:normal;font-size:16px}
+    @keyframes cuePulse{50%{transform:translateY(5px);border-color:rgba(233,165,27,.45)}}
+    .mobile-rail{position:fixed;z-index:30;right:13px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;pointer-events:none}
+    .mobile-rail span{width:3px;height:18px;border-radius:4px;background:#ffffff24;transition:.3s}.mobile-rail span.active{height:34px;background:var(--gold)}
+  }
+
+  @media(prefers-reduced-motion:reduce){.deck-card,.card-orbit,.deck-arrow,.card-enter,.swipe-hint:before,.swipe-hint:after,.mobile-panel:before,.mobile-scroll-cue i{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body class="hub">
@@ -76,50 +111,88 @@
 </header>
 <div class="hub-menu"><a href="index.html">Home</a><a href="#about">About</a><a href="mailto:hello@meducateme.uk">Contact</a></div>
 <main>
-  <section class="hub-stage" id="hubStage" aria-labelledby="explore-title">
-    <div class="hub-kicker">Choose your route through medicine</div>
-    <h1 id="explore-title">WHAT DO YOU WANT TO <em>UNDERSTAND</em></h1>
-    <p class="hub-sub">Three ways into the same idea: understand why. Move between them, then choose where you want to begin.</p>
+  <div class="desktop-explore">
+    <section class="hub-stage" id="hubStage" aria-labelledby="explore-title">
+      <div class="hub-kicker">Choose your route through medicine</div>
+      <h1 id="explore-title">WHAT DO YOU WANT TO <em>UNDERSTAND</em></h1>
+      <p class="hub-sub">Three ways into the same idea: understand why. Move between them, then choose where you want to begin.</p>
 
-    <div class="deck-wrap" id="deckWrap" aria-roledescription="carousel" aria-label="MeducateMe learning routes">
-      <div class="deck" id="deck">
-        <article class="deck-card active" data-key="cases" data-index="0" aria-hidden="false">
-          <div class="card-bg" aria-hidden="true"></div>
-          <div class="card-inner">
-            <div class="card-top"><span class="card-num">01 · Patient → mechanism</span><span class="card-orbit" aria-hidden="true"></span></div>
-            <div class="card-copy"><h2>Cases</h2><p><strong>Reason from the patient backwards.</strong> Start with symptoms and signs, build the differential, follow the clues and make the physiology explain the child in front of you.</p><a class="card-enter" href="cases.html">Enter cases <span>→</span></a></div>
-          </div>
-        </article>
-        <article class="deck-card next" data-key="concepts" data-index="1" aria-hidden="true">
-          <div class="card-bg" aria-hidden="true"></div>
-          <div class="card-inner">
-            <div class="card-top"><span class="card-num">02 · Disturbance → consequence</span><span class="card-orbit" aria-hidden="true"></span></div>
-            <div class="card-copy"><h2>Clinical<br>Concepts</h2><p><strong>Understand what goes wrong.</strong> Take problems such as hyponatraemia, hypoglycaemia or shock and derive the findings from the underlying disturbance.</p><a class="card-enter" href="clinical-concepts.html">Explore concepts <span>→</span></a></div>
-          </div>
-        </article>
-        <article class="deck-card prev" data-key="fundamentals" data-index="2" aria-hidden="true">
-          <div class="card-bg" aria-hidden="true"></div>
-          <div class="card-inner">
-            <div class="card-top"><span class="card-num">03 · Normal → foundation</span><span class="card-orbit" aria-hidden="true"></span></div>
-            <div class="card-copy"><h2>Fundamentals</h2><p><strong>Understand the normal first.</strong> Build physiology, biochemistry and pathways from first principles so pathology has something solid to connect to.</p><a class="card-enter" href="fundamentals.html">Build foundations <span>→</span></a></div>
-          </div>
-        </article>
-      </div>
-    </div>
-
-    <div class="deck-controls">
-      <div class="deck-nav" aria-label="Carousel controls">
-        <button class="deck-arrow" id="prevCard" aria-label="Previous route">←</button>
-        <div class="deck-dots" id="deckDots">
-          <button class="deck-dot active" data-go="0" aria-label="Show Cases"></button>
-          <button class="deck-dot" data-go="1" aria-label="Show Clinical Concepts"></button>
-          <button class="deck-dot" data-go="2" aria-label="Show Fundamentals"></button>
+      <div class="deck-wrap" id="deckWrap" aria-roledescription="carousel" aria-label="MeducateMe learning routes">
+        <div class="deck" id="deck">
+          <article class="deck-card active" data-key="cases" data-index="0" aria-hidden="false">
+            <div class="card-bg" aria-hidden="true"></div>
+            <div class="card-inner">
+              <div class="card-top"><span class="card-num">01 · Patient → mechanism</span><span class="card-orbit" aria-hidden="true"></span></div>
+              <div class="card-copy"><h2>Cases</h2><p><strong>Reason from the patient backwards.</strong> Start with symptoms and signs, build the differential, follow the clues and make the physiology explain the child in front of you.</p><a class="card-enter" href="cases.html">Enter cases <span>→</span></a></div>
+            </div>
+          </article>
+          <article class="deck-card next" data-key="concepts" data-index="1" aria-hidden="true">
+            <div class="card-bg" aria-hidden="true"></div>
+            <div class="card-inner">
+              <div class="card-top"><span class="card-num">02 · Disturbance → consequence</span><span class="card-orbit" aria-hidden="true"></span></div>
+              <div class="card-copy"><h2>Clinical<br>Concepts</h2><p><strong>Understand what goes wrong.</strong> Take problems such as hyponatraemia, hypoglycaemia or shock and derive the findings from the underlying disturbance.</p><a class="card-enter" href="clinical-concepts.html">Explore concepts <span>→</span></a></div>
+            </div>
+          </article>
+          <article class="deck-card prev" data-key="fundamentals" data-index="2" aria-hidden="true">
+            <div class="card-bg" aria-hidden="true"></div>
+            <div class="card-inner">
+              <div class="card-top"><span class="card-num">03 · Normal → foundation</span><span class="card-orbit" aria-hidden="true"></span></div>
+              <div class="card-copy"><h2>Fundamentals</h2><p><strong>Understand the normal first.</strong> Build physiology, biochemistry and pathways from first principles so pathology has something solid to connect to.</p><a class="card-enter" href="fundamentals.html">Build foundations <span>→</span></a></div>
+            </div>
+          </article>
         </div>
-        <button class="deck-arrow" id="nextCard" aria-label="Next route">→</button>
       </div>
-      <div class="swipe-hint">Swipe or drag to explore</div>
-    </div>
-  </section>
+
+      <div class="deck-controls">
+        <div class="deck-nav" aria-label="Carousel controls">
+          <button class="deck-arrow" id="prevCard" aria-label="Previous route">←</button>
+          <div class="deck-dots" id="deckDots">
+            <button class="deck-dot active" data-go="0" aria-label="Show Cases"></button>
+            <button class="deck-dot" data-go="1" aria-label="Show Clinical Concepts"></button>
+            <button class="deck-dot" data-go="2" aria-label="Show Fundamentals"></button>
+          </div>
+          <button class="deck-arrow" id="nextCard" aria-label="Next route">→</button>
+        </div>
+        <div class="swipe-hint">Swipe or drag to explore</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="mobile-explore" id="mobileExplore" aria-label="Explore MeducateMe learning routes">
+    <div class="mobile-rail" aria-hidden="true"><span class="active"></span><span></span><span></span><span></span></div>
+    <section class="mobile-panel mobile-intro" data-mobile-panel="0">
+      <div class="mobile-copy">
+        <span class="mobile-kicker">Choose your route through medicine</span>
+        <h1>WHAT DO YOU WANT TO <em>UNDERSTAND</em></h1>
+        <p>Start with the patient, the disease process, or normal physiology. Each route connects back to the same goal: understanding why.</p>
+        <div class="mobile-scroll-cue"><i></i>Scroll to explore the three routes</div>
+      </div>
+    </section>
+    <section class="mobile-panel mobile-cases" data-mobile-panel="1">
+      <div class="mobile-copy">
+        <span class="mobile-route-num">01 / 03</span><span class="mobile-kicker">Patient → mechanism</span>
+        <h2>Cases</h2>
+        <p><strong>Reason from the patient backwards.</strong> Start with symptoms and signs, build a differential, follow the clues and use physiology to explain the child in front of you.</p>
+        <a class="mobile-enter" href="cases.html">Explore cases <span>→</span></a>
+      </div>
+    </section>
+    <section class="mobile-panel mobile-concepts" data-mobile-panel="2">
+      <div class="mobile-copy">
+        <span class="mobile-route-num">02 / 03</span><span class="mobile-kicker">Disturbance → consequence</span>
+        <h2>Clinical<br>Concepts</h2>
+        <p><strong>Understand what goes wrong.</strong> Take problems such as hyponatraemia, hypoglycaemia or shock and derive what you see from the underlying disturbance.</p>
+        <a class="mobile-enter" href="clinical-concepts.html">Explore concepts <span>→</span></a>
+      </div>
+    </section>
+    <section class="mobile-panel mobile-fundamentals" data-mobile-panel="3">
+      <div class="mobile-copy">
+        <span class="mobile-route-num">03 / 03</span><span class="mobile-kicker">Normal → foundation</span>
+        <h2>Fundamentals</h2>
+        <p><strong>Understand the normal first.</strong> Build physiology, biochemistry and pathways from first principles so disease has something solid to connect to.</p>
+        <a class="mobile-enter" href="fundamentals.html">Explore fundamentals <span>→</span></a>
+      </div>
+    </section>
+  </div>
 
   <section class="hub-after" id="about">
     <div><span class="eyebrow">The MeducateMe idea</span><h2>DON’T JUST LEARN<br>WHAT HAPPENS<br><em>UNDERSTAND WHY</em></h2></div>
@@ -147,22 +220,22 @@
   }
   function markInteracted(){if(interacted)return;interacted=true;stage?.classList.add('interacted')}
   function go(delta,userAction=true){if(userAction)markInteracted();current=mod(current+delta,cards.length);render()}
-  document.getElementById('nextCard').addEventListener('click',()=>go(1));
-  document.getElementById('prevCard').addEventListener('click',()=>go(-1));
+  document.getElementById('nextCard')?.addEventListener('click',()=>go(1));
+  document.getElementById('prevCard')?.addEventListener('click',()=>go(-1));
   dots.forEach(d=>d.addEventListener('click',()=>{markInteracted();current=Number(d.dataset.go);render()}));
-  window.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1)});
+  window.addEventListener('keydown',e=>{if(window.innerWidth<700)return;if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1)});
 
-  wrap.addEventListener('pointerdown',e=>{if(e.target.closest('a,button'))return;dragging=true;startX=lastX=e.clientX;startY=e.clientY;wrap.classList.add('dragging');wrap.setPointerCapture?.(e.pointerId)});
-  wrap.addEventListener('pointermove',e=>{if(!dragging)return;lastX=e.clientX});
-  const endDrag=()=>{if(!dragging)return;dragging=false;wrap.classList.remove('dragging');const dx=lastX-startX;if(Math.abs(dx)>55)go(dx<0?1:-1)};
-  wrap.addEventListener('pointerup',endDrag);wrap.addEventListener('pointercancel',endDrag);
+  wrap?.addEventListener('pointerdown',e=>{if(e.target.closest('a,button'))return;dragging=true;startX=lastX=e.clientX;startY=e.clientY;wrap.classList.add('dragging');wrap.setPointerCapture?.(e.pointerId)});
+  wrap?.addEventListener('pointermove',e=>{if(!dragging)return;lastX=e.clientX});
+  const endDrag=()=>{if(!dragging)return;dragging=false;wrap?.classList.remove('dragging');const dx=lastX-startX;if(Math.abs(dx)>55)go(dx<0?1:-1)};
+  wrap?.addEventListener('pointerup',endDrag);wrap?.addEventListener('pointercancel',endDrag);
+  wrap?.addEventListener('wheel',e=>{if(Math.abs(e.deltaX)<18&&Math.abs(e.deltaY)<28)return;if(wheelLock)return;wheelLock=true;go((Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY)>0?1:-1);setTimeout(()=>wheelLock=false,650)},{passive:true});
 
-  wrap.addEventListener('wheel',e=>{
-    if(Math.abs(e.deltaX)<18 && Math.abs(e.deltaY)<28)return;
-    if(wheelLock)return;
-    wheelLock=true;go((Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY)>0?1:-1);
-    setTimeout(()=>wheelLock=false,650);
-  },{passive:true});
+  const mobile=document.getElementById('mobileExplore'), mobilePanels=[...document.querySelectorAll('[data-mobile-panel]')], rail=[...document.querySelectorAll('.mobile-rail span')];
+  if(mobile&&'IntersectionObserver' in window){
+    const obs=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting&&entry.intersectionRatio>.6){const i=Number(entry.target.dataset.mobilePanel);rail.forEach((r,n)=>r.classList.toggle('active',n===i));}})},{root:mobile,threshold:[.6,.75]});
+    mobilePanels.forEach(p=>obs.observe(p));
+  }
 
   const menuBtn=document.querySelector('.hub-menu-btn'), menu=document.querySelector('.hub-menu');
   menuBtn?.addEventListener('click',()=>{const open=menu.classList.toggle('open');menuBtn.setAttribute('aria-expanded',open)});
