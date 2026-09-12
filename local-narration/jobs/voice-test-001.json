@@ -1,0 +1,10 @@
+{
+  "status": "pending",
+  "slug": "voice-test",
+  "source_file": "local-narration/tests/voice-test.json",
+  "languages": ["en", "de", "fr", "es"],
+  "force": true,
+  "test": true,
+  "requested_by": "ChatGPT",
+  "purpose": "Initial Mac mini Chatterbox Multilingual voice quality test before replacing any existing MeducateMe narration"
+}
