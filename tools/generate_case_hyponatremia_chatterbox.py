@@ -11,7 +11,20 @@ EXAGGERATION=float(os.environ.get('CHATTERBOX_EXAGGERATION','0.65'))
 CFG_WEIGHT=float(os.environ.get('CHATTERBOX_CFG_WEIGHT','0.35'))
 MAX_CHARS=int(os.environ.get('CHATTERBOX_MAX_CHARS','280'))
 PAUSE_MS=int(os.environ.get('CHATTERBOX_PAUSE_MS','180'))
+
+def normalise_for_speech(text):
+    """Keep the written lesson unchanged, but give Chatterbox TTS-safe medical wording."""
+    replacements = [
+        (r'\bmmol\s*/\s*[lL]\b', 'millimoles per litre'),
+        (r'\bhyponatraemia\b', 'hyponatremia'),
+        (r'\bhypernatraemia\b', 'hypernatremia'),
+    ]
+    for pattern, spoken in replacements:
+        text = re.sub(pattern, spoken, text, flags=re.IGNORECASE)
+    return text
+
 def split_script(text,limit=MAX_CHARS):
+    text=normalise_for_speech(text)
     sentences=re.split(r'(?<=[.!?])\s+',text.strip())
     chunks=[]; current=''
     for sentence in sentences:
@@ -25,6 +38,7 @@ def split_script(text,limit=MAX_CHARS):
             else: current=candidate
     if current: chunks.append(current)
     return chunks
+
 with NARRATION.open(encoding='utf-8') as f:data=json.load(f)
 if not REFERENCE.exists(): raise SystemExit(f'Missing reference voice: {REFERENCE}')
 OUT.mkdir(parents=True,exist_ok=True)
