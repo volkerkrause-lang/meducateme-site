@@ -7,7 +7,7 @@ const S=[
 ['05-concepts','THE MEDUCATEME APPROACH','ONE CONNECTED UNDERSTANDING','The idea is to move away from isolated facts and towards a connected understanding of medicine — from normal physiology, to disease, to the patient in front of you. I hope MeducateMe helps make medicine clearer, more logical, easier to remember, and more enjoyable to learn.','final']
 ];
 const q=(s,r=document)=>r.querySelector(s),qa=(s,r=document)=>[...r.querySelectorAll(s)];
-function kill(){qa('.intro-launch,.m3-launch,.intro-overlay,.m3-overlay,.mm-intro-launch,.mm-intro,.mi-launch,.mi-intro').forEach(x=>x.remove())}
+function kill(){qa('.intro-launch,.m3-launch,.intro-overlay,.m3-overlay,.mm-intro-launch,.mm-intro').forEach(x=>x.remove())}
 function visual(k){
  if(k==='why')return `<div class="v why"><span data-cue=".02">DISEASES</span><span data-cue=".08">SYMPTOMS</span><span data-cue=".14">INVESTIGATIONS</span><span data-cue=".20">TREATMENTS</span><span data-cue=".26">LAB RESULTS</span><span data-cue=".32">PATHWAYS</span><b data-cue=".60">WHY?</b><i data-cue=".72">connect the pieces</i></div>`;
  if(k==='fund')return `<div class="v page"><header><strong>MEDUCATE<span>ME</span></strong><em>FUNDAMENTALS</em></header><section data-cue=".15"><small>PHYSIOLOGY · FIRST PRINCIPLES</small><h3>Understand the normal</h3></section><div class="cards"><article data-cue=".36" class="big"><small>FLAGSHIP LESSON</small><b>Cortisol & the adrenal gland</b><p>HPA axis · steroid synthesis · stress response</p></article><article data-cue=".52"><small>CARDIOLOGY</small><b>Cardiac output</b></article><article data-cue=".64"><small>RESPIRATORY</small><b>Gas exchange</b></article><article data-cue=".76"><small>RENAL</small><b>Water balance</b></article></div></div>`;
