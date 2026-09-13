@@ -1,0 +1,58 @@
+{
+  "lesson": "Diabetes — Clinical Concept",
+  "voice": "Chatterbox voice clone from narration/references/voice-reference.wav",
+  "stages": [
+    {
+      "id": "01-insulin-film",
+      "chapter": "Insulin in 90 seconds",
+      "duration_target_seconds": 90,
+      "timed_cues": [
+        {"start": 0, "end": 22, "label": "After a meal", "script": "All right. Start just after a meal. Carbohydrate is digested to glucose, absorbed through the gut, and enters the circulation. So the blood glucose concentration rises. That rise is not the problem — it is the signal that tells the body fuel has arrived."},
+        {"start": 22, "end": 48, "label": "Pancreatic sensing", "script": "The beta cells in the islets of Langerhans sense that rising glucose and release insulin into the blood. Insulin then travels to tissues such as muscle and fat and binds to its receptor on the cell surface. Think of that binding as the start of a message, not as glucose being physically carried into the cell."},
+        {"start": 48, "end": 78, "label": "Receptor signalling", "script": "Inside the cell, the insulin receptor switches on a signalling pathway: IRS one, then PI3 kinase, then Akt. The important endpoint is GLUT4. Vesicles containing GLUT4 move to the cell membrane and fuse with it, creating more doorways for glucose. Glucose can now enter, where it can be used to make ATP or stored, for example as glycogen."},
+        {"start": 78, "end": 90, "label": "Negative feedback", "script": "As glucose leaves the bloodstream, blood glucose falls. The beta cells sense that too, so insulin secretion falls. That is a negative feedback loop: glucose rises, insulin rises, glucose is cleared, and the insulin signal then fades."}
+      ],
+      "script": "All right. Start just after a meal. Carbohydrate is digested to glucose, absorbed through the gut, and enters the circulation. So the blood glucose concentration rises. That rise is not the problem — it is the signal that tells the body fuel has arrived. The beta cells in the islets of Langerhans sense that rising glucose and release insulin into the blood. Insulin then travels to tissues such as muscle and fat and binds to its receptor on the cell surface. Think of that binding as the start of a message, not as glucose being physically carried into the cell. Inside the cell, the insulin receptor switches on a signalling pathway: IRS one, then PI3 kinase, then Akt. The important endpoint is GLUT4. Vesicles containing GLUT4 move to the cell membrane and fuse with it, creating more doorways for glucose. Glucose can now enter, where it can be used to make ATP or stored, for example as glycogen. As glucose leaves the bloodstream, blood glucose falls. The beta cells sense that too, so insulin secretion falls. That is a negative feedback loop: glucose rises, insulin rises, glucose is cleared, and the insulin signal then fades."
+    },
+    {
+      "id": "02-break-system",
+      "chapter": "What does diabetes break?",
+      "script": "Now stop there. If that is the normal system, diabetes becomes much easier. There are really two main ways to break it. Either you do not make enough insulin, or you make insulin but the tissues do not respond properly to the signal. Type one diabetes is mainly the first problem. Type two diabetes begins mainly as the second. Different mechanisms, same final consequence: glucose stays in the bloodstream instead of being handled normally by the tissues."
+    },
+    {
+      "id": "03-type1",
+      "chapter": "Type 1 — no insulin signal",
+      "script": "In type one diabetes, the immune system destroys pancreatic beta cells. As beta-cell mass falls, insulin production falls with it. So after a meal, glucose still enters the blood, but the normal insulin response is missing. Muscle and fat cannot increase glucose uptake appropriately, and the liver is no longer being told effectively that the fed state has arrived. It keeps releasing glucose and, when insulin deficiency is severe, starts driving fat breakdown and ketone production. That is why type one diabetes can progress to diabetic ketoacidosis."
+    },
+    {
+      "id": "04-type2",
+      "chapter": "Type 2 — the signal is resisted",
+      "script": "Type two diabetes is more gradual. Early on, insulin is usually there — often in high concentrations — but muscle, liver and adipose tissue respond less effectively. The beta cells compensate by producing more insulin. For a while that works, which is why someone can be insulin resistant for years before the glucose becomes frankly abnormal. But persistent metabolic stress means the beta cells eventually cannot keep matching the demand. Insulin secretion becomes inadequate for the degree of resistance, and blood glucose rises."
+    },
+    {
+      "id": "05-insulin-resistance",
+      "chapter": "Why insulin resistance develops",
+      "script": "This is worth understanding rather than memorising. When adipose tissue is chronically overloaded with energy, adipocytes enlarge and become stressed. Local hypoxia, endoplasmic-reticulum stress and inflammatory signalling recruit immune cells and alter intracellular signalling. Molecules such as TNF alpha and stress kinases interfere with the insulin pathway, including IRS proteins. So the receptor may still be occupied by insulin, but the message travelling inward is weaker. Less effective PI3 kinase and Akt signalling means less GLUT4 recruitment in muscle and fat, and less suppression of hepatic glucose output."
+    },
+    {
+      "id": "06-symptoms",
+      "chapter": "Derive the symptoms",
+      "script": "Now derive the classic symptoms. If plasma glucose rises above the kidney's capacity to reabsorb it, glucose spills into the urine. Glucose is osmotically active, so water follows it. That gives you polyuria. Lose enough water and you become thirsty: polydipsia. Meanwhile, despite plenty of glucose in the blood, insulin-dependent tissues are not handling fuel normally. The body behaves as though it is under-fuelled, so appetite may increase and, particularly in insulin deficiency, fat and muscle are broken down. That explains weight loss and polyphagia."
+    },
+    {
+      "id": "07-diagnosis",
+      "chapter": "How we recognise diabetes",
+      "script": "Clinically, the diagnosis is evidence of persistent hyperglycaemia in the right context. You can demonstrate that with plasma glucose measurements or HbA1c, depending on the situation. In a symptomatic child, a high random glucose is immediately important, but you also need to think about ketones and acid-base status because the urgent question is not simply, 'Does this child have diabetes?' It is, 'Does this child already have metabolic decompensation, particularly DKA?'"
+    },
+    {
+      "id": "08-treatment",
+      "chapter": "Treatment follows the mechanism",
+      "script": "Treatment makes more sense once you keep the mechanism in view. In type one diabetes there is an absolute or near-absolute insulin deficiency, so insulin has to be replaced. In type two diabetes, treatment aims to reduce the glucose burden, improve insulin sensitivity, reduce inappropriate hepatic glucose output and, where needed, augment insulin secretion or provide insulin itself. Exercise helps because contracting muscle can increase glucose uptake through pathways that are not completely dependent on insulin, while loss of excess adipose tissue reduces the metabolic drivers of insulin resistance."
+    },
+    {
+      "id": "09-reconstruct",
+      "chapter": "Reconstruct the whole concept",
+      "script": "So rebuild the story from the beginning. A meal raises blood glucose. Beta cells respond with insulin. Insulin activates its receptor and the IRS one, PI3 kinase, Akt pathway, moving GLUT4 to the membrane in muscle and fat. Glucose is taken up and stored or used, and the insulin signal falls again. Type one diabetes removes the insulin signal. Type two diabetes progressively weakens the response to that signal and eventually overwhelms beta-cell compensation. Hyperglycaemia then explains the osmotic symptoms, while insulin deficiency or resistance explains the disordered fuel metabolism. Once that chain is clear, most of diabetes stops being a list of facts and becomes a mechanism you can reason through."
+    }
+  ]
+}
