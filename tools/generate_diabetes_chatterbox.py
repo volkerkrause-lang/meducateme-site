@@ -11,6 +11,7 @@ from chatterbox.tts import ChatterboxTTS
 
 ROOT = Path(__file__).resolve().parents[1]
 NARRATION = ROOT / "narration" / "diabetes.json"
+EXTRA_NARRATION = ROOT / "narration" / "diabetes-reconstruct.json"
 OUT = ROOT / "audio" / "diabetes-chatterbox"
 REFERENCE = ROOT / "narration" / "references" / "voice-reference.wav"
 EXAGGERATION = float(os.environ.get("CHATTERBOX_EXAGGERATION", "0.62"))
@@ -64,7 +65,6 @@ def render_text(model, text):
 
 
 def atempo_filter(speed):
-    # ffmpeg atempo accepts 0.5–2.0 per stage, so chain stages if needed.
     factors = []
     while speed > 2.0:
         factors.append(2.0)
@@ -94,6 +94,10 @@ def save_mp3(model, wav, stem, target_seconds=None):
 
 with NARRATION.open(encoding="utf-8") as f:
     data = json.load(f)
+if EXTRA_NARRATION.exists():
+    with EXTRA_NARRATION.open(encoding="utf-8") as f:
+        extra = json.load(f)
+    data["stages"].extend(extra.get("stages", []))
 
 if not REFERENCE.exists():
     raise SystemExit(f"Missing reference voice: {REFERENCE}")
