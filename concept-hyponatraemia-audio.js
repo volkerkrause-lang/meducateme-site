@@ -56,8 +56,6 @@
   note.className = 'hyp-audio-note';
   note.textContent = 'Narration';
 
-  // Keeping a real media element in the document is more reliable on iPadOS
-  // than an unattached `new Audio()` object.
   const audio = document.createElement('audio');
   audio.preload = 'metadata';
   audio.playsInline = true;
@@ -115,9 +113,6 @@
       audio.pause();
       return;
     }
-
-    // The call stays directly inside the tap/click handler so iPadOS recognises
-    // it as user-initiated media playback.
     audio.playbackRate = rate;
     const playAttempt = audio.play();
     if (playAttempt && typeof playAttempt.catch === 'function') {
@@ -216,8 +211,6 @@
     if (panel.classList.contains('open') && !panel.contains(event.target) && event.target !== orb) closePanel();
   });
 
-  // Register this before any network request. A quick tap on iPad can no longer
-  // outrun the caption download and leave the audio on the wrong step.
   window.addEventListener('hyponatraemia-step', event => {
     current = Math.max(0, Math.min(order.length - 1, event.detail.step || 0));
     loadStage();
@@ -237,8 +230,6 @@
     })
     .catch(() => {});
 
-  // Recover gracefully if the lesson was started before this script finished
-  // loading from the network or an older cached page.
   const activeStage = document.querySelector('.stage.active');
   if (activeStage) {
     current = Math.max(0, Number(activeStage.dataset.stage) || 0);
@@ -261,4 +252,5 @@
       syncCaption();
     }
   };
+  const reviewScript=document.createElement('script');reviewScript.src='lesson-consolidation-v2.js?v=1';document.body.appendChild(reviewScript);
 })();
