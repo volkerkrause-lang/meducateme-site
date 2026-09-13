@@ -12,10 +12,13 @@
     concepts:{'Hyponatraemia':'concept-hyponatraemia.html'},
     fundamentals:{'Cortisol physiology':'fundamental-cortisol-guided.html'}
   }[key]||{};
+  const reviewKey=href=>{if(!href)return null;if(href.includes('lesson.html'))return'dka';if(href.includes('case-hyponatremia'))return'hyponatremia_case';if(href.includes('concept-hyponatraemia'))return'hyponatraemia';if(href.includes('fundamental-cortisol'))return'cortisol';return null};
   const shell=document.querySelector('.learning-browser');
   if(!shell)return;
   const title=document.getElementById('preview-title'),desc=document.getElementById('preview-desc'),meta=document.getElementById('preview-meta'),status=document.getElementById('preview-status'),start=document.getElementById('preview-start'),visual=document.querySelector('.lesson-visual');
   const search=document.getElementById('browser-search'),list=document.getElementById('topic-scroll'),empty=document.getElementById('topic-empty');
+  const quick=document.createElement('div');quick.className='lesson-quick-tools';quick.innerHTML='<a class="quick-tool flash" aria-label="Open flashcards" title="Flashcards">◫</a><a class="quick-tool info" aria-label="Open infographic" title="Infographic">⌁</a>';start.insertAdjacentElement('beforebegin',quick);
+  const quickStyle=document.createElement('style');quickStyle.textContent='.lesson-quick-tools{display:none;align-items:center;gap:8px;margin-left:auto;margin-right:10px}.lesson-quick-tools.show{display:flex}.quick-tool{width:38px;height:38px;border:1px solid #ffffff2a;border-radius:50%;display:grid;place-items:center;background:#0c0d10d9;color:#e9a51b!important;font-size:18px;text-decoration:none;box-shadow:0 8px 22px #0007}.quick-tool:hover{border-color:#e9a51b}.lesson-copy{align-items:center}.lesson-copy>div:first-child{min-width:0}@media(max-width:700px){.lesson-quick-tools{margin-left:0;margin-right:6px}.quick-tool{width:36px;height:36px}}';document.head.appendChild(quickStyle);
   document.getElementById('browser-eyebrow').textContent=config.eyebrow;
   document.getElementById('browser-section-title').textContent=config.title;
   document.getElementById('browser-section-intro').textContent=config.intro;
@@ -43,6 +46,8 @@
     flat.forEach(x=>x.classList.toggle('active',x===opts.el));
     title.textContent=opts.title;desc.textContent=opts.desc;meta.textContent=opts.meta;
     status.textContent=opts.live?'Live lesson':'Lesson preview';status.classList.toggle('lesson-live',opts.live);
+    const rk=opts.live?reviewKey(opts.href):null;
+    quick.classList.toggle('show',!!rk);if(rk){quick.querySelector('.flash').href=`lesson-tools.html?lesson=${rk}#flashcards`;quick.querySelector('.info').href=`lesson-tools.html?lesson=${rk}#infographic`;}
     if(opts.live){start.textContent='Start lesson →';start.href=opts.href;start.classList.remove('disabled');start.removeAttribute('aria-disabled');}
     else{start.textContent='Coming soon';start.removeAttribute('href');start.classList.add('disabled');start.setAttribute('aria-disabled','true');}
     if(window.innerWidth<700){document.querySelector('.lesson-pane')?.scrollIntoView({behavior:'smooth',block:'start'});}
