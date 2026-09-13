@@ -7,52 +7,52 @@
       "chapter": "Insulin in 90 seconds",
       "duration_target_seconds": 90,
       "timed_cues": [
-        {"start": 0, "end": 22, "label": "After a meal", "script": "All right. Start just after a meal. Carbohydrate is digested to glucose, absorbed through the gut, and enters the circulation. So the blood glucose concentration rises. That rise is not the problem — it is the signal that tells the body fuel has arrived."},
-        {"start": 22, "end": 48, "label": "Pancreatic sensing", "script": "The beta cells in the islets of Langerhans sense that rising glucose and release insulin into the blood. Insulin then travels to tissues such as muscle and fat and binds to its receptor on the cell surface. Think of that binding as the start of a message, not as glucose being physically carried into the cell."},
-        {"start": 48, "end": 78, "label": "Receptor signalling", "script": "Inside the cell, the insulin receptor switches on a signalling pathway: IRS one, then PI3 kinase, then Akt. The important endpoint is GLUT4. Vesicles containing GLUT4 move to the cell membrane and fuse with it, creating more doorways for glucose. Glucose can now enter, where it can be used to make ATP or stored, for example as glycogen."},
-        {"start": 78, "end": 90, "label": "Negative feedback", "script": "As glucose leaves the bloodstream, blood glucose falls. The beta cells sense that too, so insulin secretion falls. That is a negative feedback loop: glucose rises, insulin rises, glucose is cleared, and the insulin signal then fades."}
+        {"start": 0, "end": 22, "label": "After a meal", "script": "All right. Start just after a meal. Carbohydrate is digested to glucose, absorbed through the gut, and enters the circulation. So blood glucose rises. That rise is not the problem — it is the signal that tells the body fuel has arrived."},
+        {"start": 22, "end": 48, "label": "Pancreatic sensing", "script": "Beta cells in the pancreatic islets sense the rise in glucose and release insulin. Insulin travels to tissues such as muscle and fat and binds to its receptor. Think of insulin as a message that says: fuel has arrived, use it and store it."},
+        {"start": 48, "end": 78, "label": "Receptor signalling", "script": "Inside muscle and fat cells, the insulin receptor activates IRS one, PI3 kinase and Akt. The important endpoint is GLUT4. GLUT4 transporters move to the cell membrane, allowing more glucose to enter, where it can be used for energy or stored."},
+        {"start": 78, "end": 90, "label": "Negative feedback", "script": "As glucose is taken up and stored, blood glucose falls. Beta cells sense that fall and reduce insulin secretion. So this is a feedback system: glucose rises, insulin rises, glucose is handled, and the insulin signal falls again."}
       ],
-      "script": "All right. Start just after a meal. Carbohydrate is digested to glucose, absorbed through the gut, and enters the circulation. So the blood glucose concentration rises. That rise is not the problem — it is the signal that tells the body fuel has arrived. The beta cells in the islets of Langerhans sense that rising glucose and release insulin into the blood. Insulin then travels to tissues such as muscle and fat and binds to its receptor on the cell surface. Think of that binding as the start of a message, not as glucose being physically carried into the cell. Inside the cell, the insulin receptor switches on a signalling pathway: IRS one, then PI3 kinase, then Akt. The important endpoint is GLUT4. Vesicles containing GLUT4 move to the cell membrane and fuse with it, creating more doorways for glucose. Glucose can now enter, where it can be used to make ATP or stored, for example as glycogen. As glucose leaves the bloodstream, blood glucose falls. The beta cells sense that too, so insulin secretion falls. That is a negative feedback loop: glucose rises, insulin rises, glucose is cleared, and the insulin signal then fades."
+      "script": "Normal insulin physiology after a meal."
     },
     {
-      "id": "02-break-system",
-      "chapter": "What does diabetes break?",
-      "script": "Now stop there. If that is the normal system, diabetes becomes much easier. There are really two main ways to break it. Either you do not make enough insulin, or you make insulin but the tissues do not respond properly to the signal. Type one diabetes is mainly the first problem. Type two diabetes begins mainly as the second. Different mechanisms, same final consequence: glucose stays in the bloodstream instead of being handled normally by the tissues."
+      "id": "02-two-diseases",
+      "chapter": "Two different diseases",
+      "script": "Before going any further, separate type one from type two diabetes. They are not the same disease. In type one diabetes, the primary problem is loss of pancreatic beta cells, so insulin becomes severely deficient. In type two diabetes, insulin is still being produced, often in large amounts initially, but the tissues respond poorly to it. That is insulin resistance. Only later does beta-cell function usually become insufficient for the amount of insulin resistance. Both can cause hyperglycaemia, but the route to hyperglycaemia is different. Keep those two pathways separate as we go through the rest of the lesson."
     },
     {
-      "id": "03-type1",
-      "chapter": "Type 1 — no insulin signal",
-      "script": "In type one diabetes, the immune system destroys pancreatic beta cells. As beta-cell mass falls, insulin production falls with it. So after a meal, glucose still enters the blood, but the normal insulin response is missing. Muscle and fat cannot increase glucose uptake appropriately, and the liver is no longer being told effectively that the fed state has arrived. It keeps releasing glucose and, when insulin deficiency is severe, starts driving fat breakdown and ketone production. That is why type one diabetes can progress to diabetic ketoacidosis."
+      "id": "03-type1-mechanism",
+      "chapter": "Type 1 — what fails first",
+      "script": "Start with type one diabetes. The initiating problem is autoimmune destruction of pancreatic beta cells. As beta-cell mass falls, insulin production falls. Eventually there is not enough insulin to signal the fed state properly. Now remember what insulin normally says to the body: glucose is available, use it, store it, and stop producing more fuel. In type one diabetes that message disappears. So the problem is much bigger than simply having a high glucose concentration."
     },
     {
-      "id": "04-type2",
-      "chapter": "Type 2 — the signal is resisted",
-      "script": "Type two diabetes is more gradual. Early on, insulin is usually there — often in high concentrations — but muscle, liver and adipose tissue respond less effectively. The beta cells compensate by producing more insulin. For a while that works, which is why someone can be insulin resistant for years before the glucose becomes frankly abnormal. But persistent metabolic stress means the beta cells eventually cannot keep matching the demand. Insulin secretion becomes inadequate for the degree of resistance, and blood glucose rises."
+      "id": "04-type1-metabolism",
+      "chapter": "Type 1 — the body enters a fasting state",
+      "script": "Now follow the consequences of severe insulin deficiency. In muscle and adipose tissue, insulin-dependent glucose uptake falls. In the liver, insulin is no longer suppressing glucose production, while glucagon is relatively unopposed, so glycogenolysis and gluconeogenesis continue. Blood glucose therefore rises from both sides: less glucose is being cleared and more glucose is being produced. At the same time, insulin is no longer restraining lipolysis. Fatty acids are released from adipose tissue and delivered to the liver, where they are converted into ketone bodies. So the key paradox is this: there is plenty of glucose in the blood, but the body behaves metabolically as though it is starving. That is why type one diabetes can cause rapid weight loss and, when insulin deficiency is severe, diabetic ketoacidosis."
     },
     {
-      "id": "05-insulin-resistance",
-      "chapter": "Why insulin resistance develops",
-      "script": "This is worth understanding rather than memorising. When adipose tissue is chronically overloaded with energy, adipocytes enlarge and become stressed. Local hypoxia, endoplasmic-reticulum stress and inflammatory signalling recruit immune cells and alter intracellular signalling. Molecules such as TNF alpha and stress kinases interfere with the insulin pathway, including IRS proteins. So the receptor may still be occupied by insulin, but the message travelling inward is weaker. Less effective PI3 kinase and Akt signalling means less GLUT4 recruitment in muscle and fat, and less suppression of hepatic glucose output."
+      "id": "05-type2-resistance",
+      "chapter": "Type 2 — what fails first",
+      "script": "Now reset and look at type two diabetes separately. Here the early problem is not absent insulin. Insulin is present, and often raised, but muscle, liver and adipose tissue respond less effectively to it. In muscle and fat, insulin signalling produces less effective glucose uptake. In the liver, insulin is less able to suppress glucose production. The pancreas senses that glucose is harder to control and compensates by releasing more insulin. So early type two diabetes is often a state of insulin resistance plus compensatory hyperinsulinaemia."
     },
     {
-      "id": "06-symptoms",
-      "chapter": "Derive the symptoms",
-      "script": "Now derive the classic symptoms. If plasma glucose rises above the kidney's capacity to reabsorb it, glucose spills into the urine. Glucose is osmotically active, so water follows it. That gives you polyuria. Lose enough water and you become thirsty: polydipsia. Meanwhile, despite plenty of glucose in the blood, insulin-dependent tissues are not handling fuel normally. The body behaves as though it is under-fuelled, so appetite may increase and, particularly in insulin deficiency, fat and muscle are broken down. That explains weight loss and polyphagia."
+      "id": "06-type2-progression",
+      "chapter": "Type 2 — compensation then failure",
+      "script": "For a while, extra insulin can compensate for insulin resistance and keep glucose near normal. That is why insulin resistance can exist for years before overt diabetes appears. But the beta cells are being asked to produce more insulin continuously. Over time, in susceptible people, beta-cell function declines and insulin secretion becomes inadequate for the degree of resistance. At that point blood glucose rises persistently. So type two diabetes is best thought of as two processes together: insulin resistance first, followed by insufficient beta-cell compensation."
     },
     {
-      "id": "07-diagnosis",
-      "chapter": "How we recognise diabetes",
-      "script": "Clinically, the diagnosis is evidence of persistent hyperglycaemia in the right context. You can demonstrate that with plasma glucose measurements or HbA1c, depending on the situation. In a symptomatic child, a high random glucose is immediately important, but you also need to think about ketones and acid-base status because the urgent question is not simply, 'Does this child have diabetes?' It is, 'Does this child already have metabolic decompensation, particularly DKA?'"
+      "id": "07-clinical-patterns",
+      "chapter": "Clinical features — what they share and what differs",
+      "script": "Now compare the clinical effects. Both type one and type two diabetes can cause hyperglycaemia, glycosuria, osmotic diuresis, polyuria and polydipsia. But the context is often different. Type one diabetes, especially in children, can develop relatively quickly and is more likely to produce marked weight loss and ketosis because insulin deficiency is profound. Type two diabetes is usually more gradual and may be detected before severe symptoms appear. Ketosis can occur in type two diabetes, but it is much more characteristic of severe insulin deficiency in type one. The important point is to derive the symptoms from the mechanism rather than mixing the two diseases together."
     },
     {
-      "id": "08-treatment",
+      "id": "08-diagnose-classify",
+      "chapter": "Diagnosis — first prove diabetes, then classify it",
+      "script": "Diagnosis has two separate questions. First: is this diabetes? That is answered by demonstrating hyperglycaemia using appropriate plasma glucose or HbA1c criteria in the clinical context. Second: what type of diabetes is this? In a child, the history, tempo, body habitus, presence of ketosis, autoantibodies and sometimes C-peptide help distinguish type one from type two and from less common forms. And if the child is unwell, there is a third urgent question: is there DKA? That requires ketones and acid-base assessment, not simply a high glucose value."
+    },
+    {
+      "id": "09-treatment-logic",
       "chapter": "Treatment follows the mechanism",
-      "script": "Treatment makes more sense once you keep the mechanism in view. In type one diabetes there is an absolute or near-absolute insulin deficiency, so insulin has to be replaced. In type two diabetes, treatment aims to reduce the glucose burden, improve insulin sensitivity, reduce inappropriate hepatic glucose output and, where needed, augment insulin secretion or provide insulin itself. Exercise helps because contracting muscle can increase glucose uptake through pathways that are not completely dependent on insulin, while loss of excess adipose tissue reduces the metabolic drivers of insulin resistance."
-    },
-    {
-      "id": "09-reconstruct",
-      "chapter": "Reconstruct the whole concept",
-      "script": "So rebuild the story from the beginning. A meal raises blood glucose. Beta cells respond with insulin. Insulin activates its receptor and the IRS one, PI3 kinase, Akt pathway, moving GLUT4 to the membrane in muscle and fat. Glucose is taken up and stored or used, and the insulin signal falls again. Type one diabetes removes the insulin signal. Type two diabetes progressively weakens the response to that signal and eventually overwhelms beta-cell compensation. Hyperglycaemia then explains the osmotic symptoms, while insulin deficiency or resistance explains the disordered fuel metabolism. Once that chain is clear, most of diabetes stops being a list of facts and becomes a mechanism you can reason through."
+      "script": "Finally, treatment follows directly from the mechanism. In type one diabetes, the central defect is severe insulin deficiency, so insulin must be replaced. In type two diabetes, the central early problem is insulin resistance, so treatment aims to reduce glucose load, improve insulin sensitivity and reduce inappropriate hepatic glucose output; additional therapies or insulin may be needed as beta-cell function declines. So keep the distinction clear from beginning to end. Type one: insulin is missing. Type two: insulin is resisted, then beta-cell compensation becomes inadequate. Both raise glucose, but for different reasons."
     }
   ]
 }
