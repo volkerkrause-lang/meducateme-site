@@ -4,15 +4,15 @@
   const data=C[key];
   const config={
     cases:{eyebrow:'Symptoms & signs → clinical reasoning',title:'Cases',intro:'Start with the child in front of you. Work through the presentation before the diagnosis is revealed, then use physiology to explain every finding.',image:'meducate-torso.webp',placeholder:'Search fever, vomiting, weakness, jaundice…',flagLabel:'Flagship case'},
-    concepts:{eyebrow:'Disease processes → mechanisms → decisions',title:'Clinical Concepts',intro:'Build the causal chain behind disease: what changed, what follows, what you see clinically and why treatment makes physiological sense.',image:'meducate-cells.webp',placeholder:'Search shock, hyponatraemia, asthma, AKI…',flagLabel:'Flagship concept'},
+    concepts:{eyebrow:'Disease processes → mechanisms → decisions',title:'Clinical Concepts',intro:'Build the causal chain behind disease: what changed, what follows, what you see clinically and why treatment makes physiological sense.',image:'meducate-cells.webp',placeholder:'Search shock, hyponatraemia, diabetes, asthma, AKI…',flagLabel:'Flagship concept'},
     fundamentals:{eyebrow:'Normal physiology → mental model',title:'Fundamentals',intro:'Understand normal function first. Build physiology systematically, then follow each mechanism into disease and the child at the bedside.',image:'meducate-brain.webp',placeholder:'Search cardiac output, ADH, V/Q, cortisol…',flagLabel:'Flagship fundamental'}
   }[key];
   const liveLessons={
     cases:{'Vomiting + deep breathing':'lesson.html?topic=dka','Hyponatremia':'case-hyponatremia.html'},
-    concepts:{'Hyponatraemia':'concept-hyponatraemia.html'},
+    concepts:{'Hyponatraemia':'concept-hyponatraemia.html','Diabetes mellitus':'concept-diabetes.html'},
     fundamentals:{'Cortisol physiology':'fundamental-cortisol-guided.html'}
   }[key]||{};
-  const reviewKey=href=>{if(!href)return null;if(href.includes('lesson.html'))return'dka';if(href.includes('case-hyponatremia'))return'hyponatremia_case';if(href.includes('concept-hyponatraemia'))return'hyponatraemia';if(href.includes('fundamental-cortisol'))return'cortisol';return null};
+  const reviewKey=href=>{if(!href)return null;if(href.includes('lesson.html'))return'dka';if(href.includes('case-hyponatremia'))return'hyponatremia_case';if(href.includes('concept-hyponatraemia'))return'hyponatraemia';if(href.includes('concept-diabetes'))return'diabetes';if(href.includes('fundamental-cortisol'))return'cortisol';return null};
   const shell=document.querySelector('.learning-browser');if(!shell)return;
   const title=document.getElementById('preview-title'),desc=document.getElementById('preview-desc'),meta=document.getElementById('preview-meta'),status=document.getElementById('preview-status'),start=document.getElementById('preview-start'),visual=document.querySelector('.lesson-visual');
   const search=document.getElementById('browser-search'),list=document.getElementById('topic-scroll'),empty=document.getElementById('topic-empty');
