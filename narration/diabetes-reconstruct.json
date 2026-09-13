@@ -1,0 +1,9 @@
+{
+  "stages": [
+    {
+      "id": "10-reconstruct",
+      "chapter": "Reconstruct the whole disease",
+      "script": "Now prove to yourself that you understand diabetes rather than just remembering it. Start with the child in front of you: thirst, passing urine all night, weight loss, vomiting and deep breathing. The glucose is twenty eight, the blood ketones are five point six, the pH is seven point one six and the bicarbonate is ten. Work backwards. Why the thirst and polyuria? Insulin effect is insufficient, so glucose rises. More glucose is filtered by the kidney. Once the tubular reabsorptive capacity is exceeded, glucose remains in the urine. That glucose holds water in the tubule, producing osmotic diuresis, polyuria, dehydration and then thirst. Now the weight loss and ketones. In severe type one diabetes, insulin is profoundly deficient. The body loses the fed-state signal, lipolysis increases, free fatty acids reach the liver and are converted to ketone bodies. Those ketone acids consume bicarbonate and lower the pH. Now the breathing. The deep rapid Kussmaul pattern is not a primary respiratory problem. It is compensation for metabolic acidosis. By increasing ventilation, carbon dioxide falls, carbonic acid falls, and the pH is partially defended. Now separate type one from type two one final time. Type one is primarily missing insulin because beta cells have been destroyed. Type two begins with insulin resistance: insulin is present, often high initially, but the tissues respond poorly, and later beta-cell compensation becomes inadequate. So if you understand what insulin normally tells the body to do, and then ask whether that signal is missing or resisted, you can derive the hyperglycaemia, the glycosuria, the osmotic diuresis, the thirst, the ketosis, the Kussmaul breathing, the investigations and the treatment. That is the whole point: reconstruct the disease from the physiology rather than memorising a list."
+    }
+  ]
+}
