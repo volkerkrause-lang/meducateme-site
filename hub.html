@@ -68,7 +68,7 @@
 
   @media(max-width:699px){
     body.hub{overflow-y:auto;background:#050608}
-    .desktop-explore,.hub-after,.footer{display:none!important}
+    .desktop-explore,.footer{display:none!important}
     .hub-top{height:66px;background:linear-gradient(#050608f8,#050608b8 72%,transparent);padding:0 18px}
     .hub-brand{font-size:15px}.hub-menu-btn{font-size:8px}
     .mobile-explore{display:block;scroll-snap-type:y mandatory;overflow-y:auto;overscroll-behavior-y:contain;height:100svh;scroll-behavior:smooth;background:#050608}
@@ -99,6 +99,12 @@
     @keyframes cuePulse{50%{transform:translateY(5px);border-color:rgba(233,165,27,.45)}}
     .mobile-rail{position:fixed;z-index:30;right:13px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;pointer-events:none}
     .mobile-rail span{width:3px;height:18px;border-radius:4px;background:#ffffff24;transition:.3s}.mobile-rail span.active{height:34px;background:var(--gold)}
+    .hub-after{display:block;padding:92px 24px 60px;background:#07080a;border-top:1px solid var(--line)}
+    .hub-after h2{font-size:clamp(42px,12vw,62px)}
+    .hub-after p{font-size:15px}
+    .hub-about-mini{grid-template-columns:88px 1fr;gap:18px;align-items:start}
+    .hub-about-mini img{width:88px;height:88px}
+    .hub-about-mini h3{font-size:20px}
   }
 
   @media(prefers-reduced-motion:reduce){.deck-card,.card-orbit,.deck-arrow,.card-enter,.swipe-hint:before,.swipe-hint:after,.mobile-panel:before,.mobile-scroll-cue i{animation:none!important;transition:none!important}}
@@ -119,11 +125,11 @@
 
       <div class="deck-wrap" id="deckWrap" aria-roledescription="carousel" aria-label="MeducateMe learning routes">
         <div class="deck" id="deck">
-          <article class="deck-card active" data-key="cases" data-index="0" aria-hidden="false">
+          <article class="deck-card active" data-key="fundamentals" data-index="0" aria-hidden="false">
             <div class="card-bg" aria-hidden="true"></div>
             <div class="card-inner">
-              <div class="card-top"><span class="card-num">01 · Patient → mechanism</span><span class="card-orbit" aria-hidden="true"></span></div>
-              <div class="card-copy"><h2>Cases</h2><p><strong>Reason from the patient backwards.</strong> Start with symptoms and signs, build the differential, follow the clues and make the physiology explain the child in front of you.</p><a class="card-enter" href="cases.html">Enter cases <span>→</span></a></div>
+              <div class="card-top"><span class="card-num">01 · Normal → foundation</span><span class="card-orbit" aria-hidden="true"></span></div>
+              <div class="card-copy"><h2>Fundamentals</h2><p><strong>Understand the normal first.</strong> Build physiology, biochemistry and pathways from first principles so pathology has something solid to connect to.</p><a class="card-enter" href="fundamentals.html">Build foundations <span>→</span></a></div>
             </div>
           </article>
           <article class="deck-card next" data-key="concepts" data-index="1" aria-hidden="true">
@@ -133,11 +139,11 @@
               <div class="card-copy"><h2>Clinical<br>Concepts</h2><p><strong>Understand what goes wrong.</strong> Take problems such as hyponatraemia, hypoglycaemia or shock and derive the findings from the underlying disturbance.</p><a class="card-enter" href="clinical-concepts.html">Explore concepts <span>→</span></a></div>
             </div>
           </article>
-          <article class="deck-card prev" data-key="fundamentals" data-index="2" aria-hidden="true">
+          <article class="deck-card prev" data-key="cases" data-index="2" aria-hidden="true">
             <div class="card-bg" aria-hidden="true"></div>
             <div class="card-inner">
-              <div class="card-top"><span class="card-num">03 · Normal → foundation</span><span class="card-orbit" aria-hidden="true"></span></div>
-              <div class="card-copy"><h2>Fundamentals</h2><p><strong>Understand the normal first.</strong> Build physiology, biochemistry and pathways from first principles so pathology has something solid to connect to.</p><a class="card-enter" href="fundamentals.html">Build foundations <span>→</span></a></div>
+              <div class="card-top"><span class="card-num">03 · Patient → mechanism</span><span class="card-orbit" aria-hidden="true"></span></div>
+              <div class="card-copy"><h2>Cases</h2><p><strong>Apply it to the patient.</strong> Start with symptoms and signs, build the differential, follow the clues and make the physiology explain the child in front of you.</p><a class="card-enter" href="cases.html">Enter cases <span>→</span></a></div>
             </div>
           </article>
         </div>
@@ -147,9 +153,9 @@
         <div class="deck-nav" aria-label="Carousel controls">
           <button class="deck-arrow" id="prevCard" aria-label="Previous route">←</button>
           <div class="deck-dots" id="deckDots">
-            <button class="deck-dot active" data-go="0" aria-label="Show Cases"></button>
+            <button class="deck-dot active" data-go="0" aria-label="Show Fundamentals"></button>
             <button class="deck-dot" data-go="1" aria-label="Show Clinical Concepts"></button>
-            <button class="deck-dot" data-go="2" aria-label="Show Fundamentals"></button>
+            <button class="deck-dot" data-go="2" aria-label="Show Cases"></button>
           </div>
           <button class="deck-arrow" id="nextCard" aria-label="Next route">→</button>
         </div>
@@ -164,16 +170,16 @@
       <div class="mobile-copy">
         <span class="mobile-kicker">Choose your route through medicine</span>
         <h1>WHAT DO YOU WANT TO <em>UNDERSTAND</em></h1>
-        <p>Start with the patient, the disease process, or normal physiology. Each route connects back to the same goal: understanding why.</p>
+        <p>Start with normal physiology, understand what goes wrong, then apply that knowledge to the patient. Each step connects back to the same goal: understanding why.</p>
         <div class="mobile-scroll-cue"><i></i>Scroll to explore the three routes</div>
       </div>
     </section>
-    <section class="mobile-panel mobile-cases" data-mobile-panel="1">
+    <section class="mobile-panel mobile-fundamentals" data-mobile-panel="1">
       <div class="mobile-copy">
-        <span class="mobile-route-num">01 / 03</span><span class="mobile-kicker">Patient → mechanism</span>
-        <h2>Cases</h2>
-        <p><strong>Reason from the patient backwards.</strong> Start with symptoms and signs, build a differential, follow the clues and use physiology to explain the child in front of you.</p>
-        <a class="mobile-enter" href="cases.html">Explore cases <span>→</span></a>
+        <span class="mobile-route-num">01 / 03</span><span class="mobile-kicker">Normal → foundation</span>
+        <h2>Fundamentals</h2>
+        <p><strong>Understand the normal first.</strong> Build physiology, biochemistry and pathways from first principles so disease has something solid to connect to.</p>
+        <a class="mobile-enter" href="fundamentals.html">Explore fundamentals <span>→</span></a>
       </div>
     </section>
     <section class="mobile-panel mobile-concepts" data-mobile-panel="2">
@@ -184,12 +190,12 @@
         <a class="mobile-enter" href="clinical-concepts.html">Explore concepts <span>→</span></a>
       </div>
     </section>
-    <section class="mobile-panel mobile-fundamentals" data-mobile-panel="3">
+    <section class="mobile-panel mobile-cases" data-mobile-panel="3">
       <div class="mobile-copy">
-        <span class="mobile-route-num">03 / 03</span><span class="mobile-kicker">Normal → foundation</span>
-        <h2>Fundamentals</h2>
-        <p><strong>Understand the normal first.</strong> Build physiology, biochemistry and pathways from first principles so disease has something solid to connect to.</p>
-        <a class="mobile-enter" href="fundamentals.html">Explore fundamentals <span>→</span></a>
+        <span class="mobile-route-num">03 / 03</span><span class="mobile-kicker">Understanding → application</span>
+        <h2>Cases</h2>
+        <p><strong>Apply it to the patient.</strong> Start with symptoms and signs, build a differential, follow the clues and use physiology to explain the child in front of you.</p>
+        <a class="mobile-enter" href="cases.html">Explore cases <span>→</span></a>
       </div>
     </section>
   </div>
