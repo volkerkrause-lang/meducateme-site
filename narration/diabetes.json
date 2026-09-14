@@ -7,10 +7,10 @@
       "chapter": "Insulin in 90 seconds",
       "duration_target_seconds": 90,
       "timed_cues": [
-        {"start": 0, "end": 22, "label": "After a meal", "script": "All right. Start just after a meal. Carbohydrate is digested to glucose, absorbed through the gut, and enters the circulation. So blood glucose rises. That rise is not the problem — it is the signal that tells the body fuel has arrived."},
-        {"start": 22, "end": 48, "label": "Pancreatic sensing", "script": "Beta cells in the pancreatic islets sense the rise in glucose and release insulin. Insulin travels to tissues such as muscle and fat and binds to its receptor. Think of insulin as a message that says: fuel has arrived, use it and store it."},
-        {"start": 48, "end": 78, "label": "Receptor signalling", "script": "Inside muscle and fat cells, the insulin receptor activates IRS one, PI3 kinase and Akt. The important endpoint is GLUT4. GLUT4 transporters move to the cell membrane, allowing more glucose to enter, where it can be used for energy or stored."},
-        {"start": 78, "end": 90, "label": "Negative feedback", "script": "As glucose is taken up and stored, blood glucose falls. Beta cells sense that fall and reduce insulin secretion. So this is a feedback system: glucose rises, insulin rises, glucose is handled, and the insulin signal falls again."}
+        {"start": 0, "end": 22, "label": "After a meal", "script": "Start just after a meal. Carbohydrate is digested into glucose, which is absorbed through the gut and enters the circulation. Blood glucose rises. That rise is not a problem. It is the signal that tells the body that fuel has arrived and is ready to be used."},
+        {"start": 22, "end": 48, "label": "Pancreatic sensing", "script": "Beta cells in the pancreatic islets detect the rising glucose and release insulin into the bloodstream. Insulin travels to tissues, particularly muscle and fat, and binds to insulin receptors on the cell surface. Think of insulin as the message: fuel has arrived, so use it now and store what is left."},
+        {"start": 48, "end": 78, "label": "Receptor signalling", "script": "Binding activates the insulin receptor and starts a signalling chain inside the cell: IRS one, PI3 kinase, then Akt. The key endpoint here is GLUT4. Vesicles carrying GLUT4 move to and fuse with the cell membrane. Glucose can then enter the cell, where it is used to make ATP or stored as glycogen."},
+        {"start": 78, "end": 90, "label": "Negative feedback", "script": "As glucose enters cells, the blood level falls. Beta cells respond by reducing insulin release. Glucose rises, insulin rises, glucose is handled, then both settle again."}
       ],
       "script": "Normal insulin physiology after a meal."
     },

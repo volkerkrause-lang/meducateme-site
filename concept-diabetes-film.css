@@ -1,0 +1,55 @@
+.film-frame canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #07090d;
+}
+
+.film-title {
+  position: absolute;
+  left: 18px;
+  top: 16px;
+  display: grid;
+  gap: 3px;
+  text-shadow: 0 2px 12px #000;
+}
+
+.film-title small {
+  color: var(--a);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+.film-title strong { font-size: clamp(15px, 2.1vw, 25px); }
+
+.film-controls {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  background: #08090c;
+  border-top: 1px solid var(--line);
+}
+
+.film-controls button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ffffff28;
+  border-radius: 50%;
+  background: #15171d;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.film-controls input { width: 100%; accent-color: var(--a); }
+.film-controls output { min-width: 80px; text-align: right; color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 800px) {
+  .film-controls { grid-template-columns: 38px 1fr; }
+  .film-controls output { grid-column: 2; text-align: left; }
+  .film-title { left: 10px; top: 9px; }
+  .film-title strong { font-size: 14px; }
+  .film-title small { font-size: 8px; }
+}

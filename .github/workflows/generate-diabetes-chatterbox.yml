@@ -27,7 +27,9 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg
           pip install chatterbox-tts
-      - name: Generate complete diabetes narration
+      - name: Generate timed insulin-film narration
+        env:
+          CHATTERBOX_STAGE: 01-insulin-film
         run: python tools/generate_diabetes_chatterbox.py
       - name: Commit narration
         run: |

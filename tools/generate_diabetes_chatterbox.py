@@ -83,9 +83,21 @@ def save_mp3(model, wav, stem, target_seconds=None):
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-i", str(wav_path)]
     if target_seconds:
         actual_seconds = wav.shape[-1] / model.sr
+        # Never slow the cloned voice to fill a chapter. A short natural pause is
+        # preferable to the stretched, artificial speech this lesson used before.
+        # Only compress a take when it overruns its chapter, and reject a take that
+        # would require more than a subtle 8% correction so the script can be fixed.
         speed = actual_seconds / target_seconds
-        cmd += ["-filter:a", atempo_filter(speed)]
-        print(f"Timing {stem}: {actual_seconds:.2f}s -> {target_seconds:.2f}s (speed {speed:.3f}x)")
+        if speed > 1.08:
+            raise SystemExit(
+                f"{stem} is {actual_seconds:.2f}s for a {target_seconds:.2f}s chapter; "
+                "shorten the script instead of distorting the voice"
+            )
+        if speed > 1.0:
+            cmd += ["-filter:a", atempo_filter(speed)]
+            print(f"Subtle timing correction {stem}: {actual_seconds:.2f}s -> {target_seconds:.2f}s ({speed:.3f}x)")
+        else:
+            print(f"Natural timing {stem}: {actual_seconds:.2f}s within {target_seconds:.2f}s chapter")
     cmd += ["-codec:a", "libmp3lame", "-b:a", "128k", str(mp3_path)]
     subprocess.run(cmd, check=True)
     wav_path.unlink(missing_ok=True)
