@@ -1,0 +1,30 @@
+name: Validate lesson routes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*.html'
+      - '*.js'
+      - 'tools/validate_lesson_routes.py'
+      - '.github/workflows/validate-lesson-routes.yml'
+  pull_request:
+    paths:
+      - '*.html'
+      - '*.js'
+      - 'tools/validate_lesson_routes.py'
+      - '.github/workflows/validate-lesson-routes.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check canonical lesson routes
+        run: python tools/validate_lesson_routes.py
