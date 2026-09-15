@@ -3,7 +3,9 @@
   "title": "Lesson title",
   "section": "fundamentals",
   "access": "free",
+  "status": "draft",
   "version": 1,
+  "references": [],
   "sections": [
     {
       "id": "replace-with-permanent-section-id",
@@ -12,7 +14,8 @@
       "narrationRef": "narration/replace-with-permanent-section-id.json",
       "audioRef": "audio/replace-with-permanent-section-id.mp3",
       "graphicRefs": [],
-      "interactionRefs": []
+      "interactionRefs": [],
+      "customModule": null
     }
   ]
 }
