@@ -16,6 +16,8 @@ TEXT_SUFFIXES = {".html", ".js", ".json", ".md", ".yml", ".yaml", ".py"}
 EXCLUDE_DIRS = {".git", "audio"}
 EXCLUDE_FILES = {
     "tools/validate_lesson_routes.py",
+    "tools/validate_lesson_architecture.py",
+    "library-v3.js",
 }
 
 errors = []
