@@ -7,14 +7,24 @@ on:
       - 'lessons/**'
       - 'lesson-template/**'
       - 'lesson-player.*'
+      - 'fundamental-*.html'
+      - 'concept-*.html'
+      - 'case-*.html'
+      - 'tools/create_modular_lesson.py'
       - 'tools/validate_modular_lessons.py'
+      - 'tools/validate_lesson_architecture.py'
       - '.github/workflows/validate-modular-lessons.yml'
   pull_request:
     paths:
       - 'lessons/**'
       - 'lesson-template/**'
       - 'lesson-player.*'
+      - 'fundamental-*.html'
+      - 'concept-*.html'
+      - 'case-*.html'
+      - 'tools/create_modular_lesson.py'
       - 'tools/validate_modular_lessons.py'
+      - 'tools/validate_lesson_architecture.py'
       - '.github/workflows/validate-modular-lessons.yml'
 
 jobs:
@@ -25,5 +35,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Validate lesson manifests
+      - name: Validate modular lesson manifests
         run: python tools/validate_modular_lessons.py
+      - name: Enforce future lesson architecture
+        run: python tools/validate_lesson_architecture.py
