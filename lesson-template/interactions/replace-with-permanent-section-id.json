@@ -1,0 +1,17 @@
+{
+  "id": "replace-with-permanent-question-id",
+  "type": "mcq",
+  "prompt": "Prediction question",
+  "options": [
+    {
+      "label": "Correct option",
+      "correct": true,
+      "feedback": "Explain why this follows from the physiology."
+    },
+    {
+      "label": "Distractor",
+      "correct": false,
+      "feedback": "Explain why this does not fit."
+    }
+  ]
+}
