@@ -34,13 +34,8 @@
     return res.json();
   }
 
-  function sectionBase() {
-    return `lessons/${encodeURIComponent(lessonKey)}/`;
-  }
-
-  function resolve(ref) {
-    return new URL(ref, new URL(sectionBase(), document.baseURI)).href;
-  }
+  function sectionBase() { return `lessons/${encodeURIComponent(lessonKey)}/`; }
+  function resolve(ref) { return new URL(ref, new URL(sectionBase(), document.baseURI)).href; }
 
   function renderRichText(blocks=[]) {
     return blocks.map(block => {
@@ -53,12 +48,10 @@
   }
 
   function renderGraphic(graphic) {
-    if (!graphic) return '<div class="lp-card">No graphic for this section.</div>';
-    if (graphic.type === 'image') {
-      return `<figure class="lp-visual"><img src="${escapeHtml(resolve(graphic.src))}" alt="${escapeHtml(graphic.alt || '')}">${graphic.caption ? `<figcaption>${escapeHtml(graphic.caption)}</figcaption>` : ''}</figure>`;
-    }
+    if (!graphic) return '';
+    if (graphic.type === 'image') return `<figure class="lp-visual"><img src="${escapeHtml(resolve(graphic.src))}" alt="${escapeHtml(graphic.alt || '')}">${graphic.caption ? `<figcaption>${escapeHtml(graphic.caption)}</figcaption>` : ''}</figure>`;
     if (graphic.type === 'html') return `<div class="lp-visual">${graphic.html || ''}</div>`;
-    return '<div class="lp-card">Unsupported graphic type.</div>';
+    return '';
   }
 
   function renderQuestion(interaction) {
@@ -68,11 +61,28 @@
     return `<div class="lp-question" data-question="${id}"><h3>${escapeHtml(interaction.prompt || '')}</h3><div class="lp-answers">${answers}</div><div class="lp-feedback" aria-live="polite"></div></div>`;
   }
 
+  async function renderStandard(sec, content, interaction) {
+    const graphic = content.graphic || (content.graphics && content.graphics[0]) || null;
+    const status = manifest.status && manifest.status !== 'live' ? `<span class="lp-status">${escapeHtml(manifest.status)} preview</span>` : '';
+    shell.innerHTML = `<section class="lp-stage" data-section-id="${escapeHtml(sec.id)}"><div>${status}<span class="lp-eyebrow">${escapeHtml(content.eyebrow || manifest.title || '')}</span><h1>${escapeHtml(content.title || sec.title || '')}</h1>${renderRichText(content.blocks || [])}${renderQuestion(interaction)}</div><div>${renderGraphic(graphic)}</div></section>`;
+  }
+
+  async function renderCustom(sec, content, narration, interaction) {
+    const moduleUrl = resolve(sec.customModule);
+    const mod = await import(moduleUrl);
+    if (typeof mod.render !== 'function') throw new Error(`${sec.customModule} must export a render() function`);
+    shell.innerHTML = '';
+    const host = document.createElement('section');
+    host.className = 'lp-custom-stage';
+    host.dataset.sectionId = sec.id;
+    shell.appendChild(host);
+    await mod.render({host, manifest, section: sec, content, narration, interaction, resolve, escapeHtml});
+  }
+
   async function renderSection(index, autoplay=false) {
     stopAudio();
     current = Math.max(0, Math.min(index, manifest.sections.length - 1));
     const sec = manifest.sections[current];
-
     const [content, narration, interaction] = await Promise.all([
       getJson(resolve(sec.contentRef)),
       getJson(resolve(sec.narrationRef)),
@@ -80,17 +90,8 @@
     ]);
 
     currentNarration = narration.text || '';
-    const graphic = content.graphic || (content.graphics && content.graphics[0]) || null;
-    shell.innerHTML = `
-      <section class="lp-stage" data-section-id="${escapeHtml(sec.id)}">
-        <div>
-          <span class="lp-eyebrow">${escapeHtml(content.eyebrow || manifest.title || '')}</span>
-          <h1>${escapeHtml(content.title || sec.title || '')}</h1>
-          ${renderRichText(content.blocks || [])}
-          ${renderQuestion(interaction)}
-        </div>
-        <div>${renderGraphic(graphic)}</div>
-      </section>`;
+    if (sec.customModule) await renderCustom(sec, content, narration, interaction);
+    else await renderStandard(sec, content, interaction);
 
     document.title = `${content.title || sec.title || manifest.title} — MeducateMe`;
     count.textContent = `${current + 1} / ${manifest.sections.length}`;
@@ -111,38 +112,19 @@
     const box = shell.querySelector('[data-question]');
     if (!box) return;
     const feedback = box.querySelector('.lp-feedback');
-    box.querySelectorAll('[data-option]').forEach(button => {
-      button.addEventListener('click', () => {
-        const opt = interaction.options[Number(button.dataset.option)];
-        feedback.textContent = opt.feedback || (opt.correct ? 'Correct.' : 'Try again.');
-        button.style.borderColor = opt.correct ? '#77d7a1' : '#ff6b62';
-      });
-    });
+    box.querySelectorAll('[data-option]').forEach(button => button.addEventListener('click', () => {
+      const opt = interaction.options[Number(button.dataset.option)];
+      feedback.textContent = opt.feedback || (opt.correct ? 'Correct.' : 'Try again.');
+      button.style.borderColor = opt.correct ? '#77d7a1' : '#ff6b62';
+    }));
   }
 
-  function stopAudio() {
-    audio.pause();
-    audio.currentTime = 0;
-    audioBtn.classList.remove('playing');
-    audioBtn.textContent = '▶';
-  }
-
-  async function playAudio() {
-    try {
-      await audio.play();
-      audioBtn.classList.add('playing');
-      audioBtn.textContent = '❚❚';
-    } catch {
-      audioBtn.title = 'Narration audio is not available yet';
-    }
-  }
+  function stopAudio() { audio.pause(); audio.currentTime = 0; audioBtn.classList.remove('playing'); audioBtn.textContent = '▶'; }
+  async function playAudio() { try { await audio.play(); audioBtn.classList.add('playing'); audioBtn.textContent = '❚❚'; } catch { audioBtn.title = 'Narration audio is not available yet'; } }
 
   function updateChapterDialog() {
     chapterDialog.innerHTML = manifest.sections.map((s, i) => `<button type="button" data-chapter="${i}"><span class="n">${String(i+1).padStart(2,'0')}</span><span class="t">${escapeHtml(s.title)}</span></button>`).join('');
-    chapterDialog.querySelectorAll('[data-chapter]').forEach(btn => btn.addEventListener('click', () => {
-      chapterDialog.close();
-      renderSection(Number(btn.dataset.chapter));
-    }));
+    chapterDialog.querySelectorAll('[data-chapter]').forEach(btn => btn.addEventListener('click', () => { chapterDialog.close(); renderSection(Number(btn.dataset.chapter)); }));
   }
 
   async function init() {
@@ -151,21 +133,17 @@
       manifest = await getJson(`${sectionBase()}lesson.json`);
       if (!manifest.lessonId || manifest.lessonId !== lessonKey) throw new Error('Lesson manifest ID does not match the requested lesson.');
       if (!Array.isArray(manifest.sections) || !manifest.sections.length) throw new Error('Lesson has no sections.');
-
       document.documentElement.dataset.lessonId = manifest.lessonId;
       document.documentElement.dataset.lessonAccess = manifest.access || 'free';
       document.documentElement.dataset.lessonSection = manifest.section || '';
+      document.documentElement.dataset.lessonStatus = manifest.status || 'draft';
       document.documentElement.style.setProperty('--lp-accent', manifest.accent || '#e9a51b');
       back.href = manifest.backHref || ({fundamentals:'fundamentals.html',concepts:'clinical-concepts.html',cases:'cases.html'}[manifest.section] || 'hub.html');
-      controls.hidden = false;
-      audioBtn.hidden = false;
-
+      controls.hidden = false; audioBtn.hidden = false;
       const requested = qs.get('section');
       const start = requested ? Math.max(0, manifest.sections.findIndex(s => s.id === requested)) : 0;
       await renderSection(start);
-    } catch (err) {
-      fail(err.message || String(err));
-    }
+    } catch (err) { fail(err.message || String(err)); }
   }
 
   prev.addEventListener('click', () => renderSection(current - 1));
@@ -176,18 +154,9 @@
   audioBtn.addEventListener('pointerdown', () => { holdTimer = setTimeout(() => { panelOpen = true; audioPanel.hidden = false; }, 450); });
   ['pointerup','pointercancel','pointerleave'].forEach(evt => audioBtn.addEventListener(evt, () => clearTimeout(holdTimer)));
   audio.addEventListener('ended', () => { audioBtn.classList.remove('playing'); audioBtn.textContent = '▶'; });
-
-  audioPanel.querySelectorAll('[data-rate]').forEach(button => button.addEventListener('click', () => {
-    audio.playbackRate = Number(button.dataset.rate);
-    audioPanel.querySelectorAll('[data-rate]').forEach(b => b.classList.toggle('active', b === button));
-  }));
-  audioPanel.querySelector('[data-caption]').addEventListener('click', e => {
-    captionsOn = !captionsOn;
-    caption.hidden = !captionsOn;
-    e.currentTarget.classList.toggle('active', captionsOn);
-  });
+  audioPanel.querySelectorAll('[data-rate]').forEach(button => button.addEventListener('click', () => { audio.playbackRate = Number(button.dataset.rate); audioPanel.querySelectorAll('[data-rate]').forEach(b => b.classList.toggle('active', b === button)); }));
+  audioPanel.querySelector('[data-caption]').addEventListener('click', e => { captionsOn = !captionsOn; caption.hidden = !captionsOn; e.currentTarget.classList.toggle('active', captionsOn); });
   chapterBtn.addEventListener('click', () => chapterDialog.showModal());
   chapterDialog.addEventListener('click', e => { if (e.target === chapterDialog) chapterDialog.close(); });
-
   init();
 })();
