@@ -1,0 +1,18 @@
+{
+  "lessonId": "replace-with-permanent-lesson-id",
+  "title": "Lesson title",
+  "section": "fundamentals",
+  "access": "free",
+  "version": 1,
+  "sections": [
+    {
+      "id": "replace-with-permanent-section-id",
+      "title": "Section title",
+      "contentRef": "content/replace-with-permanent-section-id.json",
+      "narrationRef": "narration/replace-with-permanent-section-id.json",
+      "audioRef": "audio/replace-with-permanent-section-id.mp3",
+      "graphicRefs": [],
+      "interactionRefs": []
+    }
+  ]
+}
