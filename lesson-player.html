@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Lesson — MeducateMe</title>
+  <link rel="stylesheet" href="site-v2.css?v=11" />
+  <link rel="stylesheet" href="lesson-player.css?v=1" />
+</head>
+<body>
+  <header class="lp-topbar">
+    <a class="brand" href="hub.html"><b>MEDUCATE</b>ME</a>
+    <a class="lp-back" id="lp-back" href="fundamentals.html">← BACK</a>
+    <button class="lp-chapters" id="lp-chapters" type="button" aria-label="Choose chapter">CHAPTERS</button>
+  </header>
+
+  <main class="lp-shell" id="lp-shell" aria-live="polite">
+    <section class="lp-loading" id="lp-loading">Loading lesson…</section>
+  </main>
+
+  <div class="lp-caption" id="lp-caption" hidden></div>
+  <div class="lp-controls" id="lp-controls" hidden>
+    <button id="lp-prev" type="button" aria-label="Previous section">←</button>
+    <span id="lp-count">1 / 1</span>
+    <button id="lp-next" type="button" aria-label="Next section">→</button>
+  </div>
+  <button class="lp-audio" id="lp-audio" type="button" aria-label="Play narration" hidden>▶</button>
+  <div class="lp-audio-panel" id="lp-audio-panel" hidden>
+    <button data-rate="0.8">0.8×</button>
+    <button data-rate="1" class="active">1×</button>
+    <button data-rate="1.25">1.25×</button>
+    <button data-rate="1.5">1.5×</button>
+    <button data-caption>CC</button>
+  </div>
+  <dialog class="lp-chapter-dialog" id="lp-chapter-dialog"></dialog>
+
+  <audio id="lp-audio-el" preload="metadata"></audio>
+  <script src="lesson-metadata.js?v=1"></script>
+  <script src="lesson-player.js?v=1"></script>
+</body>
+</html>
