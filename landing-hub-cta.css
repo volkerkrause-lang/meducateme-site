@@ -37,3 +37,11 @@
   .scroll-hero-copy .mi-launch{position:absolute!important;left:0!important;bottom:8px!important;margin:0!important}
   .scroll-down{display:none!important}
 }
+
+/* iPad Safari: use the same clip as an animated image so motion is not blocked by autoplay policy */
+@supports (-webkit-touch-callout:none){
+  @media (min-width:641px) and (max-width:1180px) and (hover:none) and (pointer:coarse){
+    .scroll-hero{background:#080604 url('meducateme-hero-bg-ipad.webp?v=1') center center/cover no-repeat!important}
+    .scroll-hero .hero-bg-video{display:none!important}
+  }
+}
