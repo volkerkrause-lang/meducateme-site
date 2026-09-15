@@ -14,7 +14,7 @@
   ],
   "graphic": {
     "type": "image",
-    "src": "../graphics/example.webp",
+    "src": "graphics/example.webp",
     "alt": "Describe the teaching graphic",
     "caption": "Optional concise caption"
   }
