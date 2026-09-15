@@ -7,24 +7,28 @@ on:
       - 'lessons/**'
       - 'lesson-template/**'
       - 'lesson-player.*'
+      - 'qa-dashboard.*'
       - 'fundamental-*.html'
       - 'concept-*.html'
       - 'case-*.html'
       - 'tools/create_modular_lesson.py'
       - 'tools/validate_modular_lessons.py'
       - 'tools/validate_lesson_architecture.py'
+      - 'tools/review_modular_lessons.py'
       - '.github/workflows/validate-modular-lessons.yml'
   pull_request:
     paths:
       - 'lessons/**'
       - 'lesson-template/**'
       - 'lesson-player.*'
+      - 'qa-dashboard.*'
       - 'fundamental-*.html'
       - 'concept-*.html'
       - 'case-*.html'
       - 'tools/create_modular_lesson.py'
       - 'tools/validate_modular_lessons.py'
       - 'tools/validate_lesson_architecture.py'
+      - 'tools/review_modular_lessons.py'
       - '.github/workflows/validate-modular-lessons.yml'
 
 jobs:
@@ -39,3 +43,5 @@ jobs:
         run: python tools/validate_modular_lessons.py
       - name: Enforce future lesson architecture
         run: python tools/validate_lesson_architecture.py
+      - name: Run lesson QA and medical review checks
+        run: python tools/review_modular_lessons.py
