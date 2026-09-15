@@ -1,0 +1,21 @@
+{
+  "eyebrow": "Section label",
+  "title": "Section title",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "Visible teaching text for this section. Keep this separate from narration so either can be corrected independently."
+    },
+    {
+      "type": "callout",
+      "title": "Why it matters",
+      "text": "Use this for the key explanatory idea or physiological reason."
+    }
+  ],
+  "graphic": {
+    "type": "image",
+    "src": "../graphics/example.webp",
+    "alt": "Describe the teaching graphic",
+    "caption": "Optional concise caption"
+  }
+}
