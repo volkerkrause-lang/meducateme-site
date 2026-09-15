@@ -41,24 +41,49 @@
     return `<span class="qa-check ${ok ? 'ok' : warn ? 'warn' : 'bad'}">${esc(label)}</span>`;
   }
 
+  function legacyCards() {
+    const lessons = window.MeducateMeLessons?.all || [];
+    return lessons.map(lesson => `
+      <article class="qa-card">
+        <div>
+          <div class="qa-meta"><span class="qa-tag" data-status="live">live</span><span class="qa-tag">${esc(lesson.section)}</span><span class="qa-tag">${esc(lesson.access)}</span><span class="qa-tag">legacy</span></div>
+          <h2>${esc(lesson.title)}</h2>
+          <div class="qa-checks">
+            ${check('live lesson', true)}
+            ${check('legacy architecture', true, true)}
+            ${check('section-level QA not migrated', false, true)}
+          </div>
+        </div>
+        <div class="qa-actions"><a href="${esc(lesson.href)}">Open lesson</a></div>
+      </article>`).join('');
+  }
+
   async function init() {
     try {
       const registry = await getJson('lessons/registry.json');
       const entries = registry.lessons || [];
-      const counts = {draft:0, review:0, live:0};
-      entries.forEach(x => { if (counts[x.status] !== undefined) counts[x.status]++; });
+      const legacy = window.MeducateMeLessons?.all || [];
+      const counts = {draft:0, review:0, live:legacy.length};
+      entries.forEach(x => {
+        if (counts[x.status] !== undefined) counts[x.status]++;
+      });
       summary.innerHTML = [
+        `<span class="qa-pill">${legacy.length} legacy live</span>`,
         `<span class="qa-pill">${entries.length} modular lessons</span>`,
         `<span class="qa-pill">${counts.draft} draft</span>`,
         `<span class="qa-pill">${counts.review} review</span>`,
-        `<span class="qa-pill">${counts.live} live</span>`
+        `<span class="qa-pill">${counts.live} live total</span>`
       ].join('');
+
+      const legacyHtml = legacy.length ? `<h2 style="margin:24px 0 10px">Live lessons</h2>${legacyCards()}` : '';
+
       if (!entries.length) {
-        list.innerHTML = '<div class="qa-empty">No future modular lessons have been created yet. Existing legacy lessons are intentionally not included.</div>';
+        list.innerHTML = legacyHtml + '<div class="qa-empty">No future modular lessons have been created yet.</div>';
         return;
       }
+
       const results = await Promise.all(entries.map(inspect));
-      list.innerHTML = results.map(({entry,manifest,sections,content,narration,audio}) => {
+      const modularHtml = `<h2 style="margin:32px 0 10px">Modular lessons</h2>` + results.map(({entry,manifest,sections,content,narration,audio}) => {
         const n = sections.length;
         const refs = (manifest.references || []).length;
         return `<article class="qa-card">
@@ -76,6 +101,8 @@
           <div class="qa-actions"><a href="lesson-player.html?lesson=${encodeURIComponent(entry.lessonId)}">Open lesson</a></div>
         </article>`;
       }).join('');
+
+      list.innerHTML = legacyHtml + modularHtml;
     } catch (err) {
       list.innerHTML = `<div class="qa-empty">Dashboard could not load: ${esc(err.message || err)}</div>`;
     }
