@@ -19,6 +19,8 @@ def main() -> None:
     parser.add_argument("lesson_id")
     parser.add_argument("title")
     parser.add_argument("section", choices=["fundamentals", "concepts", "cases"])
+    parser.add_argument("--group", default="New lessons", help="Public library group when the lesson becomes live")
+    parser.add_argument("--description", default="", help="Short public library description")
     parser.add_argument("--access", choices=["free", "preview", "premium"], default="free")
     parser.add_argument("--status", choices=["draft", "review", "live"], default="draft")
     parser.add_argument("--sections", nargs="+", required=True, help="Permanent section IDs")
@@ -27,7 +29,6 @@ def main() -> None:
     folder = LESSONS / args.lesson_id
     if folder.exists():
         raise SystemExit(f"Lesson already exists: {folder}")
-
     if len(set(args.sections)) != len(args.sections):
         raise SystemExit("Section IDs must be unique")
 
@@ -65,7 +66,6 @@ def main() -> None:
         "sections": section_entries
     }
     write_json(folder / "lesson.json", manifest)
-
     for name in ("graphics", "audio", "interactions", "custom"):
         (folder / name).mkdir(parents=True, exist_ok=True)
 
@@ -77,7 +77,9 @@ def main() -> None:
     registry.setdefault("lessons", []).append({
         "lessonId": args.lesson_id,
         "title": args.title,
+        "description": args.description,
         "section": args.section,
+        "group": args.group,
         "status": args.status,
         "access": args.access,
         "manifest": f"lessons/{args.lesson_id}/lesson.json"
