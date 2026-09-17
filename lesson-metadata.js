@@ -39,6 +39,15 @@
       access: 'free'
     },
     {
+      id: 'concept-paediatric-tracheostomy',
+      section: 'concepts',
+      title: 'Paediatric tracheostomy',
+      listingTitles: ['Paediatric tracheostomy'],
+      href: 'concept-tracheostomy.html',
+      paths: ['concept-tracheostomy.html'],
+      access: 'preview'
+    },
+    {
       id: 'fundamental-cortisol-physiology',
       section: 'fundamentals',
       title: 'Cortisol & the adrenal gland',
