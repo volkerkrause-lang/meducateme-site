@@ -1,13 +1,13 @@
 # MeducateMe Draft Library
 
-This area defines the development workflow for lessons that are not ready for the live site.
+This area defines the development workflow for lessons that are not ready for the live teaching library.
 
 ## States
 
 1. Draft — active development; unlimited review/revision cycles.
 2. Ready for review — coherent enough for full review, still unpublished.
 3. Approved — explicitly approved for publication.
-4. Published — merged into the live site.
+4. Published — merged into the live teaching library.
 
 Reviewing a lesson never changes its publication state automatically.
 
@@ -30,7 +30,7 @@ The workflow supports publishing one approved PR or all currently approved PRs. 
 
 ## Preview convention
 
-The Draft Library is the single entry point. Each lesson may use its own technical preview URL underneath, but the reviewer should not need to manage or remember those URLs.
+The Draft Library at `/drafts/` is the single browser entry point. It is intentionally a public index page on the MeducateMe site. Individual unfinished lessons remain on their draft branches and are opened through their technical preview links. The reviewer does not need to remember those URLs.
 
 ## Current drafts
 
