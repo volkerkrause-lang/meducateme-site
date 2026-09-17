@@ -5,7 +5,7 @@ This area defines the development workflow for lessons that are not ready for th
 ## States
 
 1. Draft — active development; unlimited review/revision cycles.
-2. Ready for review — content is coherent enough for a full review, but remains unpublished.
+2. Ready for review — coherent enough for full review, still unpublished.
 3. Approved — explicitly approved for publication.
 4. Published — merged into the live site.
 
@@ -17,11 +17,16 @@ Every revision is committed to Git. Previous versions remain recoverable from co
 
 ## Publication safety
 
-- Never publish from a Draft or Ready-for-review state.
-- Publication requires explicit approval.
-- Individual lessons may be published independently.
-- A batch publication may include Approved lessons only.
-- Draft work must not be merged into `main` merely to obtain a preview.
+Publishing is performed by `.github/workflows/publish-approved-drafts.yml` and never by credentials embedded in the Draft Library page.
+
+A PR is publishable only when all of these are true:
+- it is open;
+- it targets `main`;
+- it is no longer a GitHub draft;
+- it has the `approved-for-publish` label;
+- the manual workflow is run with confirmation `PUBLISH`.
+
+The workflow supports publishing one approved PR or all currently approved PRs. Draft and merely reviewed lessons are rejected.
 
 ## Preview convention
 
@@ -29,4 +34,4 @@ The Draft Library is the single entry point. Each lesson may use its own technic
 
 ## Current drafts
 
-- Paediatric Tracheostomy — `draft-tracheostomy-clinical-concept` — Draft.
+- Paediatric Tracheostomy — `draft-tracheostomy-clinical-concept` — PR #6 — Draft.
