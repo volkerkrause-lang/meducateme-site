@@ -1,0 +1,67 @@
+name: Publish approved MeducateMe drafts
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Publish one approved PR or all PRs labelled approved-for-publish'
+        required: true
+        type: choice
+        options:
+          - one
+          - all
+      pr_number:
+        description: 'PR number when mode=one'
+        required: false
+        type: string
+      confirmation:
+        description: 'Type PUBLISH to confirm'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  publish:
+    if: ${{ inputs.confirmation == 'PUBLISH' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish approved draft(s)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          MODE: ${{ inputs.mode }}
+          PR_NUMBER: ${{ inputs.pr_number }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          publish_pr() {
+            local pr="$1"
+            state=$(gh pr view "$pr" --repo "$REPO" --json state --jq '.state')
+            draft=$(gh pr view "$pr" --repo "$REPO" --json isDraft --jq '.isDraft')
+            base=$(gh pr view "$pr" --repo "$REPO" --json baseRefName --jq '.baseRefName')
+            labels=$(gh pr view "$pr" --repo "$REPO" --json labels --jq '[.labels[].name] | join("\n")')
+            if [[ "$state" != "OPEN" || "$draft" != "false" || "$base" != "main" ]]; then
+              echo "PR #$pr is not an open, non-draft PR targeting main." >&2
+              exit 1
+            fi
+            if ! grep -Fxq 'approved-for-publish' <<< "$labels"; then
+              echo "PR #$pr is not labelled approved-for-publish." >&2
+              exit 1
+            fi
+            gh pr merge "$pr" --repo "$REPO" --squash --delete-branch
+          }
+
+          if [[ "$MODE" == "one" ]]; then
+            [[ "$PR_NUMBER" =~ ^[0-9]+$ ]] || { echo 'A numeric PR number is required.' >&2; exit 1; }
+            publish_pr "$PR_NUMBER"
+          else
+            mapfile -t prs < <(gh pr list --repo "$REPO" --state open --base main --label approved-for-publish --json number,isDraft --jq '.[] | select(.isDraft == false) | .number')
+            if [[ ${#prs[@]} -eq 0 ]]; then
+              echo 'No approved drafts are ready to publish.'
+              exit 0
+            fi
+            for pr in "${prs[@]}"; do publish_pr "$pr"; done
+          fi
