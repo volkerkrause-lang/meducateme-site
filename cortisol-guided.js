@@ -1,5 +1,5 @@
 (() => {
-  const REV = '20260917-cortisol-review';
+  const REV = '20260919-cortisol-visual-story';
   const stages = [...document.querySelectorAll('.stage')];
   const lessonAudio = document.querySelector('#lesson-audio');
   const feedbackAudio = document.querySelector('#feedback-audio');
@@ -184,9 +184,22 @@
   function setPlayState(playing){ orb.classList.toggle('playing',playing); orb.setAttribute('aria-label',playing?'Pause narration. Hold for options':'Play narration. Hold for options'); }
   function syncPanel(){ panel.querySelectorAll('[data-rate]').forEach(b=>b.classList.toggle('active',Number(b.dataset.rate)===lessonAudio.playbackRate)); panel.querySelector('[data-cc]').classList.toggle('active',captionsOn); panel.querySelector('[data-mute]').classList.toggle('active',muted); panel.querySelector('[data-mute]').textContent=muted?'🔇':'🔊'; panel.querySelector('[data-mode]').textContent=guided?'Explore':'Guided'; panel.querySelector('[data-mode]').classList.toggle('active',!guided); }
   function setCaption(extra=''){ caption.textContent=extra?`${stageScript()}\n\n${extra}`:stageScript(); caption.classList.toggle('open',captionsOn); }
-  function revealFraction(f){ if(!guided)return; const value=Math.max(0,Math.min(1,f||0)); stages[current].querySelectorAll('.cue').forEach(el=>el.classList.toggle('is-on',Number(el.dataset.cue||0)<=value+.001)); progressFill.style.width=`${((current+value)/stages.length)*100}%`; }
-  function revealAll(){ stages[current].querySelectorAll('.cue').forEach(el=>el.classList.add('is-on')); progressFill.style.width=`${((current+1)/stages.length)*100}%`; }
-  function resetReveals(){ stages[current].querySelectorAll('.cue').forEach(el=>el.classList.remove('is-on')); stages[current].querySelectorAll('.cue').forEach(el=>{if(!guided||Number(el.dataset.cue||0)<=.04)el.classList.add('is-on');}); }
+  function syncStoryboard(seconds=0, showSceneComplete=false){
+    const board=stages[current]?.querySelector('[data-storyboard]');
+    if(!board)return;
+    const scenes=[...board.querySelectorAll('[data-scene-start]')];
+    let active=0;
+    scenes.forEach((scene,i)=>{if(seconds>=Number(scene.dataset.sceneStart||0))active=i;});
+    scenes.forEach((scene,i)=>{
+      const currentScene=i===active;
+      scene.classList.toggle('is-current',currentScene);
+      scene.querySelectorAll('[data-at]').forEach(el=>el.classList.toggle('is-on',currentScene&&(showSceneComplete||seconds>=Number(el.dataset.at||0))));
+    });
+    board.querySelectorAll('[data-scene-target]').forEach((dot,i)=>dot.classList.toggle('is-current',i===active));
+  }
+  function revealFraction(f){ if(!guided)return; const value=Math.max(0,Math.min(1,f||0)); stages[current].querySelectorAll('.cue').forEach(el=>el.classList.toggle('is-on',Number(el.dataset.cue||0)<=value+.001)); syncStoryboard(lessonAudio.currentTime); progressFill.style.width=`${((current+value)/stages.length)*100}%`; }
+  function revealAll(){ stages[current].querySelectorAll('.cue').forEach(el=>el.classList.add('is-on')); syncStoryboard(Number.MAX_SAFE_INTEGER,true); progressFill.style.width=`${((current+1)/stages.length)*100}%`; }
+  function resetReveals(){ stages[current].querySelectorAll('.cue').forEach(el=>el.classList.remove('is-on')); stages[current].querySelectorAll('.cue').forEach(el=>{if(!guided||Number(el.dataset.cue||0)<=.04)el.classList.add('is-on');}); syncStoryboard(0,!guided); }
   function resetCheckpoint(){ stages[current].querySelectorAll('.checkpoint').forEach(q=>{q.classList.remove('ready');q.querySelectorAll('button').forEach(b=>{b.disabled=false;b.classList.remove('good','bad');});const f=q.querySelector('.feedback');if(f)f.textContent='';}); }
   function showCheckpoint(){const q=stages[current].querySelector('.checkpoint');if(q)q.classList.add('ready');}
   function completeStage(){stageComplete=true;revealAll();showCheckpoint();setPlayState(false);setNote(stages[current].querySelector('.checkpoint')?'Make your prediction':'Section complete',true);}
@@ -204,7 +217,7 @@
   lessonAudio.addEventListener('error',()=>{revealAll();showCheckpoint();setNote('Narration audio unavailable',true);});
 
   function answer(button){const q=button.closest('.checkpoint');q.querySelectorAll('button').forEach(b=>b.disabled=true);const key=button.dataset.feedbackKey||(button.dataset.correct==='true'?'correct':'wrong');const correct=button.dataset.correct==='true';button.classList.add(correct?'good':'bad');const text=feedbackScripts[id()]?.[key]||(correct?'Correct.':'Not quite.');q.querySelector('.feedback').textContent=text;setCaption(text);feedbackAudio.src=mediaUrl(`${id()}-${key}.mp3`);feedbackAudio.muted=muted;feedbackAudio.playbackRate=lessonAudio.playbackRate;feedbackAudio.play().catch(()=>{});}
-  document.addEventListener('click',e=>{const b=e.target.closest('.answers button');if(b)answer(b);const c=e.target.closest('[data-chapter]');if(c)go(Number(c.dataset.chapter),false);});
+  document.addEventListener('click',e=>{const b=e.target.closest('.answers button');if(b)answer(b);const c=e.target.closest('[data-chapter]');if(c)go(Number(c.dataset.chapter),false);const d=e.target.closest('[data-scene-target]');if(d&&!guided)syncStoryboard(Number(d.dataset.sceneTarget||0),true);});
 
   prevBtn.addEventListener('click',()=>go(current-1,false));
   nextBtn.addEventListener('click',()=>go(current+1,false));
