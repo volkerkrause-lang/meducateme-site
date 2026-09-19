@@ -1,5 +1,5 @@
 (() => {
-  const REV = '20260919-cortisol-visual-story';
+  const REV = '20260919-cortisol-fuel-revision-1';
   const stages = [...document.querySelectorAll('.stage')];
   const lessonAudio = document.querySelector('#lesson-audio');
   const feedbackAudio = document.querySelector('#feedback-audio');
@@ -185,7 +185,9 @@
   function syncPanel(){ panel.querySelectorAll('[data-rate]').forEach(b=>b.classList.toggle('active',Number(b.dataset.rate)===lessonAudio.playbackRate)); panel.querySelector('[data-cc]').classList.toggle('active',captionsOn); panel.querySelector('[data-mute]').classList.toggle('active',muted); panel.querySelector('[data-mute]').textContent=muted?'🔇':'🔊'; panel.querySelector('[data-mode]').textContent=guided?'Explore':'Guided'; panel.querySelector('[data-mode]').classList.toggle('active',!guided); }
   function setCaption(extra=''){ caption.textContent=extra?`${stageScript()}\n\n${extra}`:stageScript(); caption.classList.toggle('open',captionsOn); }
   function syncStoryboard(seconds=0, showSceneComplete=false){
-    const board=stages[current]?.querySelector('[data-storyboard]');
+    const activeStage=stages[current];
+    activeStage?.querySelectorAll('[data-story-at]').forEach(el=>el.classList.toggle('is-on',showSceneComplete||seconds>=Number(el.dataset.storyAt||0)));
+    const board=activeStage?.querySelector('[data-storyboard]');
     if(!board)return;
     const scenes=[...board.querySelectorAll('[data-scene-start]')];
     let active=0;
