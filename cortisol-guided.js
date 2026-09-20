@@ -1,5 +1,5 @@
 (() => {
-  const REV = '20260920-cortisol-metabolism-progressive-1';
+  const REV = '20260920-cortisol-clean-rebuild-2';
   const stages = [...document.querySelectorAll('.stage')];
   const lessonAudio = document.querySelector('#lesson-audio');
   const feedbackAudio = document.querySelector('#feedback-audio');
