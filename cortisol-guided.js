@@ -1,5 +1,5 @@
 (() => {
-  const REV = '20260919-cortisol-fuel-revision-1';
+  const REV = '20260920-cortisol-metabolism-progressive-1';
   const stages = [...document.querySelectorAll('.stage')];
   const lessonAudio = document.querySelector('#lesson-audio');
   const feedbackAudio = document.querySelector('#feedback-audio');
@@ -186,18 +186,25 @@
   function setCaption(extra=''){ caption.textContent=extra?`${stageScript()}\n\n${extra}`:stageScript(); caption.classList.toggle('open',captionsOn); }
   function syncStoryboard(seconds=0, showSceneComplete=false){
     const activeStage=stages[current];
+    const duration=(lessonAudio.duration&&isFinite(lessonAudio.duration))?lessonAudio.duration:1;
+    const frac=showSceneComplete?1:Math.max(0,Math.min(1,seconds/duration));
     activeStage?.querySelectorAll('[data-story-at]').forEach(el=>el.classList.toggle('is-on',showSceneComplete||seconds>=Number(el.dataset.storyAt||0)));
+    activeStage?.querySelectorAll('[data-story-frac]').forEach(el=>el.classList.toggle('is-on',showSceneComplete||frac>=Number(el.dataset.storyFrac||0)));
     const board=activeStage?.querySelector('[data-storyboard]');
     if(!board)return;
-    const scenes=[...board.querySelectorAll('[data-scene-start]')];
+    const scenes=[...board.querySelectorAll('[data-scene-start],[data-scene-frac]')];
     let active=0;
-    scenes.forEach((scene,i)=>{if(seconds>=Number(scene.dataset.sceneStart||0))active=i;});
+    scenes.forEach((scene,i)=>{
+      const threshold=scene.dataset.sceneFrac!==undefined?Number(scene.dataset.sceneFrac):Number(scene.dataset.sceneStart||0)/duration;
+      if(frac>=threshold)active=i;
+    });
     scenes.forEach((scene,i)=>{
       const currentScene=i===active;
       scene.classList.toggle('is-current',currentScene);
       scene.querySelectorAll('[data-at]').forEach(el=>el.classList.toggle('is-on',currentScene&&(showSceneComplete||seconds>=Number(el.dataset.at||0))));
+      scene.querySelectorAll('[data-at-frac]').forEach(el=>el.classList.toggle('is-on',currentScene&&(showSceneComplete||frac>=Number(el.dataset.atFrac||0))));
     });
-    board.querySelectorAll('[data-scene-target]').forEach((dot,i)=>dot.classList.toggle('is-current',i===active));
+    board.querySelectorAll('[data-scene-target],[data-scene-target-frac]').forEach((dot,i)=>dot.classList.toggle('is-current',i===active));
   }
   function revealFraction(f){ if(!guided)return; const value=Math.max(0,Math.min(1,f||0)); stages[current].querySelectorAll('.cue').forEach(el=>el.classList.toggle('is-on',Number(el.dataset.cue||0)<=value+.001)); syncStoryboard(lessonAudio.currentTime); progressFill.style.width=`${((current+value)/stages.length)*100}%`; }
   function revealAll(){ stages[current].querySelectorAll('.cue').forEach(el=>el.classList.add('is-on')); syncStoryboard(Number.MAX_SAFE_INTEGER,true); progressFill.style.width=`${((current+1)/stages.length)*100}%`; }
@@ -219,7 +226,7 @@
   lessonAudio.addEventListener('error',()=>{revealAll();showCheckpoint();setNote('Narration audio unavailable',true);});
 
   function answer(button){const q=button.closest('.checkpoint');q.querySelectorAll('button').forEach(b=>b.disabled=true);const key=button.dataset.feedbackKey||(button.dataset.correct==='true'?'correct':'wrong');const correct=button.dataset.correct==='true';button.classList.add(correct?'good':'bad');const text=feedbackScripts[id()]?.[key]||(correct?'Correct.':'Not quite.');q.querySelector('.feedback').textContent=text;setCaption(text);feedbackAudio.src=mediaUrl(`${id()}-${key}.mp3`);feedbackAudio.muted=muted;feedbackAudio.playbackRate=lessonAudio.playbackRate;feedbackAudio.play().catch(()=>{});}
-  document.addEventListener('click',e=>{const b=e.target.closest('.answers button');if(b)answer(b);const c=e.target.closest('[data-chapter]');if(c)go(Number(c.dataset.chapter),false);const d=e.target.closest('[data-scene-target]');if(d&&!guided)syncStoryboard(Number(d.dataset.sceneTarget||0),true);});
+  document.addEventListener('click',e=>{const b=e.target.closest('.answers button');if(b)answer(b);const c=e.target.closest('[data-chapter]');if(c)go(Number(c.dataset.chapter),false);const d=e.target.closest('[data-scene-target],[data-scene-target-frac]');if(d&&!guided){const target=d.dataset.sceneTargetFrac!==undefined?Number(d.dataset.sceneTargetFrac)*(lessonAudio.duration||1):Number(d.dataset.sceneTarget||0);syncStoryboard(target,true);}});
 
   prevBtn.addEventListener('click',()=>go(current-1,false));
   nextBtn.addEventListener('click',()=>go(current+1,false));
