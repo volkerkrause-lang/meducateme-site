@@ -16,6 +16,26 @@ main{width:min(1180px,94vw);height:calc(100dvh - 62px);margin:auto;position:rela
 @media (orientation:portrait) and (min-width:821px) and (max-width:1100px){#lesson .stage[data-stage="01-map"].active{padding-top:10px}#lesson .stage[data-stage="01-map"] .story-heading{height:clamp(170px,19vh,210px)}#lesson .stage[data-stage="01-map"] h1{font-size:clamp(34px,5.8vw,52px);margin:0 0 8px}.storyboard{height:calc(100% - clamp(170px,19vh,210px));min-height:0}.story-scene img{object-fit:contain;max-width:100%;max-height:100%}.story-label{max-width:38vw;font-size:11px}}
 
 /* Progressive cortisol metabolism plate */
+/* Metabolic plate visual correction: no old dark infographic underneath */
+.metabolic-scene{background:#f4eddc!important;color:#2b2b27!important;font-family:Georgia,"Times New Roman",serif}
+.organ-plate{background:#f4eddc!important;border:1px solid #9d8e70!important}
+.plate-art{background:linear-gradient(180deg,#f8f1df,#eee2c8);display:grid;grid-template-columns:repeat(3,1fr);gap:2%;padding:23% 3% 4%}
+.organ-art{position:relative;min-height:58%;align-self:end;filter:sepia(.12)}
+.adipose-art{background:
+ radial-gradient(circle at 25% 35%,#f4cf77 0 11%,#8b5a34 12% 14%,transparent 15%),
+ radial-gradient(circle at 54% 28%,#f1c96f 0 13%,#8b5a34 14% 16%,transparent 17%),
+ radial-gradient(circle at 75% 52%,#f6d680 0 12%,#8b5a34 13% 15%,transparent 16%),
+ radial-gradient(circle at 38% 68%,#edc365 0 14%,#8b5a34 15% 17%,transparent 18%),
+ radial-gradient(circle at 68% 79%,#f2cf75 0 12%,#8b5a34 13% 15%,transparent 16%)}
+.muscle-art{border-radius:42% 42% 30% 30%;background:repeating-linear-gradient(78deg,#a84d38 0 7px,#e29a78 8px 11px,#7e352b 12px 15px);transform:skew(-7deg);box-shadow:inset 0 0 0 2px #6e382d}
+.liver-art{border-radius:58% 42% 50% 36%;background:radial-gradient(circle at 65% 25%,#c66f57,#8f3f35 60%,#6e302a);box-shadow:inset -8px -10px 18px #54261f66,inset 3px 3px 5px #e0a08088}
+.organ-note{background:#f7f0dfed!important;border:1px solid #9d8e70!important;color:#2b2b27!important;box-shadow:0 3px 10px #6b5b3c22}
+.organ-note h3,.state-panel h3{color:#2c3437!important;letter-spacing:.03em}
+.organ-note>b,.state-panel>b{font-family:Arial,sans-serif;letter-spacing:.04em}
+.state-panel{background:#f7f0df!important;border-color:#9d8e70!important}
+.metabolic-title strong,.metabolic-title span{color:#2c3437!important}
+.blood-result,.outcomes span{background:#f7f0df!important;border-color:#9d8e70!important}
+
 .metabolic-scene{background:#f6f1e6;color:#17212a;padding:12px 18px 18px;overflow:auto}.metabolic-title{text-align:center;font-family:Georgia,serif;color:#123246}.metabolic-title strong{display:block;font-size:clamp(20px,3vw,38px);letter-spacing:.03em}.metabolic-title span{display:block;font-size:clamp(10px,1.25vw,15px);text-transform:uppercase;letter-spacing:.08em}.state-row{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:start;margin:10px auto;max-width:1050px}.state-panel{border:1px solid #a89d82;border-radius:12px;padding:9px 12px;min-height:96px;background:#fffaf0}.state-panel.fed{box-shadow:inset 0 4px 0 #7ba7aa}.state-panel.stress{box-shadow:inset 0 4px 0 #c7854d}.state-panel h3{margin:0;font:800 16px/1.1 Georgia,serif}.state-panel>b{font-size:10px}.reveal-list{display:grid;gap:2px;margin-top:5px}.reveal-list span,.organ-note span,.organ-note>b,.blood-result,.outcomes span{opacity:0;transform:translateY(5px);transition:opacity .38s ease,transform .38s ease}.reveal-list .is-on,.organ-note .is-on,.blood-result.is-on,.outcomes .is-on{opacity:1;transform:none}.axis-core{display:flex;gap:6px;align-items:center;align-self:center;font-size:10px;font-weight:900}.axis-core b{font-size:22px;color:#b47a35}.organ-plate{position:relative;max-width:1050px;height:clamp(260px,39vh,410px);margin:auto;border:1px solid #c9bea6;background:#fffaf0;overflow:hidden}.plate-art{position:absolute;inset:0}.plate-art img{width:100%;height:100%;object-fit:cover;filter:brightness(1.15) saturate(.88)}.organ-note{position:absolute;top:7%;width:29%;padding:7px 8px;border:1px solid #a89d82;background:#fffaf0e8;border-radius:8px;text-align:center;font-size:clamp(9px,1vw,12px);display:grid;gap:3px}.organ-note h3{font:800 clamp(11px,1.3vw,16px)/1 Georgia,serif;margin:0}.organ-note>b{color:#a65f27}.adipose-note{left:2.5%}.muscle-note{left:35.5%}.liver-note{right:2.5%}.insulin-down{margin-top:4px;padding-top:4px;border-top:1px solid #b6aa91;color:#466c80;font-weight:800}.blood-result{width:max-content;margin:7px auto 0;padding:5px 18px;border:1px solid #a89d82;border-radius:999px;background:#fffaf0;font-weight:900;color:#174a66}.outcomes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:1050px;margin:6px auto}.outcomes span{border:1px solid #c9bea6;background:#fffaf0;padding:5px;text-align:center;font-size:9px}.outcomes b{display:block}.meducate-mark{text-align:center;font-weight:900;letter-spacing:.05em;color:#173246}.meducate-mark span{color:#d69a29}@media(max-width:820px){.metabolic-scene{padding:8px}.state-row{grid-template-columns:1fr 1fr}.axis-core{display:none}.state-panel{min-height:84px;padding:6px}.organ-plate{height:300px}.organ-note{top:4%;width:31%;padding:5px;font-size:8px}.adipose-note{left:1%}.muscle-note{left:34.5%}.liver-note{right:1%}.outcomes{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
@@ -52,7 +72,11 @@ main{width:min(1180px,94vw);height:calc(100dvh - 62px);margin:auto;position:rela
     </div>
 
     <div class="organ-plate">
-      <div class="plate-art"><img src="assets/cortisol/cortisol-fuel.webp" alt="Medical illustration of adipose tissue, skeletal muscle and liver"></div>
+      <div class="plate-art" aria-hidden="true">
+  <div class="organ-art adipose-art"></div>
+  <div class="organ-art muscle-art"></div>
+  <div class="organ-art liver-art"></div>
+</div>
       <section class="organ-note adipose-note">
         <h3>ADIPOSE TISSUE</h3>
         <span data-at-frac=".285">Fat breakdown</span>
